@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.progetto_informatica.openingSceneController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_informatica.openingSceneController">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Nuovo Campionato"/>
+                <MenuItem text="Apri Campionato"/>
+                <MenuItem text="Salva"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Esci"/>
+            </Menu>
+            <Menu text="Modifica">
+                <MenuItem text="Aggiungi Partecipante"/>
+                <MenuItem text="Rimuovi Partecipante"/>
+            </Menu>
+            <Menu text="Aiuto">
+                <MenuItem text="Informazioni"/>
+            </Menu>
+        </MenuBar>
+    </top>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+            <HBox fx:id="championshipsContainer"
+                  spacing="20"
+                  alignment="CENTER_LEFT"
+                  style="-fx-background-color: #f4f4f4;">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <!-- I campionati verranno aggiunti dinamicamente qui -->
+                <Button text="+" onAction="#handleAddChampionship"
+                        style="-fx-font-size: 20px; -fx-min-width: 50px; -fx-min-height: 50px;"/>
+            </HBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #e0e0e0;" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="5" right="5" bottom="5" left="5"/>
+            </padding>
+            <Label text="Pronto" fx:id="statusLabel"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusDateTimeLabel" style="-fx-font-style: italic;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
