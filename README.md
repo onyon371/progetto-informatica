@@ -28,9 +28,24 @@ Classi:
     - boolean isInCorso();
     - int getPartecipanti();
 
+- class GestioneCampionati():
+  - Attributi:
+    - ArrayList<Campionato> campionati;
+    - button aggiungi;
+    - button modifica;
+    - button elimina;
+  - Metodi:
+    - void setCampionati(ArrayList<Campionato> campionati);
+    - void getCampionati();
+    - void onAggiungi();
+    - void onModifica();
+    - void onElimina();
+
 - class Gara:
   - Attributi:
     - ArrayList<Pilota> piloti;
+    - ArrayList<ArrayList<Tempo>> tempiPiloti;
+    - ArrayList<Integer> puntiPiloti;
     - String nome;
     - int partecipanti;
     - boolean inCorso;
@@ -47,19 +62,32 @@ Classi:
     - boolean isInCorso();
     - String getVincitore();
 
-- class Timer:
+- class GestioneGare:
   - Attributi:
-    - int minuti;
-    - int secondi;
-    - int decimi;
+    - ArrayList<Gara> gare;
+    - button aggiungi;
+    - button modifica;
+    - button elimina;
   - Metodi:
+    -   
+
+- class Tempo:
+  - Atrributi:
+    - int minuti;
+    - int secondi
+    - int centesimi
+  - Metodi: 
     - void setMinuti(int minuti);
     - void setSecondi(int secondi);
-    - void setDecimi(int decimi);
-    - int getMinuti();
-    - int getSecondi();
-    - int getDecimi();
+    - void setCentesimi(int centesimi);
+    - Integer getMinuti();
+    - Integer getSecondi();
+    - Integer getCentesimi();
+
+- class Timer:
+  - Attributi:
+    - Tempo tempo;
+  - Metodi:
     - String visualizzaTempo();
     - void startTimer();
     - void stopTimer();
-```
