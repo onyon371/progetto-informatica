@@ -6,3 +6,4 @@ Donati:
 De Silva:
 		16/04/25 Realizzazione Documentazione codice.
 Dolea:
+		23/04/25 aggiunta firma classi varie
