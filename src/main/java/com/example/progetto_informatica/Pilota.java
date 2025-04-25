@@ -24,4 +24,13 @@ public class Pilota {
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
+
+    @Override
+    //serve a far considerare 2 piloti uguali
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pilota)) return false;
+        Pilota pilota = (Pilota) o;
+        return nome.equalsIgnoreCase(pilota.nome) && cognome.equalsIgnoreCase(pilota.cognome);
+    }
 }
