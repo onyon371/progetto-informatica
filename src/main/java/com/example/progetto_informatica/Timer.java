@@ -7,8 +7,9 @@ public class Timer {
         this.tempo = tempo;
     }
 
-    public String visualizzaTempo() {
-    }
+
+
+  // public String visualizzaTempo() {}
 
     public void startTimer() {
     }
