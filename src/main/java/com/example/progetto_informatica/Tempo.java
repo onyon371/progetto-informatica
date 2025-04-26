@@ -1,5 +1,7 @@
 package com.example.progetto_informatica;
 
+import java.util.Objects;
+
 public class Tempo {
     private int minuti;
     private int secondi;
@@ -35,5 +37,16 @@ public class Tempo {
         return centesimi;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Tempo tempo = (Tempo) o;
+        return minuti == tempo.minuti && secondi == tempo.secondi && centesimi == tempo.centesimi;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(minuti, secondi, centesimi);
+    }
 }
 
