@@ -85,12 +85,6 @@ public class openingMenùController implements Initializable {
         System.out.println("Edit functionality to be implemented");
     }
 
-    @FXML
-    private void handleDeleteTournament() {
-        // Implementation for deleting a tournament
-        System.out.println("Delete functionality to be implemented");
-    }
-
     public static class TournamentData implements Serializable {
         private String year;
         private String title;
@@ -132,7 +126,6 @@ public class openingMenùController implements Initializable {
         }
     }
 
-
     private void serializeTournament(TournamentData td) throws IOException {
         File file = new File("tournamentSaveFile.bin");
         boolean append = file.exists();
@@ -152,7 +145,7 @@ public class openingMenùController implements Initializable {
                     TournamentData child = (TournamentData) in.readObject();
                     addTournamentCard(child.getYear(), child.getTitle(), child.getParticipants(), child.getStatus());
                 } catch (EOFException e) {
-                    break; // Fine del file
+                    break;
                 }
             }
         }

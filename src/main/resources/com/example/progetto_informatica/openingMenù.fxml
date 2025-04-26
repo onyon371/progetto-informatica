@@ -12,7 +12,6 @@
     <HBox spacing="10" styleClass="button-container">
         <Button text="Aggiungi" styleClass="action-button" onAction="#handleAddTournament"/>
         <Button text="Modifica" styleClass="action-button" onAction="#handleEditTournament"/>
-        <Button text="Elimina" styleClass="action-button" onAction="#handleDeleteTournament"/>
     </HBox>
 
     <!-- Tournaments Container with ScrollPane -->
