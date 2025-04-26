@@ -1,0 +1,134 @@
+/* Main container styling */
+.main-container {
+    -fx-padding: 20;
+    -fx-background-color: #f5f5f5;
+    -fx-spacing: 20;
+}
+
+/* Button container styling */
+.button-container {
+    -fx-padding: 0 0 15 0;
+}
+
+/* Action buttons styling */
+.action-button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #3a7bc8;
+}
+
+/* Section styling */
+.section-container {
+    -fx-padding: 10;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 0 0 5 0;
+}
+
+.section-separator {
+    -fx-padding: 5 0;
+}
+
+/* Winners list styling */
+.winners-list {
+    -fx-spacing: 5;
+}
+
+.winner-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+    -fx-padding: 3 10;
+}
+
+/* ScrollPane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-fit-to-width: true;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Races list styling */
+.races-list {
+    -fx-spacing: 15;
+    -fx-padding: 5;
+}
+
+/* Race container styling */
+.race-container {
+    -fx-padding: 15;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-spacing: 8;
+}
+
+.race-header {
+    -fx-alignment: center-left;
+}
+
+.race-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.race-date {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.race-details {
+    -fx-alignment: center-left;
+    -fx-padding: 5 0 0 0;
+}
+
+.race-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.winner-info {
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a5885;
+}
+
+.race-status {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+.completed {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.in-progress {
+    -fx-background-color: #FFC107;
+    -fx-text-fill: #333;
+}
+
+.upcoming {
+    -fx-background-color: #9E9E9E;
+    -fx-text-fill: white;
+}

@@ -17,17 +17,17 @@ public class main extends Application {
         mainStage = stage;
         stage.setTitle("Programma");
 
-        changeScene("openingMenù.fxml");
+        changeScene("openingMenù.fxml", "openingMenùStyle.css");
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-    public static void changeScene(String sceneName) throws IOException {
+    public static void changeScene(String sceneName, String cssName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource(sceneName));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
-        scene.getStylesheets().add(main.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(main.class.getResource(cssName).toExternalForm());
         mainStage.setScene(scene);
         mainStage.show();
     }

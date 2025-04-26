@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container">
+    <!-- Action Buttons -->
+    <HBox spacing="10" styleClass="button-container">
+        <Button text="Aggiungi" styleClass="action-button" onAction="#handleAddRace"/>
+        <Button text="Modifica" styleClass="action-button" onAction="#handleEditRace"/>
+        <Button text="Elimina" styleClass="action-button" onAction="#handleDeleteRace"/>
+    </HBox>
+
+    <!-- Recent Winners Section -->
+    <VBox spacing="5" styleClass="section-container">
+        <Label text="Ultimi Vincitori" styleClass="section-title"/>
+        <VBox fx:id="winnersContainer" styleClass="winners-list"/>
+    </VBox>
+
+    <Separator styleClass="section-separator"/>
+
+    <!-- Races List with ScrollPane -->
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+        <VBox fx:id="racesContainer" styleClass="races-list"/>
+    </ScrollPane>
+</VBox>
