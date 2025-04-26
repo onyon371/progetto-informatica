@@ -1,6 +1,7 @@
 module com.example.progetto_informatica {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.example.progetto_informatica to javafx.fxml;
