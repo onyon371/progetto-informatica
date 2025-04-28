@@ -3,7 +3,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class Gara implements Serializable {
@@ -16,7 +15,7 @@ public class Gara implements Serializable {
     private String nomeGara;
     private int numeroPartecipanti;
     private boolean inCorso;
-    private Time targetTime;
+    private Tempo targetTime;
 
     public Gara(int lanciPerPilota, String nomeGara) {
 
@@ -81,7 +80,7 @@ public class Gara implements Serializable {
             for(Tempo t : lanciAttuali.tempi)
             {
                 int tempPoint = 0;
-                int calculetedMaxPoint = tempPoint = targetTime.getMinutes()*60+targetTime.getSeconds();
+                int calculetedMaxPoint = tempPoint = targetTime.getMinuti()*60+targetTime.getSecondi();
 
                 if(t.getCentesimi()>499)
                 {
@@ -97,16 +96,16 @@ public class Gara implements Serializable {
 
                 if(t.equals(targetTime)) tempPoint = calculetedMaxPoint;
 
-                else if(t.getMinuti() == targetTime.getMinutes())
+                else if(t.getMinuti() == targetTime.getMinuti())
                 {
-                    if(t.getSecondi() > targetTime.getSeconds())
+                    if(t.getSecondi() > targetTime.getSecondi())
                     {
-                        tempPoint = calculetedMaxPoint - (t.getSecondi()-targetTime.getSeconds())*2;
+                        tempPoint = calculetedMaxPoint - (t.getSecondi()-targetTime.getSecondi())*2;
                     }else
                     {
-                        tempPoint = calculetedMaxPoint - (t.getSecondi()-targetTime.getSeconds());
+                        tempPoint = calculetedMaxPoint - (t.getSecondi()-targetTime.getSecondi());
                     }
-                }else if(t.getMinuti() > targetTime.getMinutes())
+                }else if(t.getMinuti() > targetTime.getMinuti())
                 {
                     int secondi = t.getMinuti()*60+t.getSecondi();
                     tempPoint = calculetedMaxPoint - (secondi-calculetedMaxPoint)*2;

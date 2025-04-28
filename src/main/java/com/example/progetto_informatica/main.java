@@ -17,7 +17,7 @@ public class main extends Application {
         mainStage = stage;
         stage.setTitle("Programma");
 
-        changeScene("openingMenù.fxml", "openingMenùStyle.css");
+        changeScene("gareMenù.fxml", "gareMenùStyle.css");
     }
 
     public static void main(String[] args) {

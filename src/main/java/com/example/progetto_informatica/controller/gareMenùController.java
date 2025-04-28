@@ -1,12 +1,15 @@
 package com.example.progetto_informatica.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class gareMenùController implements Initializable {
