@@ -25,10 +25,11 @@ public class specificRaceMenùController {
 
     private Race raceReference;
 
+    /*
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         raceReference = null;
-    }
+    }*/
 
     public void initRace(Race raceReference)
     {
