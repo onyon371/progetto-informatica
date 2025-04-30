@@ -105,6 +105,10 @@ public class racesMenùController implements Initializable {
                 statusLabel.getStyleClass().add("in-progress");
             }
 
+            raceBox.setOnMouseClicked(event -> {
+                main.openSpecificRaceMenù(race);
+            });
+
             detailsBox.getChildren().addAll(participantsLabel, winnerLabel, statusLabel);
             raceBox.getChildren().addAll(headerBox, detailsBox);
             racesContainer.getChildren().add(raceBox);

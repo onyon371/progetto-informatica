@@ -55,6 +55,23 @@ public class main extends Application {
         }
     }
 
+    public static void openSpecificRaceMenù(Race raceReference)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("racesMenù.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+
+            specificRaceMenùController controller = fxmlLoader.getController();
+            controller.initRace(raceReference);
+
+            mainStage.setScene(scene);
+            mainStage.show();
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
+    }
+
     @Override
     public void stop() {
         championshipsMenùController.saveChampionships();
