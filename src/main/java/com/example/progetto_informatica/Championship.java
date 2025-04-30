@@ -15,6 +15,9 @@ public class Championship implements Serializable {
         this.championshipName = championshipName;
         this.championshipYear = championshipYear;
         championshipOpen = true;
+
+        pilots = new ArrayList<Pilot>();
+        races = new ArrayList<Race>();
     }
 
     public boolean addPilot(Pilot p)
@@ -52,4 +55,6 @@ public class Championship implements Serializable {
     public boolean isChampionshipOpen() {
         return championshipOpen;
     }
+
+    public ArrayList<Race> getRaces() { return races;}
 }

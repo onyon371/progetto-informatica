@@ -1,6 +1,8 @@
 package com.example.progetto_informatica;
 
+import java.awt.*;
 import java.io.Serializable;
+import java.sql.Array;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -15,7 +17,13 @@ public class Throws implements Serializable {
     private final int underTimePenality = 1;
     private final int overTimePenality = underTimePenality*2;
     private final int nThrows = 4;
+    private final int nDiscardedTimes = 1;
 
+    public Throws()
+    {
+        times = new ArrayList<LocalTime>();
+        points = new ArrayList<Integer>();
+    }
 
     public void calculatePoints()
     {
@@ -42,8 +50,21 @@ public class Throws implements Serializable {
 
     public int getTotPoints()
     {
+        ArrayList<Integer> tempPointArray = new ArrayList<Integer>(points);
+        int nTimesToKeep = nThrows-nDiscardedTimes;
+
+        while (tempPointArray.size() > nTimesToKeep)
+        {
+            int lowest = tempPointArray.getFirst();
+            for(int i = 1; i < tempPointArray.size(); i++)
+            {
+                if(tempPointArray.get(i) < lowest) lowest = tempPointArray.get(i);
+            }
+            tempPointArray.remove(tempPointArray.indexOf(lowest));
+        }
+
         int tot = 0;
-        for(Integer i : points) tot+=i;
+        for(Integer i : tempPointArray) tot+=i;
         return tot;
     }
 

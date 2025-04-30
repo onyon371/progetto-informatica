@@ -7,7 +7,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.controller.gareMenùController">
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.racesMenùController">
+    <stylesheets>
+        <URL value="@racesMenùStyle.css"/>
+    </stylesheets>
+
     <!-- Action Buttons -->
     <HBox spacing="10" styleClass="button-container">
         <Button text="Aggiungi" styleClass="action-button" onAction="#handleAddRace"/>
@@ -17,8 +22,8 @@
 
     <!-- Recent Winners Section -->
     <VBox spacing="5" styleClass="section-container">
-        <Label text="Ultimi Vincitori" styleClass="section-title"/>
-        <VBox fx:id="winnersContainer" styleClass="winners-list"/>
+        <Label text="Classifica" styleClass="section-title"/>
+        <VBox fx:id="pilotsRankingContainer" styleClass="winners-list"/>
     </VBox>
 
     <Separator styleClass="section-separator"/>

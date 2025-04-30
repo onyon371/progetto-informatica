@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class main extends Application {
     private static Stage mainStage;
@@ -15,21 +16,43 @@ public class main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         mainStage = stage;
-        stage.setTitle("Programma");
+        stage.setTitle("Gestione Tornei");
 
-        changeScene("openingMenù.fxml", "openingMenùStyle.css");
+        openChampionshipsMenù();
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-    public static void changeScene(String sceneName, String cssName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource(sceneName));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
-        scene.getStylesheets().add(main.class.getResource(cssName).toExternalForm());
-        mainStage.setScene(scene);
-        mainStage.show();
+    public static void openChampionshipsMenù()
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("championshipsMenù.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+            mainStage.setScene(scene);
+            mainStage.show();
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void openRacesMenù(Championship championshipReference)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("racesMenù.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+
+            racesMenùController controller = fxmlLoader.getController();
+            controller.initChampionhip(championshipReference);
+
+            mainStage.setScene(scene);
+            mainStage.show();
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
 }
 

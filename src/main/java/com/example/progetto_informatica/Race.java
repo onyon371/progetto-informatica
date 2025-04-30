@@ -15,6 +15,9 @@ public class Race implements Serializable {
         this.name = name;
         this.pilots = pilots;
         raceOpen = true;
+
+        pilots = new ArrayList<Pilot>();
+        throwsPilots = new ArrayList<Throws>();
     }
 
     public void addPilot(Pilot p)

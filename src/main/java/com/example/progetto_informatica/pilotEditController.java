@@ -1,4 +1,4 @@
-package com.example.progetto_informatica.controller;
+package com.example.progetto_informatica;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,8 +6,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-import java.time.Year;
 import java.util.Optional;
 
 public class pilotEditController {

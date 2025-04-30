@@ -1,4 +1,4 @@
-package com.example.progetto_informatica.controller;
+package com.example.progetto_informatica;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -11,20 +11,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
 import java.util.Optional;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class gareMenùController implements Initializable {
-    @FXML private VBox winnersContainer;
+public class racesMenùController implements Initializable {
+    @FXML private VBox pilotsRankingContainer;
     @FXML private VBox racesContainer;
 
-    private ObservableList<String> winners = FXCollections.observableArrayList();
-    private ObservableList<Race> races = FXCollections.observableArrayList();
+    private Championship championshipReference;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Initialize with sample data
+
+        championshipReference = null;
+
         winners.addAll("Nicolò Cipollini", "Nicolò Cipollini");
         refreshWinners();
 
@@ -33,6 +36,11 @@ public class gareMenùController implements Initializable {
                 new Race("GARA NUMERO 2", "", 0, "", "")
         );
         refreshRaces();
+    }
+
+    public void initChampionhip(Championship championshipReference)
+    {
+        this.championshipReference = championshipReference;
     }
 
     private void refreshWinners() {
@@ -155,37 +163,12 @@ public class gareMenùController implements Initializable {
 
     @FXML
     private void handleEditRace() {
-        // Implementation for editing a race
-        // Would need selection logic
+
     }
 
     @FXML
     private void handleDeleteRace() {
-        // Implementation for deleting a race
-        // Would need selection logic
+
     }
 
-    // Race data model class
-    public static class Race {
-        private String title;
-        private String date;
-        private int participants;
-        private String winner;
-        private String status;
-
-        public Race(String title, String date, int participants, String winner, String status) {
-            this.title = title;
-            this.date = date;
-            this.participants = participants;
-            this.winner = winner;
-            this.status = status;
-        }
-
-        // Getters and setters
-        public String getTitle() { return title; }
-        public String getDate() { return date; }
-        public int getParticipants() { return participants; }
-        public String getWinner() { return winner; }
-        public String getStatus() { return status; }
-    }
 }
