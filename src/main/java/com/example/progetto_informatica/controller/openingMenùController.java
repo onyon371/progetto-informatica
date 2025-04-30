@@ -1,5 +1,6 @@
 package com.example.progetto_informatica.controller;
 
+import com.example.progetto_informatica.Championship;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,14 +16,18 @@ import java.util.ResourceBundle;
 
 public class openingMenùController implements Initializable {
     @FXML
-    private VBox tournamentsList;
+    private VBox championshipAnchor;
     @FXML
     private ScrollPane scrollPane;
+
+    private ArrayList<Championship> championships;
+    private final String SAVEPATH = "save.bin";
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            deserializeTournament();
+            getChampionships();
         } catch (Exception e)
         {
             System.out.println(e.getMessage());
@@ -40,17 +45,12 @@ public class openingMenùController implements Initializable {
         Optional<String> nomeCampionato = dialog.showAndWait();
 
         if(!nomeCampionato.isEmpty()) {
-            addTournamentCard(String.valueOf(Year.now().getValue()), nomeCampionato.get(), "0", "In Corso");
-
-            try {
-                serializeTournament(new TournamentData(String.valueOf(Year.now().getValue()), nomeCampionato.get(), "0", "In Corso"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            addTournamentCard(String.valueOf(Year.now().getValue()), nomeCampionato.get(), "0", true);
+            saveChampionships();
         }
     }
 
-    private void addTournamentCard(String year, String title, String participants, String status) throws IOException {
+    private void addTournamentCard(String year, String title, String participants, boolean status) throws IOException {
         VBox tournamentContainer = new VBox();
         tournamentContainer.getStyleClass().add("tournament-container");
         tournamentContainer.setSpacing(5);
@@ -64,18 +64,45 @@ public class openingMenùController implements Initializable {
         Label participantsLabel = new Label(participants + " partecipanti");
         participantsLabel.getStyleClass().add("participants-label");
 
-        Label statusLabel = new Label(status);
+        Label statusLabel;
+        if(status)
+        {
+            statusLabel = new Label("Aperto");
+        }else
+        {
+            statusLabel = new Label("Terminato");
+        }
+
         statusLabel.getStyleClass().add("status-label");
-        statusLabel.getStyleClass().add(status.equals("In Corso") ? "in-progress" : "completed");
+
+        statusLabel.getStyleClass().add(status ? "in-progress" : "completed");
 
         tournamentContainer.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
-        tournamentsList.getChildren().add(0, tournamentContainer); // Add at the beginning
+        championshipAnchor.getChildren().add(0, tournamentContainer); // Add at the beginning
 
         // Add separator if not the first tournament
-        if (tournamentsList.getChildren().size() > 1) {
+        if (championshipAnchor.getChildren().size() > 1) {
             Separator separator = new Separator();
             separator.getStyleClass().add("separator");
-            tournamentsList.getChildren().add(1, separator); // Add after the new tournament
+            championshipAnchor.getChildren().add(1, separator); // Add after the new tournament
+        }
+    }
+
+
+    private void getChampionships() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
+        championships = (ArrayList<Championship>) in.readObject();
+    }
+
+    private void saveChampionships() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
+        out.writeObject(championships);
+    }
+
+    private void addAllChampionshipsCards() throws IOException {
+        for(Championship c : championships)
+        {
+            addTournamentCard(Integer.toString(c.getChampionshipYear()), c.getChampionshipName(), Integer.toString(c.getChampionshipParticipantsNumber()), c.isChampionshipOpen());
         }
     }
 
@@ -115,6 +142,11 @@ public class openingMenùController implements Initializable {
         }
     }
 
+
+
+
+
+/*
     public class AppendableObjectOutputStream extends ObjectOutputStream {
         public AppendableObjectOutputStream(OutputStream out) throws IOException {
             super(out);
@@ -150,5 +182,5 @@ public class openingMenùController implements Initializable {
             }
         }
     }
-
+*/
 }

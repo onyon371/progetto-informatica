@@ -3,7 +3,7 @@ Cipollini:
 		26/04/25 realizzata tutta la pagina iniziale con tutta la logica associata, riscritto interamente 		tutto il codice del progetto, aggiunta salvataggio dei tornei singoli, implementate classi timer, tempi, 		lanci. inizio stesura logica gare, inizio implementazione view gare e relativo controllore.
 Donati:
 		16/04/25 Realizzazione Documentazione codice.
-		25/04/25 aggiunta logica per la funzionalità di aggiunta/rimozione pilota.
+		25/04/25 aggiunta logica per la funzionalità di aggiunta/rimozione pilot.
 De Silva:
 		16/04/25 Realizzazione Documentazione codice.
 Dolea:

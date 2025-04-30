@@ -16,7 +16,7 @@
 
     <!-- Tournaments Container with ScrollPane -->
     <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS" fx:id="scrollPane">
-        <VBox spacing="15" styleClass="tournaments-list" fx:id="tournamentsList">
+        <VBox spacing="15" styleClass="tournaments-list" fx:id="championshipAnchor">
             <!-- Tournaments will be added here dynamically -->
         </VBox>
     </ScrollPane>

@@ -51,7 +51,7 @@ Classi:
     - boolean inCorso;
     - String vincitore;
   - Metodi:
-    - void aggiungiPilota(Pilota pilota);
+    - void aggiungiPilota(Pilota pilot);
     - void setNome(String nome);
     - void setPartecipanti(int partecipanti);
     - void setInCorso(boolean inCorso);
