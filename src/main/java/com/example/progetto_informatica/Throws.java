@@ -25,7 +25,7 @@ public class Throws implements Serializable {
         points = new ArrayList<Integer>();
     }
 
-    public void calculatePoints()
+    private void calculatePoints()
     {
         points.clear();
         for(int i = 0; i < times.size(); i++)
@@ -50,17 +50,25 @@ public class Throws implements Serializable {
 
     public int getTotPoints()
     {
+        if(times.isEmpty()) return 0;
+
+        calculatePoints();
         ArrayList<Integer> tempPointArray = new ArrayList<Integer>(points);
         int nTimesToKeep = nThrows-nDiscardedTimes;
 
         while (tempPointArray.size() > nTimesToKeep)
         {
             int lowest = tempPointArray.getFirst();
+            int index = 0;
             for(int i = 1; i < tempPointArray.size(); i++)
             {
-                if(tempPointArray.get(i) < lowest) lowest = tempPointArray.get(i);
+                if(tempPointArray.get(i) < lowest)
+                {
+                    lowest = tempPointArray.get(i);
+                    index = i;
+                }
             }
-            tempPointArray.remove(tempPointArray.indexOf(lowest));
+            tempPointArray.remove(index);
         }
 
         int tot = 0;

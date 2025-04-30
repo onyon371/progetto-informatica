@@ -34,4 +34,11 @@ public class Pilot {
         Pilot pilot = (Pilot) o;
         return Objects.equals(name, pilot.name) && Objects.equals(surname, pilot.surname);
     }
+
+    @Override
+    public String toString() {
+        return name + " " + surname;
+    }
 }
+
+

@@ -54,6 +54,11 @@ public class main extends Application {
             System.err.println(e.getMessage());
         }
     }
+
+    @Override
+    public void stop() {
+        championshipsMenùController.saveChampionships();
+    }
 }
 
 

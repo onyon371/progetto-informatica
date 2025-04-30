@@ -12,10 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class racesMenùController implements Initializable {
     @FXML private VBox pilotsRankingContainer;
@@ -25,46 +28,51 @@ public class racesMenùController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         championshipReference = null;
-
-        winners.addAll("Nicolò Cipollini", "Nicolò Cipollini");
-        refreshWinners();
-
-        races.addAll(
-                new Race("GARA NUMERO 1", "25/04/2025", 25, "Nicolò Cipollini", "Terminata"),
-                new Race("GARA NUMERO 2", "", 0, "", "")
-        );
-        refreshRaces();
     }
 
     public void initChampionhip(Championship championshipReference)
     {
         this.championshipReference = championshipReference;
+
+        try {
+            setPilotsRankingContainer();
+            addRacesCard();
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
 
-    private void refreshWinners() {
-        winnersContainer.getChildren().clear();
-        winners.forEach(winner -> {
-            Label winnerLabel = new Label(winner);
-            winnerLabel.getStyleClass().add("winner-name");
-            winnersContainer.getChildren().add(winnerLabel);
+    private void setPilotsRankingContainer() {
+        pilotsRankingContainer.getChildren().clear();
+        ArrayList<PilotPoint> bestPilots = championshipReference.getBestPilotsAndPoints();
+
+        AtomicInteger counter = new AtomicInteger(1);
+
+        bestPilots.forEach(pilot -> {
+            Label pilotLabel = new Label(counter.incrementAndGet() + " " + pilot.getP().toString() + " Punti: " + pilot.getPoints());
+            pilotLabel.getStyleClass().add("winner-name");
+            pilotsRankingContainer.getChildren().add(pilotLabel);
         });
     }
 
-    private void refreshRaces() {
+    private void addRacesCard() {
         racesContainer.getChildren().clear();
-        races.forEach(race -> {
+
+        AtomicInteger counter = new AtomicInteger(0);
+
+        championshipReference.getRaces().forEach(race -> {
             VBox raceBox = new VBox();
             raceBox.getStyleClass().add("race-container");
 
             HBox headerBox = new HBox(10);
             headerBox.getStyleClass().add("race-header");
 
-            Label titleLabel = new Label(race.getTitle());
+            Label titleLabel = new Label(race.getName());
             titleLabel.getStyleClass().add("race-title");
 
-            Label dateLabel = new Label(race.getDate());
+            Label dateLabel = new Label(race.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             dateLabel.getStyleClass().add("race-date");
 
             headerBox.getChildren().addAll(titleLabel, dateLabel);
@@ -72,23 +80,29 @@ public class racesMenùController implements Initializable {
             HBox detailsBox = new HBox(20);
             detailsBox.getStyleClass().add("race-details");
 
-            Label participantsLabel = new Label(race.getParticipants() > 0 ?
-                    "Partecipanti: " + race.getParticipants() : "");
+            Label participantsLabel = new Label("Partecipanti: " + race.getPilots().size());
             participantsLabel.getStyleClass().add("race-info");
 
-            Label winnerLabel = new Label(race.getWinner().isEmpty() ?
-                    "" : "Vincitore: " + race.getWinner());
+            String temp = "";
+
+            try
+            {
+                temp = race.getBestPilotsAndPoints().getFirst().getP().toString();
+            }catch (Exception e)
+            {
+                System.err.println(e.getMessage());
+            }
+
+            Label winnerLabel = new Label("Primo Classificato: " + temp);
             winnerLabel.getStyleClass().addAll("race-info", "winner-info");
 
-            Label statusLabel = new Label(race.getStatus());
+            Label statusLabel = new Label(race.isRaceOpen() ? "In corso" : "Terminata");
             statusLabel.getStyleClass().add("race-status");
 
-            if (race.getStatus().equalsIgnoreCase("Terminata")) {
+            if (!race.isRaceOpen()) {
                 statusLabel.getStyleClass().add("completed");
-            } else if (race.getStatus().equalsIgnoreCase("In corso")) {
+            } else {
                 statusLabel.getStyleClass().add("in-progress");
-            } else if (!race.getStatus().isEmpty()) {
-                statusLabel.getStyleClass().add("upcoming");
             }
 
             detailsBox.getChildren().addAll(participantsLabel, winnerLabel, statusLabel);
@@ -99,66 +113,18 @@ public class racesMenùController implements Initializable {
 
    @FXML
     private void handleAddRace() {
-        // Create a dialog to add new race
-        Dialog<Race> dialog = new Dialog<>();
-        dialog.setTitle("Aggiungi Nuova Gara");
 
-        // Set up dialog buttons
-        ButtonType addButton = new ButtonType("Aggiungi", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(addButton, ButtonType.CANCEL);
+       TextInputDialog dialog = new TextInputDialog();
+       dialog.setTitle("Aggiungi gara");
+       dialog.setHeaderText("Inserisci i dettagli della nuova gara");
+       dialog.setContentText("Nome gara:");
 
-        // Create form
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+       Optional<String> raceName = dialog.showAndWait();
 
-        TextField titleField = new TextField();
-        TextField dateField = new TextField();
-        Spinner<Integer> participantsField = new Spinner<>(1, 100, 1);
-        TextField winnerField = new TextField();
-        ComboBox<String> statusField = new ComboBox<>();
-        statusField.getItems().addAll("Terminata", "In corso", "Pianificata");
-
-        grid.add(new Label("Titolo:"), 0, 0);
-        grid.add(titleField, 1, 0);
-        grid.add(new Label("Data:"), 0, 1);
-        grid.add(dateField, 1, 1);
-        grid.add(new Label("Partecipanti:"), 0, 2);
-        grid.add(participantsField, 1, 2);
-        grid.add(new Label("Vincitore:"), 0, 3);
-        grid.add(winnerField, 1, 3);
-        grid.add(new Label("Stato:"), 0, 4);
-        grid.add(statusField, 1, 4);
-
-        dialog.getDialogPane().setContent(grid);
-
-        // Convert result to Race object
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == addButton) {
-                return new Race(
-                        titleField.getText(),
-                        dateField.getText(),
-                        participantsField.getValue(),
-                        winnerField.getText(),
-                        statusField.getValue()
-                );
-            }
-            return null;
-        });
-
-        Optional<Race> result = dialog.showAndWait();
-        result.ifPresent(race -> {
-            races.add(0, race);
-            if (!race.getWinner().isEmpty()) {
-                winners.add(0, race.getWinner());
-                if (winners.size() > 5) {
-                    winners.remove(winners.size() - 1);
-                }
-                refreshWinners();
-            }
-            refreshRaces();
-        });
+       if(!raceName.isEmpty()) {
+           championshipReference.addRace(raceName.get());
+           addRacesCard();
+       }
     }
 
     @FXML
@@ -171,4 +137,9 @@ public class racesMenùController implements Initializable {
 
     }
 
+    @FXML
+    private void handleBackToChampionshipMenù()
+    {
+        main.openChampionshipsMenù();
+    }
 }

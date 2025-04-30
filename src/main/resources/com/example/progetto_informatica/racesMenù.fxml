@@ -18,6 +18,7 @@
         <Button text="Aggiungi" styleClass="action-button" onAction="#handleAddRace"/>
         <Button text="Modifica" styleClass="action-button" onAction="#handleEditRace"/>
         <Button text="Elimina" styleClass="action-button" onAction="#handleDeleteRace"/>
+        <Button text="Indietro" styleClass="action-button" onAction="#handleBackToChampionshipMenù"/>
     </HBox>
 
     <!-- Recent Winners Section -->

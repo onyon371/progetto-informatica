@@ -18,19 +18,26 @@ public class championshipsMenùController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
 
-    private ArrayList<Championship> championships;
-    private final String SAVEPATH = "save.bin";
+    private static ArrayList<Championship> championships;
+    private final static String SAVEPATH = "save.bin";
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        championships = new ArrayList<Championship>();
-        try {
-            getChampionships();
-            addAllChampionshipsCards();
-        } catch (Exception e)
-        {
-            System.out.println(e.getMessage());
+        if(championships==null) {
+            championships = new ArrayList<Championship>();
+            try {
+                getChampionships();
+                addAllChampionshipsCards();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }else {
+            try {
+                addAllChampionshipsCards();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -47,7 +54,7 @@ public class championshipsMenùController implements Initializable {
         if(!championshipName.isEmpty()) {
             championships.add(new Championship(championshipName.get(), Year.now().getValue()));
             addTournamentCard(String.valueOf(Year.now().getValue()), championshipName.get(), "0", true, championships.get(championships.size()-1));
-            saveChampionships();
+            //saveChampionships();
         }
     }
 
@@ -64,7 +71,7 @@ public class championshipsMenùController implements Initializable {
         }
     }
 
-    private void addTournamentCard(String year, String title, String participants, boolean status, Championship championhipReference) throws IOException {
+    private void addTournamentCard(String year, String title, String participants, boolean status, Championship championshipReference) throws IOException {
         VBox tournamentContainer = new VBox();
         tournamentContainer.getStyleClass().add("tournament-container");
         tournamentContainer.setSpacing(5);
@@ -85,7 +92,7 @@ public class championshipsMenùController implements Initializable {
         tournamentContainer.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
 
         tournamentContainer.setOnMouseClicked(event -> {
-            onTournamentClicked(championhipReference);
+            main.openRacesMenù(championshipReference);
         });
 
         championshipAnchor.getChildren().add(0, tournamentContainer);
@@ -98,18 +105,18 @@ public class championshipsMenùController implements Initializable {
         }
     }
 
-    public static void onTournamentClicked(Championship clickedChampionship){
-        main.openRacesMenù(clickedChampionship);
-    }
-
-
     private void getChampionships() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
         championships = (ArrayList<Championship>) in.readObject();
     }
 
-    private void saveChampionships() throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
-        out.writeObject(championships);
+    public static void saveChampionships() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
+            out.writeObject(championships);
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
 }

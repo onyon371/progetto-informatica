@@ -34,6 +34,40 @@ public class Championship implements Serializable {
         return true;
     }
 
+    public ArrayList<PilotPoint> getBestPilotsAndPoints()
+    {
+        ArrayList<PilotPoint> pilotPointsList = races.getFirst().getPilotPointsList();
+
+        if(races.size() > 1)
+        {
+            for(int i = 1; i < races.size(); i++)
+            {
+                ArrayList<PilotPoint> currentRacePilotPointList = races.get(i).getPilotPointsList();
+                for(int q = 0; q < pilotPointsList.size(); q++)
+                {
+                    pilotPointsList.get(q).points += currentRacePilotPointList.get(q).points;
+                }
+            }
+        }
+
+        while(pilotPointsList.size() > 3)
+        {
+            int lower = pilotPointsList.get(0).getPoints();
+            int index = 0;
+            for(int i = 0; i < pilotPointsList.size(); i++)
+            {
+                if(pilotPointsList.get(0).getPoints() < lower)
+                {
+                    lower = pilotPointsList.get(0).getPoints();
+                    index = i;
+                }
+            }
+            pilotPointsList.remove(index);
+        }
+
+        return pilotPointsList;
+    }
+
     public void addRace(String raceName)
     {
         races.add(new Race(raceName, pilots));
@@ -57,4 +91,19 @@ public class Championship implements Serializable {
     }
 
     public ArrayList<Race> getRaces() { return races;}
+
+    public ArrayList<Pilot> getPilots() {
+        return pilots;
+    }
+
+    public void setPilots(ArrayList<Pilot> pilots) {
+        this.pilots = pilots;
+    }
+
+    @Override
+    public String toString() {
+        return "Championship{" +
+                "championshipName='" + championshipName + '\'' +
+                '}';
+    }
 }
