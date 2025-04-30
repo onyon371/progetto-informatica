@@ -3,13 +3,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.net.URL;
 import java.util.Optional;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 public class gareMenùController implements Initializable {
@@ -86,7 +89,7 @@ public class gareMenùController implements Initializable {
         });
     }
 
-    @FXML
+   @FXML
     private void handleAddRace() {
         // Create a dialog to add new race
         Dialog<Race> dialog = new Dialog<>();
