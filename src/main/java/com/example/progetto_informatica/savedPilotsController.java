@@ -107,7 +107,16 @@ public class savedPilotsController implements Initializable {
             Button addPilotToChampionship = new Button("Aggiungi");
 
             addPilotToChampionship.setOnMouseClicked(event -> {
-                championshipReference.addPilot(pilot);
+                if(!championshipReference.getPilots().contains(pilot)) {
+                    championshipReference.addPilot(pilot);
+                }else
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Errore aggiunta pilota");
+                    alert.setHeaderText("Pilota non aggiunto correttamente");
+                    alert.setContentText("Pilota già presente nel campionato!");
+                    alert.showAndWait();
+                }
             });
 
             pilotBox.getChildren().addAll(pilotNumber, pilotData, addPilotToChampionship);
