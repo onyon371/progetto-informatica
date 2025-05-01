@@ -1,4 +1,4 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.model;
 
 public class PilotPoint {
     Pilot p;

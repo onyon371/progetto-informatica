@@ -1,10 +1,9 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Race implements Serializable {
 

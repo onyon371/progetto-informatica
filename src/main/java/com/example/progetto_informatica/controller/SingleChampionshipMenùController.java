@@ -1,8 +1,12 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.controller;
+
+import com.example.progetto_informatica.model.*;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
@@ -81,19 +85,29 @@ public class SingleChampionshipMenùController implements Initializable {
         });
     }
 
+    private void removeRace(Race raceReference)
+    {
+        championshipReference.getRaces().remove(raceReference);
+        addRacesCard();
+    }
+
     private void addRacesCard() {
         racesContainer.getChildren().clear();
 
         AtomicInteger counter = new AtomicInteger(0);
 
-        if(championshipReference.getRaces().isEmpty())
-        {
-
+        if (championshipReference.getRaces().isEmpty()) {
+            // eventualmente mostra un messaggio
         }
 
         championshipReference.getRaces().forEach(race -> {
+            // Contenitore principale con stile del rettangolo
+            BorderPane racePane = new BorderPane();
+            racePane.getStyleClass().add("race-container");
+
+            // VBox con i contenuti originali
             VBox raceBox = new VBox();
-            raceBox.getStyleClass().add("race-container");
+            raceBox.setSpacing(10);
 
             HBox headerBox = new HBox(10);
             headerBox.getStyleClass().add("race-header");
@@ -113,43 +127,64 @@ public class SingleChampionshipMenùController implements Initializable {
             participantsLabel.getStyleClass().add("race-info");
 
             Label winnerLabel = null;
-
-            try
-            {
+            try {
                 winnerLabel = new Label("Primo Classificato: " + race.getBestPilotsAndPoints().getFirst().getP().toString());
                 winnerLabel.getStyleClass().addAll("race-info", "winner-info");
-            }catch (Exception e)
-            {
-                System.err.println("SingleChampionshipMenùController: Tentativo di aggiungere i migliori classificati di una gara ma non è presente");
+            } catch (Exception e) {
+                System.err.println("Tentativo di aggiungere vincitore ma non presente");
             }
 
             Label statusLabel = new Label(race.isRaceOpen() ? "In corso" : "Terminata");
             statusLabel.getStyleClass().add("race-status");
-
             if (!race.isRaceOpen()) {
                 statusLabel.getStyleClass().add("completed");
             } else {
                 statusLabel.getStyleClass().add("in-progress");
             }
 
-            raceBox.setOnMouseClicked(event -> {
-                Main.openSpecificRaceMenù(race);
-            });
-
             detailsBox.getChildren().add(participantsLabel);
-            if(winnerLabel!=null)
-            {
+            if (winnerLabel != null) {
                 detailsBox.getChildren().add(winnerLabel);
             }
             detailsBox.getChildren().add(statusLabel);
 
             raceBox.getChildren().addAll(headerBox, detailsBox);
-            racesContainer.getChildren().add(raceBox);
+
+            // Menu a tre puntini
+            MenuItem editItem = new MenuItem("Modifica");
+            MenuItem deleteItem = new MenuItem("Elimina");
+
+            editItem.setOnAction(e -> {
+                System.out.println("Modifica gara: " + race.getName());
+            });
+
+            deleteItem.setOnAction(e -> {
+                removeRace(race);
+            });
+
+            MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
+            optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
+            optionsButton.getStyleClass().add("three-dots");
+
+            // Blocca propagazione clic sul menu
+            optionsButton.setOnMouseClicked(e -> e.consume());
+
+            // Assembla nel BorderPane
+            racePane.setCenter(raceBox);
+            racePane.setRight(optionsButton);
+            racePane.setStyle("-fx-padding: 10;");
+
+            // Clic sulla card
+            racePane.setOnMouseClicked(event -> {
+                Main.openSpecificRaceMenù(race, championshipReference);
+            });
+
+            racesContainer.getChildren().add(racePane);
         });
     }
 
    @FXML
-    private void handleAddRace() {
+    private void handleAddNewRace() {
 
        TextInputDialog dialog = new TextInputDialog();
        dialog.setTitle("Aggiungi gara");
@@ -165,24 +200,14 @@ public class SingleChampionshipMenùController implements Initializable {
     }
 
     @FXML
-    private void handleEditRace() {
-
-    }
-
-    @FXML
-    private void handleDeleteRace() {
-
-    }
-
-    @FXML
     private void handleBackToChampionshipMenù()
     {
         Main.openChampionshipsMenù();
     }
 
     @FXML
-    private void handleAddPilot()
+    private void handleAddNewPilot()
     {
-        Main.openSavedPilotsView(championshipReference);
+        Main.openSavedPilotsView(championshipReference, this);
     }
 }

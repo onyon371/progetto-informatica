@@ -1,0 +1,117 @@
+/* Main container styling */
+.main-container {
+    -fx-padding: 20;
+    -fx-background-color: #f5f5f5;
+    -fx-spacing: 15;
+}
+
+/* Button container styling */
+.button-container {
+    -fx-padding: 0 0 15 0;
+}
+
+/* Action buttons styling */
+.action-button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #3a7bc8;
+}
+
+/* ScrollPane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-fit-to-width: true;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 5;
+}
+
+/* Tournaments list container */
+.tournaments-list {
+    -fx-padding: 5;
+}
+
+/* Tournament container styling */
+.tournament-container {
+    -fx-padding: 15;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-spacing: 5;
+}
+
+.three-dots {
+    -fx-font-size: 14px;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+}
+
+/* Year label styling */
+.year-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #666;
+}
+
+/* Tournament title styling */
+.tournament-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+/* Participants label styling */
+.participants-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+/* Status label base styling */
+.status-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+    -fx-alignment: center-left;
+    -fx-max-width: 80;
+}
+
+/* In progress status */
+.status-label.in-progress {
+    -fx-background-color: #ffcc00;
+    -fx-text-fill: #333;
+}
+
+/* Completed status */
+.status-label.completed {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+/* Separator styling */
+.separator {
+    -fx-padding: 5 0;
+}

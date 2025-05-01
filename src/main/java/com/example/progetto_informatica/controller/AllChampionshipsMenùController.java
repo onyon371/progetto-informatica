@@ -1,8 +1,11 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.controller;
+
+import com.example.progetto_informatica.model.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.io.*;
@@ -65,22 +68,27 @@ public class AllChampionshipsMenùController implements Initializable {
     }
 
     @FXML
-    private void handleEditTournament() {
-        // Implementation for editing a tournament
-        System.out.println("Edit functionality to be implemented");
+    private void deleteTournament(Championship championshipReference) {
+        championships.remove(championshipReference);
+        addAllChampionshipsCards();
     }
 
-    private void addAllChampionshipsCards() throws IOException {
-        for(Championship c : championships)
-        {
-            addTournamentCard(Integer.toString(c.getChampionshipYear()), c.getChampionshipName(), Integer.toString(c.getChampionshipParticipantsNumber()), c.isChampionshipOpen(), c);
+    private void addAllChampionshipsCards() {
+        championshipAnchor.getChildren().clear();
+        try {
+            for (Championship c : championships) {
+                addTournamentCard(Integer.toString(c.getChampionshipYear()), c.getChampionshipName(), Integer.toString(c.getChampionshipParticipantsNumber()), c.isChampionshipOpen(), c);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void addTournamentCard(String year, String title, String participants, boolean status, Championship championshipReference) throws IOException {
-        VBox tournamentContainer = new VBox();
-        tournamentContainer.getStyleClass().add("tournament-container");
-        tournamentContainer.setSpacing(5);
+        // Contenuto principale (sinistra)
+        VBox contentBox = new VBox();
+        contentBox.setSpacing(5);
+        contentBox.getStyleClass().add("tournament-content");
 
         Label yearLabel = new Label(year);
         yearLabel.getStyleClass().add("year-label");
@@ -95,19 +103,48 @@ public class AllChampionshipsMenùController implements Initializable {
         statusLabel.getStyleClass().add("status-label");
         statusLabel.getStyleClass().add(status ? "in-progress" : "completed");
 
-        tournamentContainer.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
+        contentBox.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
 
-        tournamentContainer.setOnMouseClicked(event -> {
+        // Tre puntini (destra)
+        MenuItem editItem = new MenuItem("Modifica");
+        MenuItem deleteItem = new MenuItem("Elimina");
+
+        editItem.setOnAction(e -> {
+            System.out.println("Modifica " + title);
+            // TODO: implementa modifica
+        });
+
+        deleteItem.setOnAction(e -> {
+            deleteTournament(championshipReference);
+        });
+
+        MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
+        optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
+        optionsButton.getStyleClass().add("three-dots");
+
+        // Layout principale
+        BorderPane tournamentPane = new BorderPane();
+        tournamentPane.setCenter(contentBox);
+        tournamentPane.setRight(optionsButton);
+        tournamentPane.setStyle("-fx-padding: 10;");
+        tournamentPane.getStyleClass().add("tournament-container");
+
+        tournamentPane.setOnMouseClicked(event -> {
             Main.openSingleChampionshipMenù(championshipReference);
         });
 
-        championshipAnchor.getChildren().add(0, tournamentContainer);
+        // Evita conflitto tra click sul pulsante e apertura torneo
+        optionsButton.setOnMouseClicked(e -> {
+            e.consume(); // blocca la propagazione del click
+        });
 
-        // Add separator if not the first tournament
+        championshipAnchor.getChildren().add(0, tournamentPane);
+
+        // Separator
         if (championshipAnchor.getChildren().size() > 1) {
             Separator separator = new Separator();
             separator.getStyleClass().add("separator");
-            championshipAnchor.getChildren().add(1, separator); // Add after the new tournament
+            championshipAnchor.getChildren().add(1, separator);
         }
     }
 

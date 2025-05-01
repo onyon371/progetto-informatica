@@ -63,6 +63,12 @@
     -fx-spacing: 5;
 }
 
+.three-dots {
+    -fx-font-size: 14px;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+}
+
 /* Year label styling */
 .year-label {
     -fx-font-size: 14px;

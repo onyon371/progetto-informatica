@@ -8,15 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import java.net.URL?>
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.AllChampionshipsMenùController">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.controller.AllChampionshipsMenùController">
     <stylesheets>
-        <URL value="@championshipsMenùStyle.css"/>
+        <URL value="@../cssFiles/championshipsMenùStyle.css"/>
     </stylesheets>
 
     <!-- Action Buttons -->
     <HBox spacing="10" styleClass="button-container">
-        <Button text="Aggiungi" styleClass="action-button" onAction="#handleAddTournament"/>
-        <Button text="Modifica" styleClass="action-button" onAction="#handleEditTournament"/>
+        <Button text="Nuovo Campionato" styleClass="action-button" onAction="#handleAddTournament"/>
     </HBox>
 
     <!-- Tournaments Container with ScrollPane -->

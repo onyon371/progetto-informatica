@@ -1,6 +1,7 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.controller;
 
-import javafx.collections.transformation.FilteredList;
+import com.example.progetto_informatica.model.*;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -12,8 +13,6 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,6 +25,7 @@ public class SingleRaceMenùController implements Initializable {
     @FXML
     private TextField searchField;
 
+    private Championship championshipReference;
     private Race raceReference;
 
     @Override
@@ -42,9 +42,10 @@ public class SingleRaceMenùController implements Initializable {
         });*/
     }
 
-    public void initRaceReference(Race raceReference)
+    public void initRaceReference(Race raceReference, Championship championshipReference)
     {
         this.raceReference = raceReference;
+        this.championshipReference = championshipReference;
         addPilotsCards();
     }
 
@@ -88,6 +89,12 @@ public class SingleRaceMenùController implements Initializable {
             card.getChildren().addAll(rankLabel, infoBox);
             pilotsAnchor.getChildren().add(card);
         }
+    }
+
+    @FXML
+    private void handleBackToChampionshipMenù()
+    {
+        Main.openSingleChampionshipMenù(championshipReference);
     }
 }
 

@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 
 <?import java.net.URL?>
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.SavedPilotsController">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.controller.SavedPilotsController">
     <stylesheets>
-        <URL value="@savedPilots.css"/>
+        <URL value="@../cssFiles/savedPilots.css"/>
     </stylesheets>
 
     <!-- Action Buttons -->

@@ -1,4 +1,6 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.controller;
+
+import com.example.progetto_informatica.model.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ public class SavedPilotsController implements Initializable {
     @FXML
     private VBox pilotsAnchor;
 
+    private SingleChampionshipMenùController singleChampionshipMenùControllerReference;
     private Championship championshipReference;
     private static ArrayList<Pilot> savedPilots;
 
@@ -29,9 +32,11 @@ public class SavedPilotsController implements Initializable {
         championshipReference = null;
     }
 
-    public void initChampionship(Championship championshipReference)
+    public void initChampionship(Championship championshipReference, SingleChampionshipMenùController singleChampionshipMenùControllerReference)
     {
         this.championshipReference = championshipReference;
+
+        this.singleChampionshipMenùControllerReference = singleChampionshipMenùControllerReference;
         //savedPilots = new ArrayList<Pilot>();
 
         try {
@@ -115,6 +120,7 @@ public class SavedPilotsController implements Initializable {
             addPilotToChampionship.setOnMouseClicked(event -> {
                 if(!championshipReference.getPilots().contains(pilot)) {
                     championshipReference.addPilot(pilot);
+                    singleChampionshipMenùControllerReference.setParticipantsContainer();
                 }else
                 {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

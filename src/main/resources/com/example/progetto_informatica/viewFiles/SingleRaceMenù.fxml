@@ -9,7 +9,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ScrollPane?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.SingleRaceMenùController">
+<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.controller.SingleRaceMenùController">
+   <stylesheets>
+      <URL value="@../cssFiles/SingleRaceMenù.css"/>
+   </stylesheets>
+
+   <HBox spacing="10" styleClass="button-container">
+      <Button text="Indietro" styleClass="action-button" onAction="#handleBackToChampionshipMenù"/>
+   </HBox>
+
    <children>
       <HBox prefHeight="46.0" prefWidth="515.0" spacing="10.0">
          <children>

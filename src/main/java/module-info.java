@@ -6,6 +6,8 @@ module com.example.progetto_informatica {
     requires jdk.compiler;
 
 
-    opens com.example.progetto_informatica to javafx.fxml;
-    exports com.example.progetto_informatica;
+    exports com.example.progetto_informatica.controller;
+    opens com.example.progetto_informatica.controller to javafx.fxml;
+    exports com.example.progetto_informatica.model;
+    opens com.example.progetto_informatica.model to javafx.fxml;
 }

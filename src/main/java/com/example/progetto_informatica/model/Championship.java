@@ -1,4 +1,4 @@
-package com.example.progetto_informatica;
+package com.example.progetto_informatica.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
