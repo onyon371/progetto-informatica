@@ -1,6 +1,5 @@
 package com.example.progetto_informatica;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.sql.Array;
 import java.sql.Time;
