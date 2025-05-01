@@ -13,9 +13,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class racesMenùController implements Initializable {
+public class SingleChampionshipMenùController implements Initializable {
     @FXML private VBox pilotsRankingContainer;
     @FXML private VBox racesContainer;
+    @FXML private VBox pilotsParticipantsContainer;
 
     private Championship championshipReference;
 
@@ -29,19 +30,49 @@ public class racesMenùController implements Initializable {
         this.championshipReference = championshipReference;
 
         try {
+            setParticipantsContainer();
             setPilotsRankingContainer();
             addRacesCard();
         }catch (Exception e)
         {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    public void setParticipantsContainer()
+    {
+        pilotsParticipantsContainer.getChildren().clear();
+
+        AtomicInteger counter = new AtomicInteger(0);
+
+        if(championshipReference.getPilots().isEmpty())
+        {
+            Label pilotLabel = new Label("Nessun Partecipante!");
+            pilotLabel.getStyleClass().add("winner-name");
+            pilotsParticipantsContainer.getChildren().add(pilotLabel);
+            return;
+        }
+
+        championshipReference.getPilots().forEach(pilot -> {
+            Label pilotLabel = new Label(counter.incrementAndGet() + ". " + pilot.toString());
+            pilotLabel.getStyleClass().add("winner-name");
+            pilotsParticipantsContainer.getChildren().add(pilotLabel);
+        });
     }
 
     private void setPilotsRankingContainer() {
         pilotsRankingContainer.getChildren().clear();
         ArrayList<PilotPoint> bestPilots = championshipReference.getBestPilotsAndPoints();
 
-        AtomicInteger counter = new AtomicInteger(1);
+        AtomicInteger counter = new AtomicInteger(0);
+
+        if(bestPilots.isEmpty())
+        {
+            Label pilotLabel = new Label("Classifica Vuota!");
+            pilotLabel.getStyleClass().add("winner-name");
+            pilotsRankingContainer.getChildren().add(pilotLabel);
+            return;
+        }
 
         bestPilots.forEach(pilot -> {
             Label pilotLabel = new Label(counter.incrementAndGet() + " " + pilot.getP().toString() + " Punti: " + pilot.getPoints());
@@ -54,6 +85,11 @@ public class racesMenùController implements Initializable {
         racesContainer.getChildren().clear();
 
         AtomicInteger counter = new AtomicInteger(0);
+
+        if(championshipReference.getRaces().isEmpty())
+        {
+
+        }
 
         championshipReference.getRaces().forEach(race -> {
             VBox raceBox = new VBox();
@@ -76,18 +112,16 @@ public class racesMenùController implements Initializable {
             Label participantsLabel = new Label("Partecipanti: " + race.getPilots().size());
             participantsLabel.getStyleClass().add("race-info");
 
-            String temp = "";
+            Label winnerLabel = null;
 
             try
             {
-                temp = race.getBestPilotsAndPoints().getFirst().getP().toString();
+                winnerLabel = new Label("Primo Classificato: " + race.getBestPilotsAndPoints().getFirst().getP().toString());
+                winnerLabel.getStyleClass().addAll("race-info", "winner-info");
             }catch (Exception e)
             {
-                System.err.println(e.getMessage());
+                System.err.println("SingleChampionshipMenùController: Tentativo di aggiungere i migliori classificati di una gara ma non è presente");
             }
-
-            Label winnerLabel = new Label("Primo Classificato: " + temp);
-            winnerLabel.getStyleClass().addAll("race-info", "winner-info");
 
             Label statusLabel = new Label(race.isRaceOpen() ? "In corso" : "Terminata");
             statusLabel.getStyleClass().add("race-status");
@@ -102,7 +136,13 @@ public class racesMenùController implements Initializable {
                 Main.openSpecificRaceMenù(race);
             });
 
-            detailsBox.getChildren().addAll(participantsLabel, winnerLabel, statusLabel);
+            detailsBox.getChildren().add(participantsLabel);
+            if(winnerLabel!=null)
+            {
+                detailsBox.getChildren().add(winnerLabel);
+            }
+            detailsBox.getChildren().add(statusLabel);
+
             raceBox.getChildren().addAll(headerBox, detailsBox);
             racesContainer.getChildren().add(raceBox);
         });

@@ -12,10 +12,10 @@ public class Throws implements Serializable {
     private ArrayList<LocalTime> times;
     private ArrayList<Integer> points;
 
-    private final LocalTime defaultTargetTime = LocalTime.of(0, 4, 0, 0);
+    private static final LocalTime defaultTargetTime = LocalTime.of(0, 4, 0, 0);
     private final int underTimePenality = 1;
     private final int overTimePenality = underTimePenality*2;
-    private final int nThrows = 4;
+    private static final int nThrows = 4;
     private final int nDiscardedTimes = 1;
 
     public Throws()
@@ -81,6 +81,36 @@ public class Throws implements Serializable {
         {
             throw new RuntimeException("Throw limit reached");
         }
+    }
+
+    public static Integer getMaxPoints()
+    {
+        return (int) defaultTargetTime.getMinute()*60 + defaultTargetTime.getSecond();
+    }
+
+    public static Integer getMaxThrows()
+    {
+        return nThrows;
+    }
+
+    public Integer getThrowsDone()
+    {
+        return times.size();
+    }
+
+    public LocalTime getBestTime()
+    {
+        LocalTime maxTime = LocalTime.of(0,0,0,0);
+
+        for(LocalTime t : times)
+        {
+            if(t.compareTo(maxTime) > 0)
+            {
+                maxTime = t;
+            }
+        }
+
+        return maxTime;
     }
 }
 

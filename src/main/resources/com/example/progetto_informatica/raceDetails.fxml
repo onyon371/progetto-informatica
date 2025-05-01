@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ScrollPane?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.racesDetailsController">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.SingleRaceMenùController">
    <children>
       <HBox prefHeight="46.0" prefWidth="515.0" spacing="10.0">
          <children>
@@ -20,7 +20,7 @@
       <!-- Scroll per le card -->
       <ScrollPane fitToWidth="true" prefHeight="400.0">
          <content>
-            <VBox fx:id="cardContainer" spacing="15.0" prefWidth="700.0" />
+            <VBox fx:id="pilotsAnchor" spacing="15.0" prefWidth="700.0" />
          </content>
       </ScrollPane>
    </children>

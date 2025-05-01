@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import java.net.URL?>
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.racesMenùController">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="20" styleClass="main-container" fx:controller="com.example.progetto_informatica.SingleChampionshipMenùController">
     <stylesheets>
         <URL value="@racesMenùStyle.css"/>
     </stylesheets>
@@ -22,6 +22,13 @@
         <Button text="Aggiungi Partecipante" styleClass="action-button" onAction="#handleAddPilot"/>
     </HBox>
 
+    <VBox spacing="5" styleClass="section-container">
+        <Label text="Partecipanti" styleClass="section-title"/>
+        <VBox fx:id="pilotsParticipantsContainer" styleClass="winners-list"/>
+    </VBox>
+
+    <Separator styleClass="section-separator"/>
+
     <!-- Recent Winners Section -->
     <VBox spacing="5" styleClass="section-container">
         <Label text="Classifica" styleClass="section-title"/>
@@ -29,6 +36,10 @@
     </VBox>
 
     <Separator styleClass="section-separator"/>
+
+    <VBox spacing="5" styleClass="section-container" alignment="CENTER">
+        <Label text="Gare" styleClass="section-title"/>
+    </VBox>
 
     <!-- Races List with ScrollPane -->
     <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">

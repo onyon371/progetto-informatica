@@ -36,6 +36,8 @@ public class Championship implements Serializable {
 
     public ArrayList<PilotPoint> getBestPilotsAndPoints()
     {
+        if(races.isEmpty()) return new ArrayList<PilotPoint>();
+
         ArrayList<PilotPoint> pilotPointsList = races.getFirst().getPilotPointsList();
 
         if(races.size() > 1)

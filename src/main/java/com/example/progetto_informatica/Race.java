@@ -2,6 +2,7 @@ package com.example.progetto_informatica;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -108,5 +109,31 @@ public class Race implements Serializable {
         this.pilots = pilots;
     }
 
+    public Integer getMaxThrows()
+    {
+        return Throws.getMaxThrows();
+    }
 
+    public Integer getThrowsCompletedOfSpecificPilot(int index)
+    {
+        if(throwsPilots.isEmpty()) return 0;
+        return throwsPilots.get(index).getThrowsDone();
+    }
+
+    public Integer getMaxPoints()
+    {
+        return Throws.getMaxPoints();
+    }
+
+    public Integer getPointsOfSpecificPilot(int index)
+    {
+        if(throwsPilots.isEmpty()) return 0;
+        return throwsPilots.get(index).getTotPoints();
+    }
+
+    public LocalTime getBestTimeOfSpecificPilot(int index)
+    {
+        if(throwsPilots.isEmpty()) return LocalTime.of(0,0,0,0);
+        return throwsPilots.get(index).getBestTime();
+    }
 }

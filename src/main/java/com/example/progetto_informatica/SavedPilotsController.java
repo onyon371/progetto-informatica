@@ -2,27 +2,19 @@ package com.example.progetto_informatica;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.time.Year;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class savedPilotsController implements Initializable {
+public class SavedPilotsController implements Initializable {
 
     @FXML
     private VBox pilotsAnchor;
@@ -40,14 +32,16 @@ public class savedPilotsController implements Initializable {
     public void initChampionship(Championship championshipReference)
     {
         this.championshipReference = championshipReference;
-        savedPilots = new ArrayList<Pilot>();
+        //savedPilots = new ArrayList<Pilot>();
 
         try {
             getSavedPilots();
             addPilotsCard();
         }catch (Exception e)
         {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+            savedPilots = new ArrayList<Pilot>();
+            savePilots();
         }
     }
 
@@ -68,10 +62,22 @@ public class savedPilotsController implements Initializable {
 
             Optional<String> pilotSurname = dialog.showAndWait();
 
-            if(!pilotSurname.isEmpty()) {
-                savedPilots.add(new Pilot(pilotName.get(), pilotSurname.get()));
-                addPilotsCard();
-                savePilots();
+            if(!pilotSurname.isEmpty() && !savedPilots.contains(new Pilot(pilotName.get(), pilotSurname.get()))) {
+                try {
+                    savedPilots.add(new Pilot(pilotName.get(), pilotSurname.get()));
+                    addPilotsCard();
+                    savePilots();
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }else
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Errore creazione pilota");
+                alert.setHeaderText("Pilota non creato correttamente");
+                alert.setContentText("Pilota già esistente!");
+                alert.showAndWait();
             }
         }
     }
@@ -131,7 +137,7 @@ public class savedPilotsController implements Initializable {
         in.close();
         }catch (Exception e)
         {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -142,7 +148,7 @@ public class savedPilotsController implements Initializable {
             out.close();
         }catch (Exception e)
         {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

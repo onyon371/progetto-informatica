@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class championshipsMenùController implements Initializable {
+public class AllChampionshipsMenùController implements Initializable {
     @FXML
     private VBox championshipAnchor;
     @FXML
@@ -51,10 +51,16 @@ public class championshipsMenùController implements Initializable {
 
         Optional<String> championshipName = dialog.showAndWait();
 
-        if(!championshipName.isEmpty()) {
+        if(championshipName.get() != "") {
             championships.add(new Championship(championshipName.get(), Year.now().getValue()));
             addTournamentCard(String.valueOf(Year.now().getValue()), championshipName.get(), "0", true, championships.get(championships.size()-1));
-            //saveChampionships();
+        }else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore creazione campionato");
+            alert.setHeaderText("Campionato non creato correttamente");
+            alert.setContentText("Inserire un nome al campionato!");
+            alert.showAndWait();
         }
     }
 
@@ -92,7 +98,7 @@ public class championshipsMenùController implements Initializable {
         tournamentContainer.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
 
         tournamentContainer.setOnMouseClicked(event -> {
-            Main.openRacesMenù(championshipReference);
+            Main.openSingleChampionshipMenù(championshipReference);
         });
 
         championshipAnchor.getChildren().add(0, tournamentContainer);

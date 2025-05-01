@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     private static Stage mainStage;
+    private static Stage pilotViewStage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,76 +23,83 @@ public class Main extends Application {
         launch();
     }
 
-    public static void openChampionshipsMenù()
-    {
+    public static void openChampionshipsMenù() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("championshipsMenù.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 650);
             mainStage.setScene(scene);
             mainStage.show();
-        }catch (Exception e)
-        {
-            System.err.println(e.getMessage());
+
+            tryAndCloseSavedPilotsView();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static void openRacesMenù(Championship championshipReference)
-    {
+    public static void openSingleChampionshipMenù(Championship championshipReference) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("racesMenù.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 650);
 
-            racesMenùController controller = fxmlLoader.getController();
+            SingleChampionshipMenùController controller = fxmlLoader.getController();
             controller.initChampionhip(championshipReference);
 
             mainStage.setScene(scene);
             mainStage.show();
-        }catch (Exception e)
-        {
-            System.err.println(e.getMessage());
+
+            tryAndCloseSavedPilotsView();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static void openSpecificRaceMenù(Race raceReference)
-    {
+    public static void openSpecificRaceMenù(Race raceReference) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("racesMenù.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("raceDetails.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 650);
 
-            specificRaceMenùController controller = fxmlLoader.getController();
-            controller.initRace(raceReference);
+            SingleRaceMenùController controller = fxmlLoader.getController();
+            controller.initRaceReference(raceReference);
 
             mainStage.setScene(scene);
             mainStage.show();
-        }catch (Exception e)
-        {
-            System.err.println(e.getMessage());
+
+            tryAndCloseSavedPilotsView();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static void openSavedPilotsView(Championship championshipReference)
-    {
-        try {
-            Stage pilotViewStage = new Stage();
-            pilotViewStage.setTitle("Gestione Piloti");
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("savedPilotsView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+    public static void openSavedPilotsView(Championship championshipReference) {
+        if (pilotViewStage == null) {
+            try {
+                pilotViewStage = new Stage();
+                pilotViewStage.setTitle("Gestione Piloti");
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("savedPilotsView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 300, 300);
 
-            savedPilotsController controller = fxmlLoader.getController();
-            controller.initChampionship(championshipReference);
+                SavedPilotsController controller = fxmlLoader.getController();
+                controller.initChampionship(championshipReference);
 
-            pilotViewStage.setScene(scene);
-            pilotViewStage.show();
-        }catch (Exception e)
-        {
-            System.err.println(e.getMessage());
+                pilotViewStage.setScene(scene);
+                pilotViewStage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void tryAndCloseSavedPilotsView() {
+        if (pilotViewStage != null) {
+            pilotViewStage.close();
+            pilotViewStage = null;
         }
     }
 
     @Override
     public void stop() {
-        championshipsMenùController.saveChampionships();
-        savedPilotsController.savePilots();
+        AllChampionshipsMenùController.saveChampionships();
+        //SavedPilotsController.savePilots();
     }
 }
 
