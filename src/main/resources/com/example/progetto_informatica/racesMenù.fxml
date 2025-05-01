@@ -15,10 +15,11 @@
 
     <!-- Action Buttons -->
     <HBox spacing="10" styleClass="button-container">
-        <Button text="Aggiungi" styleClass="action-button" onAction="#handleAddRace"/>
-        <Button text="Modifica" styleClass="action-button" onAction="#handleEditRace"/>
+        <Button text="Aggiungi Gara" styleClass="action-button" onAction="#handleAddRace"/>
+        <Button text="Modifica Gara" styleClass="action-button" onAction="#handleEditRace"/>
         <Button text="Elimina" styleClass="action-button" onAction="#handleDeleteRace"/>
         <Button text="Indietro" styleClass="action-button" onAction="#handleBackToChampionshipMenù"/>
+        <Button text="Aggiungi Partecipante" styleClass="action-button" onAction="#handleAddPilot"/>
     </HBox>
 
     <!-- Recent Winners Section -->

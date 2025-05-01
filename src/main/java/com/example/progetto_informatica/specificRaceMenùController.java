@@ -21,15 +21,15 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class specificRaceMenùController {
+public class specificRaceMenùController implements Initializable {
 
     private Race raceReference;
 
-    /*
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         raceReference = null;
-    }*/
+    }
 
     public void initRace(Race raceReference)
     {

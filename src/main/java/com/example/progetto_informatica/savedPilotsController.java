@@ -1,4 +1,5 @@
 package com.example.progetto_informatica;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.*;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,49 +22,37 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class racesMenùController implements Initializable {
-    @FXML private VBox pilotsRankingContainer;
-    @FXML private VBox racesContainer;
+public class savedPilotsController implements Initializable {
+
+    @FXML
+    private VBox pilotsAnchor;
 
     private Championship championshipReference;
+    private ArrayList<Pilot> savedPilots;
+
+    final String SAVEPATH = "pilots.bin";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         championshipReference = null;
     }
 
-    public void initChampionhip(Championship championshipReference)
+    public void initChampionship(Championship championshipReference)
     {
         this.championshipReference = championshipReference;
 
         try {
-            setPilotsRankingContainer();
-            addRacesCard();
+
         }catch (Exception e)
         {
             System.err.println(e.getMessage());
         }
     }
 
-    private void setPilotsRankingContainer() {
-        pilotsRankingContainer.getChildren().clear();
-        ArrayList<PilotPoint> bestPilots = championshipReference.getBestPilotsAndPoints();
+    private void addPilotsCard() {
+        pilotsAnchor.getChildren().clear();
 
-        AtomicInteger counter = new AtomicInteger(1);
-
-        bestPilots.forEach(pilot -> {
-            Label pilotLabel = new Label(counter.incrementAndGet() + " " + pilot.getP().toString() + " Punti: " + pilot.getPoints());
-            pilotLabel.getStyleClass().add("winner-name");
-            pilotsRankingContainer.getChildren().add(pilotLabel);
-        });
-    }
-
-    private void addRacesCard() {
-        racesContainer.getChildren().clear();
-
-        AtomicInteger counter = new AtomicInteger(0);
-
-        championshipReference.getRaces().forEach(race -> {
+        savedPilots.forEach(pilot -> {
             VBox raceBox = new VBox();
             raceBox.getStyleClass().add("race-container");
 
@@ -115,41 +105,25 @@ public class racesMenùController implements Initializable {
         });
     }
 
-   @FXML
-    private void handleAddRace() {
 
-       TextInputDialog dialog = new TextInputDialog();
-       dialog.setTitle("Aggiungi gara");
-       dialog.setHeaderText("Inserisci i dettagli della nuova gara");
-       dialog.setContentText("Nome gara:");
-
-       Optional<String> raceName = dialog.showAndWait();
-
-       if(!raceName.isEmpty()) {
-           championshipReference.addRace(raceName.get());
-           addRacesCard();
-       }
+    private void getSavedPilots() {
+        try {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
+        savedPilots = (ArrayList<Pilot>) in.readObject();
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
 
-    @FXML
-    private void handleEditRace() {
-
+    public void savePilots() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
+            out.writeObject(savedPilots);
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
 
-    @FXML
-    private void handleDeleteRace() {
-
-    }
-
-    @FXML
-    private void handleBackToChampionshipMenù()
-    {
-        main.openChampionshipsMenù();
-    }
-
-    @FXML
-    private void handleAddPilot()
-    {
-
-    }
 }

@@ -72,6 +72,23 @@ public class main extends Application {
         }
     }
 
+    public static void openSavedPilotsView(Championship championshipReference)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("savedPilotsView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+
+            savedPilotsController controller = fxmlLoader.getController();
+            controller.initChampionship(championshipReference);
+
+            mainStage.setScene(scene);
+            mainStage.show();
+        }catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
+    }
+
     @Override
     public void stop() {
         championshipsMenùController.saveChampionships();
