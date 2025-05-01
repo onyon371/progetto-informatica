@@ -1,18 +1,11 @@
 package com.example.progetto_informatica;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -106,7 +99,7 @@ public class racesMenùController implements Initializable {
             }
 
             raceBox.setOnMouseClicked(event -> {
-                main.openSpecificRaceMenù(race);
+                Main.openSpecificRaceMenù(race);
             });
 
             detailsBox.getChildren().addAll(participantsLabel, winnerLabel, statusLabel);
@@ -144,12 +137,12 @@ public class racesMenùController implements Initializable {
     @FXML
     private void handleBackToChampionshipMenù()
     {
-        main.openChampionshipsMenù();
+        Main.openChampionshipsMenù();
     }
 
     @FXML
     private void handleAddPilot()
     {
-
+        Main.openSavedPilotsView(championshipReference);
     }
 }

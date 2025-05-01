@@ -2,15 +2,12 @@ package com.example.progetto_informatica;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.ArrayList;
 
-public class main extends Application {
+public class Main extends Application {
     private static Stage mainStage;
 
     @Override
@@ -28,7 +25,7 @@ public class main extends Application {
     public static void openChampionshipsMenù()
     {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("championshipsMenù.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("championshipsMenù.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 600);
             mainStage.setScene(scene);
             mainStage.show();
@@ -41,7 +38,7 @@ public class main extends Application {
     public static void openRacesMenù(Championship championshipReference)
     {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("racesMenù.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("racesMenù.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 600);
 
             racesMenùController controller = fxmlLoader.getController();
@@ -58,7 +55,7 @@ public class main extends Application {
     public static void openSpecificRaceMenù(Race raceReference)
     {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("racesMenù.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("racesMenù.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 600);
 
             specificRaceMenùController controller = fxmlLoader.getController();
@@ -75,14 +72,16 @@ public class main extends Application {
     public static void openSavedPilotsView(Championship championshipReference)
     {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("savedPilotsView.fxml"));
+            Stage pilotViewStage = new Stage();
+            pilotViewStage.setTitle("Gestione Piloti");
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("savedPilotsView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 600);
 
             savedPilotsController controller = fxmlLoader.getController();
             controller.initChampionship(championshipReference);
 
-            mainStage.setScene(scene);
-            mainStage.show();
+            pilotViewStage.setScene(scene);
+            pilotViewStage.show();
         }catch (Exception e)
         {
             System.err.println(e.getMessage());
@@ -92,6 +91,7 @@ public class main extends Application {
     @Override
     public void stop() {
         championshipsMenùController.saveChampionships();
+        savedPilotsController.savePilots();
     }
 }
 

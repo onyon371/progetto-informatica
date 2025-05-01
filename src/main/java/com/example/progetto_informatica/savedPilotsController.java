@@ -28,9 +28,9 @@ public class savedPilotsController implements Initializable {
     private VBox pilotsAnchor;
 
     private Championship championshipReference;
-    private ArrayList<Pilot> savedPilots;
+    private static ArrayList<Pilot> savedPilots;
 
-    final String SAVEPATH = "pilots.bin";
+    private static final String SAVEPATH = "pilots.bin";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,124 +40,97 @@ public class savedPilotsController implements Initializable {
     public void initChampionship(Championship championshipReference)
     {
         this.championshipReference = championshipReference;
+        savedPilots = new ArrayList<Pilot>();
 
         try {
-
+            getSavedPilots();
+            addPilotsCard();
         }catch (Exception e)
         {
             System.err.println(e.getMessage());
         }
     }
 
-    /*@FXML
-    void addPilot(ActionEvent event) {
-        // Create dialog to get pilot details
+    @FXML
+    void handleCreateNewPilot()
+    {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Aggiungi Pilota");
         dialog.setHeaderText("Inserisci i dati del pilota che vuoi aggiungere!");
         dialog.setContentText("Nome Pilota:");
-        dialog.setContentText("Cognome Pilota:");
 
-        Optional<String> pilot = dialog.showAndWait();
+        Optional<String> pilotName = dialog.showAndWait();
 
-        if(!pilot.isEmpty()) {
-            handlePilotCard("","");
+        if(!pilotName.isEmpty()) {
+            dialog.setTitle("Aggiungi Pilota");
+            dialog.setHeaderText("Inserisci i dati del pilota che vuoi aggiungere!");
+            dialog.setContentText("Cognome Pilota:");
 
+            Optional<String> pilotSurname = dialog.showAndWait();
+
+            if(!pilotSurname.isEmpty()) {
+                savedPilots.add(new Pilot(pilotName.get(), pilotSurname.get()));
+                addPilotsCard();
+                savePilots();
+            }
         }
+    }
+
+
+    @FXML
+    void handleEditPilots()
+    {
 
     }
 
     @FXML
-    void removePilot(ActionEvent event) {
+    void handleDeletePilots()
+    {
 
     }
-    @FXML
-    void handlePilotCard(String name, String surname){
-        VBox tournamentContainer = new VBox();
-        tournamentContainer.getStyleClass().add("tournament-container");
-        tournamentContainer.setSpacing(5);
-
-        // Add separator if not the first pilot
-        if (pilotContainer.getChildren().size() > 1) {
-            Separator separator = new Separator();
-            separator.getStyleClass().add("separator");
-            pilotContainer.getChildren().add(1, separator); // Add after the new pilot
-        }
-    }*/
-
-
 
     private void addPilotsCard() {
         pilotsAnchor.getChildren().clear();
 
+        AtomicInteger counter = new AtomicInteger(0);
+
         savedPilots.forEach(pilot -> {
-            VBox raceBox = new VBox();
-            raceBox.getStyleClass().add("race-container");
+            HBox pilotBox = new HBox();
+            pilotBox.getStyleClass().add("pilot-container");
 
-            HBox headerBox = new HBox(10);
-            headerBox.getStyleClass().add("race-header");
+            Label pilotNumber = new Label(Integer.toString(counter.incrementAndGet()));
+            pilotNumber.getStyleClass().add("pilot-number");
 
-            Label titleLabel = new Label(race.getName());
-            titleLabel.getStyleClass().add("race-title");
+            Label pilotData = new Label(pilot.toString());
+            pilotNumber.getStyleClass().add("pilot-data");
 
-            Label dateLabel = new Label(race.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            dateLabel.getStyleClass().add("race-date");
+            Button addPilotToChampionship = new Button("Aggiungi");
 
-            headerBox.getChildren().addAll(titleLabel, dateLabel);
-
-            HBox detailsBox = new HBox(20);
-            detailsBox.getStyleClass().add("race-details");
-
-            Label participantsLabel = new Label("Partecipanti: " + race.getPilots().size());
-            participantsLabel.getStyleClass().add("race-info");
-
-            String temp = "";
-
-            try
-            {
-                temp = race.getBestPilotsAndPoints().getFirst().getP().toString();
-            }catch (Exception e)
-            {
-                System.err.println(e.getMessage());
-            }
-
-            Label winnerLabel = new Label("Primo Classificato: " + temp);
-            winnerLabel.getStyleClass().addAll("race-info", "winner-info");
-
-            Label statusLabel = new Label(race.isRaceOpen() ? "In corso" : "Terminata");
-            statusLabel.getStyleClass().add("race-status");
-
-            if (!race.isRaceOpen()) {
-                statusLabel.getStyleClass().add("completed");
-            } else {
-                statusLabel.getStyleClass().add("in-progress");
-            }
-
-            raceBox.setOnMouseClicked(event -> {
-                main.openSpecificRaceMenù(race);
+            addPilotToChampionship.setOnMouseClicked(event -> {
+                championshipReference.addPilot(pilot);
             });
 
-            detailsBox.getChildren().addAll(participantsLabel, winnerLabel, statusLabel);
-            raceBox.getChildren().addAll(headerBox, detailsBox);
-            racesContainer.getChildren().add(raceBox);
+            pilotBox.getChildren().addAll(pilotNumber, pilotData, addPilotToChampionship);
+            pilotsAnchor.getChildren().add(pilotBox);
         });
     }
-
 
     private void getSavedPilots() {
         try {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
         savedPilots = (ArrayList<Pilot>) in.readObject();
+        in.close();
         }catch (Exception e)
         {
             System.err.println(e.getMessage());
         }
     }
 
-    public void savePilots() {
+    public static void savePilots() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
             out.writeObject(savedPilots);
+            out.close();
         }catch (Exception e)
         {
             System.err.println(e.getMessage());

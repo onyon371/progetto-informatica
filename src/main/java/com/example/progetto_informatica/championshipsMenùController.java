@@ -92,7 +92,7 @@ public class championshipsMenùController implements Initializable {
         tournamentContainer.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
 
         tournamentContainer.setOnMouseClicked(event -> {
-            main.openRacesMenù(championshipReference);
+            Main.openRacesMenù(championshipReference);
         });
 
         championshipAnchor.getChildren().add(0, tournamentContainer);
@@ -108,12 +108,14 @@ public class championshipsMenùController implements Initializable {
     private void getChampionships() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
         championships = (ArrayList<Championship>) in.readObject();
+        in.close();
     }
 
     public static void saveChampionships() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
             out.writeObject(championships);
+            out.close();
         }catch (Exception e)
         {
             System.err.println(e.getMessage());

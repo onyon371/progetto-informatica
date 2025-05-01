@@ -14,7 +14,7 @@
 
     <!-- Action Buttons -->
     <HBox spacing="10" styleClass="button-container">
-        <Button text="Aggiungi Nuovo Pilota" styleClass="action-button" onAction="#handleAddNewPilot"/>
+        <Button text="Crea Nuovo Pilota" styleClass="action-button" onAction="#handleCreateNewPilot"/>
         <Button text="Modifica Pilota" styleClass="action-button" onAction="#handleEditPilots"/>
         <Button text="Elimina Pilota" styleClass="action-button" onAction="#handleDeletePilots"/>
     </HBox>

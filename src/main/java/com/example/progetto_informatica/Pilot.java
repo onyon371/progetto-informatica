@@ -1,8 +1,9 @@
 package com.example.progetto_informatica;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Pilot {
+public class Pilot implements Serializable {
     private String name;
     private String surname;
 
