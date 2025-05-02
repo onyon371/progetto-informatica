@@ -117,7 +117,7 @@ public class SavedPilotsController implements Initializable {
 
             Button addPilotToChampionship = new Button("Aggiungi");
 
-            addPilotToChampionship.setOnMouseClicked(event -> {
+            addPilotToChampionship.setOnMouseClicked(_ -> {
                 if(!championshipReference.getPilots().contains(pilot)) {
                     championshipReference.addPilot(pilot);
                     singleChampionshipMenùControllerReference.setParticipantsContainer();
