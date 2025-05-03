@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Main extends Application {
     private static Stage mainStage;
@@ -87,6 +88,22 @@ public class Main extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static void openShowThrowsView(Pilot pilotReference, Race raceReference, Championship championshipReference, List<Throws> throwsList) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/showThrows.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            ShowThrowsController controller = fxmlLoader.getController();
+            controller.initThrowsData(pilotReference, championshipReference, raceReference, throwsList);
+
+            mainStage.setScene(scene);
+            mainStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

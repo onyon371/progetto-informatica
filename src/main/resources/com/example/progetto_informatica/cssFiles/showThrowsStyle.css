@@ -1,0 +1,38 @@
+.main-container {
+    -fx-padding: 20;
+    -fx-background-color: white;
+}
+
+.pilot-name {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+.model-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: gray;
+    -fx-translate-y: 10px;
+}
+
+.throw-card {
+    -fx-background-color: #e2dede;
+    -fx-padding: 15;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: black;
+    -fx-border-width: 1;
+}
+
+.throw-card.error {
+    -fx-background-color: #f3b6b6;
+}
+
+.throw-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.throw-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}

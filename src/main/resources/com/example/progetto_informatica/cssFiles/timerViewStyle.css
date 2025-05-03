@@ -1,0 +1,13 @@
+.start-button {
+    -fx-background-color: #90ee90;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-padding: 10 20;
+}
+
+.stop-button {
+    -fx-background-color: #f08080;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-padding: 10 20;
+}

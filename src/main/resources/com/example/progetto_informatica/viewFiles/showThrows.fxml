@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="20"
+      styleClass="main-container"
+      fx:controller="com.example.progetto_informatica.controller.ShowThrowsController">
+
+    <stylesheets>
+        <URL value="@../cssFiles/showThrowsStyle.css"/>
+    </stylesheets>
+
+    <HBox spacing="10" styleClass="button-container">
+        <Button text="Indietro" styleClass="action-button" onAction="#handleBackToSavedPilotsView"/>
+    </HBox>
+
+    <Label fx:id="pilotNameLabel" styleClass="pilot-name-title"/>
+
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS" fx:id="scrollPane">
+        <VBox spacing="15" styleClass="throws-list" fx:id="throwsContainer">
+        </VBox>
+    </ScrollPane>
+</VBox>
