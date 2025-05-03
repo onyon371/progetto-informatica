@@ -21,13 +21,12 @@
    </HBox>
 
    <children>
-      <HBox prefHeight="46.0" prefWidth="515.0" spacing="10.0">
+      <HBox prefHeight="46.0" prefWidth="515.0" spacing="10.0" alignment="CENTER">
          <children>
 
             <TextField fx:id="searchField" />
          </children>
       </HBox>
-      <!-- Scroll per le card -->
       <ScrollPane fitToWidth="true" prefHeight="400.0">
          <content>
             <VBox fx:id="pilotsAnchor" spacing="15.0" prefWidth="700.0" />

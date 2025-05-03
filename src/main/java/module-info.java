@@ -3,7 +3,6 @@ module com.example.progetto_informatica {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
-    requires jdk.compiler;
 
 
     exports com.example.progetto_informatica.controller;
