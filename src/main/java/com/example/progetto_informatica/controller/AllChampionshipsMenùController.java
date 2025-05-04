@@ -126,17 +126,17 @@ public class AllChampionshipsMenùController implements Initializable {
         contentBox.getChildren().addAll(yearLabel, titleLabel, participantsLabel, statusLabel);
 
         // Crea il menu con le opzioni "Modifica" e "Elimina"
-        MenuItem editItem = new MenuItem("Modifica");
+        //MenuItem editItem = new MenuItem("Modifica");
         MenuItem deleteItem = new MenuItem("Elimina");
-
+        /*
         editItem.setOnAction(e -> {
             System.out.println("Modifica " + title);
             // TODO: implementare la logica di modifica
-        });
+        });*/
 
         deleteItem.setOnAction(e -> deleteTournament(championshipReference));
 
-        MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
+        MenuButton optionsButton = new MenuButton("⋮", null, deleteItem);
         optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
         optionsButton.getStyleClass().add("three-dots");
 

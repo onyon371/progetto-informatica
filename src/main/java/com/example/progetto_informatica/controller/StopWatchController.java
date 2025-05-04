@@ -95,7 +95,9 @@ public class StopWatchController implements Initializable {
             totalSeconds += 1;
         }
 
-        raceReference.getThrows().get(pilotIndex).addNewThrow(LocalTime.of(0,0,(int)totalSeconds,0));
+        int minutes = (int)totalSeconds / 60;
+        totalSeconds = totalSeconds-minutes*60;
+        raceReference.getThrows().get(pilotIndex).addNewThrow(LocalTime.of(0,minutes,(int)totalSeconds,0));
         Main.openShowThrowsView(pilotIndex, raceReference, championshipReference);
         Main.tryAndCloseSavedOtherView();
     }

@@ -153,18 +153,18 @@ public class SingleChampionshipMenùController implements Initializable {
             raceBox.getChildren().addAll(headerBox, detailsBox); // Aggiungi tutto nel contenitore della gara
 
             // Menu a tre puntini per modificare o eliminare la gara
-            MenuItem editItem = new MenuItem("Modifica");
+            //MenuItem editItem = new MenuItem("Modifica");
             MenuItem deleteItem = new MenuItem("Elimina");
-
+            /*
             editItem.setOnAction(e -> {
                 System.out.println("Modifica gara: " + race.getName()); // Placeholder per l'azione di modifica
-            });
+            });*/
 
             deleteItem.setOnAction(e -> {
                 removeRace(race); // Rimuovi la gara quando cliccato
             });
 
-            MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem); // Crea il menu a tre puntini
+            MenuButton optionsButton = new MenuButton("⋮", null, deleteItem); // Crea il menu a tre puntini
             optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;"); // Stile del pulsante
             optionsButton.getStyleClass().add("three-dots"); // Applica la classe CSS
 

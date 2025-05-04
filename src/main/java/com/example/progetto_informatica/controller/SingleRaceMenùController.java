@@ -108,6 +108,7 @@ public class SingleRaceMenùController implements Initializable {
         // Gestione degli eventi per il mouse
         card.setOnMouseClicked(e -> {
             Main.openShowThrowsView(i, raceReference, championshipReference); // Apre la vista per i lanci del pilota
+            System.out.println(i);
         });
 
         // Effetto hover sulla card: cambia colore di sfondo e aggiungi ombra quando il mouse passa sopra

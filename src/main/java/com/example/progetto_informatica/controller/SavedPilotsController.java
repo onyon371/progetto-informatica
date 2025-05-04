@@ -127,20 +127,20 @@ public class SavedPilotsController implements Initializable {
             });
 
             // Crea il menu con le opzioni "Modifica" e "Elimina"
-            MenuItem editItem = new MenuItem("Modifica");
+            //MenuItem editItem = new MenuItem("Modifica");
             MenuItem deleteItem = new MenuItem("Elimina");
-
+            /*
             editItem.setOnAction(e -> {
                 System.out.println("Modifica ");
                 handleEditPilots();
-            });
+            });*/
 
             deleteItem.setOnAction(e->
             {
                 handleDeletePilots(pilot);
             });
 
-            MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
+            MenuButton optionsButton = new MenuButton("⋮", null, deleteItem);
             optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
             optionsButton.getStyleClass().add("three-dots");
 
