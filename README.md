@@ -207,6 +207,93 @@ View:
   - Contenitore scrollabile dove vengono inseriti dinamicamente i componenti grafici che rappresentano i piloti.
   - Il contenitore:
     - `VBox fx:id="pilotsAnchor"` viene popolato a runtime tramite il controller.
+    
+### 3)championshipsMenù.fxml
+
+**Descrizione:**
+
+- Il file FXML descrive l'interfaccia utente della schermata "All Championships Menu".
+- Visualizza un elenco di campionati con un'opzione per aggiungere un nuovo campionato.
+- Utilizza layout in verticale (`VBox`) e orizzontale (`HBox`) per organizzare i componenti.
+- Include una barra di scorrimento per visualizzare l'elenco dei campionati.
+
+
+**Attributi principali:**
+
+- **`VBox (root element)`**: Contenitore principale con layout verticale.
+  - **`spacing="20"`**: Distanza verticale tra i componenti figli.
+  - **`styleClass="main-container"`**: Classe CSS per la personalizzazione dello stile.
+  - **`fx:controller="com.example.progetto_informatica.controller.AllChampionshipsMenùController"`**: Associa il controller per la gestione dell'interfaccia.
+
+- **`HBox`**: Contenitore orizzontale per i pulsanti.
+  - **`spacing="10"`**: Distanza orizzontale tra i componenti figli.
+  - **`styleClass="button-container"`**: Classe CSS per lo stile del contenitore dei pulsanti.
+
+- **`Button`**:
+  - **Testo**: "Nuovo Campionato".
+  - **`styleClass="action-button"`**: Classe CSS per personalizzare l'aspetto del pulsante.
+  - **`onAction="#handleAddTournament"`**: Associa un'azione al pulsante, che invoca il metodo `handleAddTournament` del controller quando il pulsante viene premuto.
+
+- **`ScrollPane`**:
+  - **`fitToWidth="true"`**: Rende la larghezza della barra di scorrimento adattabile alla larghezza del contenitore principale.
+  - **`styleClass="scroll-pane"`**: Classe CSS per personalizzare l'aspetto della barra di scorrimento.
+  - **`VBox.vgrow="ALWAYS"`**: Permette alla `VBox` di crescere verticalmente all'interno dello spazio disponibile.
+  - **`fx:id="scrollPane"`**: Identificatore unico per il componente, utilizzato nel controller per l'interazione.
+
+- **`VBox (contenitore per la lista dei campionati)`**:
+  - **`spacing="15"`**: Distanza verticale tra gli elementi della lista dei campionati.
+  - **`styleClass="tournaments-list"`**: Classe CSS per stilizzare l'elenco dei campionati.
+  - **`fx:id="championshipAnchor"`**: Identificatore per accedere alla lista dei campionati dal controller.
+
+**Foglio di stile**
+
+- **`stylesheets:`**
+  - Collega il foglio di stile `championshipsMenùStyle.css` per la personalizzazione visiva dell'interfaccia.
+
+### 3)savedPilotsView.fxml
+
+**Descrizione:**
+- Il file FXML descrive l'interfaccia utente per la schermata "Saved Pilots", che consente agli utenti di visualizzare un elenco di piloti salvati.
+- Include un'opzione per creare un nuovo pilota e una barra di scorrimento per visualizzare la lista dei piloti.
+
+**Struttura principale:**
+
+- **VBox (root element):**
+  - **Tipo di layout:** Verticale.
+  - **Attributi:**
+    - `spacing="20"`: Distanza verticale tra i componenti figli.
+    - `styleClass="main-container"`: Classe CSS associata per personalizzare lo stile del contenitore principale.
+    - `fx:controller="com.example.progetto_informatica.controller.SavedPilotsController"`: Specifica il controller associato a questo file FXML.
+
+- **Foglio di stile:**
+  - **stylesheets:** Collega il foglio di stile `savedPilots.css` per la personalizzazione visiva dell'interfaccia.
+
+**Componenti principali:**
+
+- **HBox:**
+  - **Tipo di layout:** Orizzontale.
+  - **Attributi:**
+    - `spacing="10"`: Distanza orizzontale tra i componenti figli.
+    - `styleClass="button-container"`: Classe CSS per stilizzare il contenitore dei pulsanti.
+
+- **Button:**
+  - **Testo:** "Crea Nuovo Pilota".
+  - **styleClass="action-button"**: Classe CSS per personalizzare l'aspetto del pulsante.
+  - **onAction="#handleCreateNewPilot"**: Associa un'azione al pulsante, che invoca il metodo `handleCreateNewPilot` del controller quando il pulsante viene premuto.
+
+- **ScrollPane:**
+  - **Attributi:**
+    - `fitToWidth="true"`: La larghezza della barra di scorrimento si adatta automaticamente alla larghezza del contenitore principale.
+    - `styleClass="scroll-pane"`: Classe CSS per personalizzare l'aspetto della barra di scorrimento.
+    - `VBox.vgrow="ALWAYS"`: Permette alla `VBox` di crescere verticalmente all'interno dello spazio disponibile.
+    - `fx:id="scrollPane"`: Identificatore per interagire con questo componente dal controller.
+
+- **VBox (contenitore per la lista dei piloti):**
+  - **Attributi:**
+    - `spacing="15"`: Distanza verticale tra gli elementi della lista dei piloti.
+    - `styleClass="pilots-list"`: Classe CSS per stilizzare l'elenco dei piloti.
+    - `fx:id="pilotsAnchor"`: Identificatore per accedere alla lista dei piloti dal controller.
+
 ---
 CSS:
 -
