@@ -5,7 +5,6 @@ import com.example.progetto_informatica.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
@@ -19,40 +18,39 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SavedPilotsController implements Initializable {
 
     @FXML
-    private VBox pilotsAnchor;
+    private VBox pilotsAnchor; // Container per la visualizzazione dei piloti salvati
 
-    private SingleChampionshipMenùController singleChampionshipMenùControllerReference;
-    private Championship championshipReference;
-    private static ArrayList<Pilot> savedPilots;
+    private SingleChampionshipMenùController singleChampionshipMenùControllerReference; // Riferimento al controller del campionato
+    private Championship championshipReference; // Campionato attualmente in uso
 
-    private static final String SAVEPATH = "pilots.bin";
+    private static ArrayList<Pilot> savedPilots; // Lista di tutti i piloti salvati
 
+    private static final String SAVEPATH = "pilots.bin"; // Percorso file per salvataggio piloti
+
+    // Metodo chiamato all'inizializzazione del controller
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         championshipReference = null;
     }
 
-    public void initChampionship(Championship championshipReference, SingleChampionshipMenùController singleChampionshipMenùControllerReference)
-    {
+    // Inizializza il controller con i riferimenti necessari e carica i piloti
+    public void initChampionship(Championship championshipReference, SingleChampionshipMenùController singleChampionshipMenùControllerReference) {
         this.championshipReference = championshipReference;
-
         this.singleChampionshipMenùControllerReference = singleChampionshipMenùControllerReference;
-        //savedPilots = new ArrayList<Pilot>();
 
         try {
-            getSavedPilots();
-            addPilotsCard();
-        }catch (Exception e)
-        {
+            getSavedPilots();  // Carica piloti dal file
+            addPilotsCard();   // Mostra i piloti nella GUI
+        } catch (Exception e) {
             e.printStackTrace();
-            savedPilots = new ArrayList<Pilot>();
-            savePilots();
+            savedPilots = new ArrayList<>();
+            savePilots(); // Crea file se non esiste
         }
     }
 
+    // Gestisce l'aggiunta di un nuovo pilota tramite input utente
     @FXML
-    void handleCreateNewPilot()
-    {
+    void handleCreateNewPilot() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Aggiungi Pilota");
         dialog.setHeaderText("Inserisci i dati del pilota che vuoi aggiungere!");
@@ -60,49 +58,43 @@ public class SavedPilotsController implements Initializable {
 
         Optional<String> pilotName = dialog.showAndWait();
 
-        if(!pilotName.isEmpty()) {
-            dialog.setTitle("Aggiungi Pilota");
-            dialog.setHeaderText("Inserisci i dati del pilota che vuoi aggiungere!");
+        if (pilotName.isPresent() && !pilotName.get().isBlank()) {
             dialog.setContentText("Cognome Pilota:");
-
             Optional<String> pilotSurname = dialog.showAndWait();
 
-            if(!pilotSurname.isEmpty() && !savedPilots.contains(new Pilot(pilotName.get(), pilotSurname.get()))) {
-                try {
-                    savedPilots.add(new Pilot(pilotName.get(), pilotSurname.get()));
-                    addPilotsCard();
-                    savePilots();
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
+            if (pilotSurname.isPresent() && !pilotSurname.get().isBlank()) {
+                Pilot newPilot = new Pilot(pilotName.get(), pilotSurname.get());
+
+                if (!savedPilots.contains(newPilot)) {
+                    try {
+                        savedPilots.add(newPilot);
+                        addPilotsCard(); // Aggiorna la lista visuale
+                        savePilots();    // Salva nel file
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    showError("Pilota già esistente!");
                 }
-            }else
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Errore creazione pilota");
-                alert.setHeaderText("Pilota non creato correttamente");
-                alert.setContentText("Pilota già esistente!");
-                alert.showAndWait();
             }
         }
     }
 
-
+    // Stub per future funzioni di modifica piloti
     @FXML
-    void handleEditPilots()
-    {
-
+    void handleEditPilots() {
+        // TODO: Implementare modifica piloti
     }
 
+    // Stub per future funzioni di cancellazione piloti
     @FXML
-    void handleDeletePilots()
-    {
-
+    void handleDeletePilots() {
+        // TODO: Implementare cancellazione piloti
     }
 
+    // Mostra nella GUI tutti i piloti salvati
     private void addPilotsCard() {
         pilotsAnchor.getChildren().clear();
-
         AtomicInteger counter = new AtomicInteger(0);
 
         savedPilots.forEach(pilot -> {
@@ -113,21 +105,17 @@ public class SavedPilotsController implements Initializable {
             pilotNumber.getStyleClass().add("pilot-number");
 
             Label pilotData = new Label(pilot.toString());
-            pilotNumber.getStyleClass().add("pilot-data");
+            pilotData.getStyleClass().add("pilot-data");
 
             Button addPilotToChampionship = new Button("Aggiungi");
 
+            // Quando cliccato, aggiunge il pilota al campionato se non è già presente
             addPilotToChampionship.setOnMouseClicked(_ -> {
-                if(!championshipReference.getPilots().contains(pilot)) {
+                if (!championshipReference.getPilots().contains(pilot)) {
                     championshipReference.addPilot(pilot);
                     singleChampionshipMenùControllerReference.setParticipantsContainer();
-                }else
-                {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Errore aggiunta pilota");
-                    alert.setHeaderText("Pilota non aggiunto correttamente");
-                    alert.setContentText("Pilota già presente nel campionato!");
-                    alert.showAndWait();
+                } else {
+                    showError("Pilota già presente nel campionato!");
                 }
             });
 
@@ -136,26 +124,34 @@ public class SavedPilotsController implements Initializable {
         });
     }
 
+    // Carica i piloti salvati da file
     private void getSavedPilots() {
         try {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
-        savedPilots = (ArrayList<Pilot>) in.readObject();
-        in.close();
-        }catch (Exception e)
-        {
-            e.printStackTrace();
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVEPATH));
+            savedPilots = (ArrayList<Pilot>) in.readObject();
+            in.close();
+        } catch (Exception e) {
+            System.err.println("pilots.bin NOT FOUND");
         }
     }
 
+    // Salva i piloti correnti su file
     public static void savePilots() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVEPATH));
             out.writeObject(savedPilots);
             out.close();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // Mostra un alert di errore con messaggio personalizzato
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Errore");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

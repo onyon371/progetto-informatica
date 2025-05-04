@@ -14,86 +14,95 @@ import java.util.ResourceBundle;
 public class TimerViewController implements Initializable {
 
     @FXML
-    private Label minutesLabel, secondsLabel, millisecondsLabel;
+    private Label minutesLabel, secondsLabel, millisecondsLabel; // Etichette per visualizzare il tempo (minuti, secondi, millisecondi)
 
     @FXML
-    private Button startButton, stopButton;
+    private Button startButton, stopButton; // Pulsanti per avviare e fermare il timer
 
-    private long startTime;
-    private AnimationTimer timer;
+    private long startTime; // Variabile per memorizzare l'orario di inizio
+    private AnimationTimer timer; // Timer che aggiorna il tempo ogni fotogramma
 
-    private boolean running = false;
-    private Pilot pilotReference;
-    private PilotPoint pilotPointReference;
+    private boolean running = false; // Flag per sapere se il timer è in esecuzione
+    private Pilot pilotReference; // Riferimento al pilota
+    private PilotPoint pilotPointReference; // Riferimento al punto del pilota (dove vengono salvati i punteggi)
 
-    private static final int MAX_TIME_SECONDS = 240; // 4 minuti
+    private static final int MAX_TIME_SECONDS = 240; // Tempo massimo in secondi (4 minuti)
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        stopButton.setDisable(true);
+        stopButton.setDisable(true); // Disabilita il pulsante di stop all'inizio
     }
 
+    // Metodo per inizializzare i dati del pilota e del suo punto
     public void initPilotData(Pilot pilot, PilotPoint pilotPoint) {
         this.pilotReference = pilot;
         this.pilotPointReference = pilotPoint;
     }
 
+    // Metodo per gestire l'inizio del timer
     @FXML
     private void handleStart() {
-        if (running) return;
+        if (running) return; // Se il timer è già in esecuzione, non fare nulla
 
-        running = true;
-        startTime = System.nanoTime();
-        stopButton.setDisable(false);
-        startButton.setDisable(true);
+        running = true; // Imposta il flag a true per indicare che il timer è avviato
+        startTime = System.nanoTime(); // Registra il tempo di inizio in nanosecondi
+        stopButton.setDisable(false); // Abilita il pulsante di stop
+        startButton.setDisable(true); // Disabilita il pulsante di start per evitare di premere più volte
 
+        // Crea e avvia il timer che aggiornerà i valori di tempo ogni fotogramma
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                long elapsedNano = now - startTime;
-                long totalMillis = elapsedNano / 1_000_000;
+                long elapsedNano = now - startTime; // Calcola il tempo trascorso in nanosecondi
+                long totalMillis = elapsedNano / 1_000_000; // Converti il tempo trascorso in millisecondi
 
+                // Calcola minuti, secondi e centesimi (decimi di secondo)
                 int minutes = (int) (totalMillis / 60000);
                 int seconds = (int) ((totalMillis % 60000) / 1000);
                 int centesimi = (int) ((totalMillis % 1000) / 10);
 
+                // Imposta il tempo visualizzato nelle etichette
                 minutesLabel.setText(String.format("%02d", minutes));
                 secondsLabel.setText(String.format("%02d", seconds));
                 millisecondsLabel.setText(String.format("%02d", centesimi));
             }
         };
-        timer.start();
+        timer.start(); // Avvia il timer
     }
 
+    // Metodo per gestire l'arresto del timer
     @FXML
     private void handleStop() {
-        if (!running) return;
+        if (!running) return; // Se il timer non è in esecuzione, non fare nulla
 
-        running = false;
-        timer.stop();
-        stopButton.setDisable(true);
-        startButton.setDisable(false);
+        running = false; // Imposta il flag a false per indicare che il timer è fermo
+        timer.stop(); // Ferma il timer
+        stopButton.setDisable(true); // Disabilita il pulsante di stop
+        startButton.setDisable(false); // Abilita il pulsante di start per poter ripartire
 
+        // Calcola il tempo trascorso in millisecondi
         long elapsedMillis = (System.nanoTime() - startTime) / 1_000_000;
         long totalSeconds = elapsedMillis / 1000;
         int centesimi = (int) ((elapsedMillis % 1000) / 10);
 
-        // Arrotondamento secondi
+        // Arrotonda il tempo in secondi, se i centesimi sono superiori o uguali a 50, aggiungi un secondo
         if (centesimi >= 50) {
             totalSeconds += 1;
         }
 
+        // Calcola il punteggio
         int score;
         if (totalSeconds <= MAX_TIME_SECONDS) {
-            score = (int) totalSeconds; // 1 punto per ogni secondo
+            score = (int) totalSeconds; // 1 punto per ogni secondo se il tempo è entro il limite
         } else {
-            int penalty = (int) (totalSeconds - MAX_TIME_SECONDS) * 2;
-            score = MAX_TIME_SECONDS - penalty;
+            int penalty = (int) (totalSeconds - MAX_TIME_SECONDS) * 2; // Penalità per ogni secondo oltre il limite
+            score = MAX_TIME_SECONDS - penalty; // Sottrai la penalità al punteggio massimo
         }
 
+        // Se il punteggio è negativo, imposta il punteggio a 0
         if (score < 0) score = 0;
 
-        // Aggiorna l'oggetto PilotPoint
+        // Aggiorna il punteggio del pilota
         pilotPointReference.setPoints(score);
         System.out.println("Punteggio aggiornato per " + pilotReference + ": " + score + " punti");
     }

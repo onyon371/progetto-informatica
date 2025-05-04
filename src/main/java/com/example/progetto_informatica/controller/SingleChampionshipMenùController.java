@@ -5,7 +5,6 @@ import com.example.progetto_informatica.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -18,196 +17,195 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SingleChampionshipMenùController implements Initializable {
-    @FXML private VBox pilotsRankingContainer;
-    @FXML private VBox racesContainer;
-    @FXML private VBox pilotsParticipantsContainer;
+    @FXML private VBox pilotsRankingContainer; // Contenitore per la classifica dei piloti
+    @FXML private VBox racesContainer; // Contenitore per la visualizzazione delle gare
+    @FXML private VBox pilotsParticipantsContainer; // Contenitore per visualizzare i partecipanti
 
-    private Championship championshipReference;
+    private Championship championshipReference; // Riferimento al campionato corrente
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        championshipReference = null;
+        championshipReference = null; // Inizializzazione con campionato nullo
     }
 
-    public void initChampionhip(Championship championshipReference)
-    {
+    // Metodo che inizializza il campionato e carica tutte le informazioni (partecipanti, classifica, gare)
+    public void initChampionhip(Championship championshipReference) {
         this.championshipReference = championshipReference;
 
         try {
-            setParticipantsContainer();
-            setPilotsRankingContainer();
-            addRacesCard();
-        }catch (Exception e)
-        {
-            e.printStackTrace();
+            setParticipantsContainer(); // Aggiungi i partecipanti alla UI
+            setPilotsRankingContainer(); // Aggiungi la classifica piloti alla UI
+            addRacesCard(); // Aggiungi le gare alla UI
+        } catch (Exception e) {
+            e.printStackTrace(); // Gestione errore durante il caricamento
         }
     }
 
-    public void setParticipantsContainer()
-    {
-        pilotsParticipantsContainer.getChildren().clear();
+    // Metodo che aggiorna la lista dei partecipanti nel contenitore
+    public void setParticipantsContainer() {
+        pilotsParticipantsContainer.getChildren().clear(); // Pulisce i partecipanti già visualizzati
 
-        AtomicInteger counter = new AtomicInteger(0);
+        AtomicInteger counter = new AtomicInteger(0); // Variabile per numerare i partecipanti
 
-        if(championshipReference.getPilots().isEmpty())
-        {
-            Label pilotLabel = new Label("Nessun Partecipante!");
-            pilotLabel.getStyleClass().add("winner-name");
-            pilotsParticipantsContainer.getChildren().add(pilotLabel);
+        if(championshipReference.getPilots().isEmpty()) { // Se non ci sono partecipanti, mostra il messaggio
+            Label pilotLabel = new Label("Nessun Partecipante!"); // Etichetta per nessun partecipante
+            pilotLabel.getStyleClass().add("winner-name"); // Aggiungi stile al testo
+            pilotsParticipantsContainer.getChildren().add(pilotLabel); // Aggiungi l'etichetta alla UI
             return;
         }
 
+        // Per ogni pilota nel campionato, aggiungi un'etichetta con il nome
         championshipReference.getPilots().forEach(pilot -> {
             Label pilotLabel = new Label(counter.incrementAndGet() + ". " + pilot.toString());
-            pilotLabel.getStyleClass().add("winner-name");
-            pilotsParticipantsContainer.getChildren().add(pilotLabel);
+            pilotLabel.getStyleClass().add("winner-name"); // Applica stile
+            pilotsParticipantsContainer.getChildren().add(pilotLabel); // Aggiungi alla UI
         });
     }
 
+    // Metodo che aggiorna la classifica dei piloti nel contenitore
     private void setPilotsRankingContainer() {
-        pilotsRankingContainer.getChildren().clear();
-        ArrayList<PilotPoint> bestPilots = championshipReference.getBestPilotsAndPoints();
+        pilotsRankingContainer.getChildren().clear(); // Pulisce la classifica esistente
+        ArrayList<PilotPoint> bestPilots = championshipReference.getBestPilotsAndPoints(); // Ottiene i piloti e i punti
 
-        AtomicInteger counter = new AtomicInteger(0);
+        AtomicInteger counter = new AtomicInteger(0); // Variabile per numerare i piloti nella classifica
 
-        if(bestPilots.isEmpty())
-        {
-            Label pilotLabel = new Label("Classifica Vuota!");
-            pilotLabel.getStyleClass().add("winner-name");
-            pilotsRankingContainer.getChildren().add(pilotLabel);
+        if(bestPilots.isEmpty()) { // Se non ci sono piloti nella classifica, mostra il messaggio
+            Label pilotLabel = new Label("Classifica Vuota!"); // Etichetta per classifica vuota
+            pilotLabel.getStyleClass().add("winner-name"); // Aggiungi stile al testo
+            pilotsRankingContainer.getChildren().add(pilotLabel); // Aggiungi l'etichetta alla UI
             return;
         }
 
+        // Per ogni pilota nella classifica, aggiungi il suo nome e punti
         bestPilots.forEach(pilot -> {
             Label pilotLabel = new Label(counter.incrementAndGet() + " " + pilot.getP().toString() + " Punti: " + pilot.getPoints());
-            pilotLabel.getStyleClass().add("winner-name");
-            pilotsRankingContainer.getChildren().add(pilotLabel);
+            pilotLabel.getStyleClass().add("winner-name"); // Applica stile
+            pilotsRankingContainer.getChildren().add(pilotLabel); // Aggiungi alla UI
         });
     }
 
-    private void removeRace(Race raceReference)
-    {
-        championshipReference.getRaces().remove(raceReference);
-        addRacesCard();
+    // Metodo che rimuove una gara dal campionato e aggiorna la UI
+    private void removeRace(Race raceReference) {
+        championshipReference.getRaces().remove(raceReference); // Rimuove la gara dalla lista
+        addRacesCard(); // Ricarica le gare nella UI
     }
 
+    // Metodo che aggiunge una card per ogni gara nel contenitore delle gare
     private void addRacesCard() {
-        racesContainer.getChildren().clear();
+        racesContainer.getChildren().clear(); // Pulisce le gare esistenti
 
-        AtomicInteger counter = new AtomicInteger(0);
+        AtomicInteger counter = new AtomicInteger(0); // Variabile per numerare le gare
 
-        if (championshipReference.getRaces().isEmpty()) {
-            // eventualmente mostra un messaggio
+        if (championshipReference.getRaces().isEmpty()) { // Se non ci sono gare, non fare nulla
+            // Eventualmente mostra un messaggio per indicare che non ci sono gare
         }
 
+        // Per ogni gara nel campionato, crea una card con i dettagli della gara
         championshipReference.getRaces().forEach(race -> {
-            // Contenitore principale con stile del rettangolo
-            BorderPane racePane = new BorderPane();
-            racePane.getStyleClass().add("race-container");
+            BorderPane racePane = new BorderPane(); // Contenitore principale per la gara
+            racePane.getStyleClass().add("race-container"); // Applica stile alla card della gara
 
-            // VBox con i contenuti originali
-            VBox raceBox = new VBox();
+            VBox raceBox = new VBox(); // Contenitore per i dettagli della gara
             raceBox.setSpacing(10);
 
+            // Box per il titolo e la data della gara
             HBox headerBox = new HBox(10);
             headerBox.getStyleClass().add("race-header");
 
-            Label titleLabel = new Label(race.getName());
+            Label titleLabel = new Label(race.getName()); // Nome della gara
             titleLabel.getStyleClass().add("race-title");
 
-            Label dateLabel = new Label(race.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            Label dateLabel = new Label(race.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))); // Data della gara
             dateLabel.getStyleClass().add("race-date");
 
-            headerBox.getChildren().addAll(titleLabel, dateLabel);
+            headerBox.getChildren().addAll(titleLabel, dateLabel); // Aggiungi nome e data
 
+            // Box per i dettagli della gara
             HBox detailsBox = new HBox(20);
             detailsBox.getStyleClass().add("race-details");
 
-            Label participantsLabel = new Label("Partecipanti: " + race.getPilots().size());
+            Label participantsLabel = new Label("Partecipanti: " + race.getPilots().size()); // Numero di partecipanti
             participantsLabel.getStyleClass().add("race-info");
 
             Label winnerLabel = null;
             try {
-                winnerLabel = new Label("Primo Classificato: " + race.getBestPilotsAndPoints().getFirst().getP().toString());
+                winnerLabel = new Label("Primo Classificato: " + race.getBestPilotsAndPoints().getFirst().getP().toString()); // Vincitore
                 winnerLabel.getStyleClass().addAll("race-info", "winner-info");
             } catch (Exception e) {
                 System.err.println("Tentativo di aggiungere vincitore ma non presente");
             }
 
-            Label statusLabel = new Label(race.isRaceOpen() ? "In corso" : "Terminata");
+            Label statusLabel = new Label(race.isRaceOpen() ? "In corso" : "Terminata"); // Stato della gara
             statusLabel.getStyleClass().add("race-status");
             if (!race.isRaceOpen()) {
-                statusLabel.getStyleClass().add("completed");
+                statusLabel.getStyleClass().add("completed"); // Applica lo stile se la gara è terminata
             } else {
-                statusLabel.getStyleClass().add("in-progress");
+                statusLabel.getStyleClass().add("in-progress"); // Applica lo stile se la gara è in corso
             }
 
-            detailsBox.getChildren().add(participantsLabel);
+            detailsBox.getChildren().add(participantsLabel); // Aggiungi numero partecipanti
             if (winnerLabel != null) {
-                detailsBox.getChildren().add(winnerLabel);
+                detailsBox.getChildren().add(winnerLabel); // Aggiungi vincitore, se presente
             }
-            detailsBox.getChildren().add(statusLabel);
+            detailsBox.getChildren().add(statusLabel); // Aggiungi stato
 
-            raceBox.getChildren().addAll(headerBox, detailsBox);
+            raceBox.getChildren().addAll(headerBox, detailsBox); // Aggiungi tutto nel contenitore della gara
 
-            // Menu a tre puntini
+            // Menu a tre puntini per modificare o eliminare la gara
             MenuItem editItem = new MenuItem("Modifica");
             MenuItem deleteItem = new MenuItem("Elimina");
 
             editItem.setOnAction(e -> {
-                System.out.println("Modifica gara: " + race.getName());
+                System.out.println("Modifica gara: " + race.getName()); // Placeholder per l'azione di modifica
             });
 
             deleteItem.setOnAction(e -> {
-                removeRace(race);
+                removeRace(race); // Rimuovi la gara quando cliccato
             });
 
-            MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
-            optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
-            optionsButton.getStyleClass().add("three-dots");
+            MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem); // Crea il menu a tre puntini
+            optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;"); // Stile del pulsante
+            optionsButton.getStyleClass().add("three-dots"); // Applica la classe CSS
 
-            // Blocca propagazione clic sul menu
-            optionsButton.setOnMouseClicked(e -> e.consume());
+            optionsButton.setOnMouseClicked(e -> e.consume()); // Blocca la propagazione del click sul menu
 
-            // Assembla nel BorderPane
-            racePane.setCenter(raceBox);
-            racePane.setRight(optionsButton);
-            racePane.setStyle("-fx-padding: 10;");
+            racePane.setCenter(raceBox); // Imposta il contenuto della gara
+            racePane.setRight(optionsButton); // Imposta il pulsante delle opzioni a destra
+            racePane.setStyle("-fx-padding: 10;"); // Aggiungi padding alla card
 
-            // Clic sulla card
             racePane.setOnMouseClicked(event -> {
-                Main.openSpecificRaceMenù(race, championshipReference);
+                Main.openSpecificRaceMenù(race, championshipReference); // Apre il menu della gara quando cliccato
             });
 
-            racesContainer.getChildren().add(racePane);
+            racesContainer.getChildren().add(racePane); // Aggiungi la card della gara alla UI
         });
     }
 
-   @FXML
+    // Aggiunge una nuova gara al campionato
+    @FXML
     private void handleAddNewRace() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Aggiungi gara");
+        dialog.setHeaderText("Inserisci i dettagli della nuova gara");
+        dialog.setContentText("Nome gara:");
 
-       TextInputDialog dialog = new TextInputDialog();
-       dialog.setTitle("Aggiungi gara");
-       dialog.setHeaderText("Inserisci i dettagli della nuova gara");
-       dialog.setContentText("Nome gara:");
+        Optional<String> raceName = dialog.showAndWait(); // Chiede il nome della gara
 
-       Optional<String> raceName = dialog.showAndWait();
-
-       if(!raceName.isEmpty()) {
-           championshipReference.addRace(raceName.get());
-           addRacesCard();
-       }
+        if(!raceName.isEmpty()) { // Se il nome è valido, aggiungi la gara
+            championshipReference.addRace(raceName.get());
+            addRacesCard(); // Ricarica la lista delle gare
+        }
     }
 
+    // Torna al menu del campionato principale
     @FXML
-    private void handleBackToChampionshipMenù()
-    {
-        Main.openChampionshipsMenù();
+    private void handleBackToChampionshipMenù() {
+        Main.openChampionshipsMenù(); // Apre il menu delle informazioni sul campionato
     }
 
+    // Aggiunge un nuovo pilota al campionato
     @FXML
-    private void handleAddNewPilot()
-    {
-        Main.openSavedPilotsView(championshipReference, this);
+    private void handleAddNewPilot() {
+        Main.openSavedPilotsView(championshipReference, this); // Apre la vista dei piloti salvati
     }
 }

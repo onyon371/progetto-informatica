@@ -7,65 +7,68 @@ import java.util.ArrayList;
 
 public class Race implements Serializable {
 
+    // Nome della gara
     private String name;
+
+    // Data in cui si tiene la gara
     private LocalDate date;
+
+    // Stato della gara: true se aperta, false se chiusa
     private boolean raceOpen;
 
+    // Lista dei piloti che partecipano alla gara
     private ArrayList<Pilot> pilots;
 
+    // Lista dei lanci effettuati dai piloti (oggetti Throws)
     private ArrayList<Throws> throwsPilots;
 
+    // Costruttore: inizializza la gara con nome e lista di piloti
     public Race(String name, ArrayList<Pilot> pilots) {
         this.name = name;
         this.pilots = pilots;
-        raceOpen = true;
-
+        this.raceOpen = true;
         this.date = LocalDate.now();
 
-        pilots = new ArrayList<Pilot>();
-        throwsPilots = new ArrayList<Throws>();
+        this.pilots = new ArrayList<>();
+        this.throwsPilots = new ArrayList<>();
     }
 
-    public void addPilot(Pilot p)
-    {
+    // Aggiunge un pilota alla gara
+    public void addPilot(Pilot p) {
         pilots.add(p);
     }
 
-    public ArrayList<PilotPoint> getPilotPointsList()
-    {
-        ArrayList<PilotPoint> pilotPointsList = new ArrayList<PilotPoint>();
-        for(int i = 0; i < throwsPilots.size(); i++)
-        {
+    // Restituisce una lista di PilotPoint con i punti ottenuti da ciascun pilota
+    public ArrayList<PilotPoint> getPilotPointsList() {
+        ArrayList<PilotPoint> pilotPointsList = new ArrayList<>();
+        for (int i = 0; i < throwsPilots.size(); i++) {
             pilotPointsList.add(new PilotPoint(pilots.get(i), throwsPilots.get(i).getTotPoints()));
         }
         return pilotPointsList;
     }
 
-    public ArrayList<PilotPoint> getBestPilotsAndPoints()
-    {
-        int pilotPoints = 0;
-        ArrayList<PilotPoint> pilotPointsList = new ArrayList<PilotPoint>();
+    // Restituisce i 3 migliori piloti della gara, ordinati per punteggio
+    public ArrayList<PilotPoint> getBestPilotsAndPoints() {
+        ArrayList<PilotPoint> pilotPointsList = new ArrayList<>();
 
-        if(throwsPilots.size() <= 3) {
+        // Se ci sono 3 o meno piloti, restituisci tutti
+        if (throwsPilots.size() <= 3) {
             for (int i = 0; i < throwsPilots.size(); i++) {
                 pilotPointsList.add(new PilotPoint(pilots.get(i), throwsPilots.get(i).getTotPoints()));
             }
-        }else
-        {
-            for(int i = 0; i < throwsPilots.size(); i++)
-            {
+        } else {
+            // Calcola i punteggi per tutti i piloti
+            for (int i = 0; i < throwsPilots.size(); i++) {
                 pilotPointsList.add(new PilotPoint(pilots.get(i), throwsPilots.get(i).getTotPoints()));
             }
 
-            while(pilotPointsList.size() > 3)
-            {
+            // Rimuove i piloti con punteggio più basso finché ne restano solo 3
+            while (pilotPointsList.size() > 3) {
                 int lower = pilotPointsList.get(0).getPoints();
                 int index = 0;
-                for(int i = 0; i < throwsPilots.size(); i++)
-                {
-                    if(pilotPointsList.get(0).getPoints() < lower)
-                    {
-                        lower = pilotPointsList.get(0).getPoints();
+                for (int i = 0; i < pilotPointsList.size(); i++) {
+                    if (pilotPointsList.get(i).getPoints() < lower) {
+                        lower = pilotPointsList.get(i).getPoints();
                         index = i;
                     }
                 }
@@ -75,6 +78,7 @@ public class Race implements Serializable {
         return pilotPointsList;
     }
 
+    // Getter e setter per i principali attributi della gara
 
     public String getName() {
         return name;
@@ -108,31 +112,35 @@ public class Race implements Serializable {
         this.pilots = pilots;
     }
 
-    public Integer getMaxThrows()
-    {
+    public ArrayList<Throws> getThrows() {
+        return throwsPilots;
+    }
+
+    // Restituisce il numero massimo di lanci consentiti
+    public Integer getMaxThrows() {
         return Throws.getMaxThrows();
     }
 
-    public Integer getThrowsCompletedOfSpecificPilot(int index)
-    {
-        if(throwsPilots.isEmpty()) return 0;
+    // Restituisce il numero di lanci completati da un pilota specifico
+    public Integer getThrowsCompletedOfSpecificPilot(int index) {
+        if (throwsPilots.isEmpty()) return 0;
         return throwsPilots.get(index).getThrowsDone();
     }
 
-    public Integer getMaxPoints()
-    {
+    // Restituisce il punteggio massimo ottenibile
+    public Integer getMaxPoints() {
         return Throws.getMaxPoints();
     }
 
-    public Integer getPointsOfSpecificPilot(int index)
-    {
-        if(throwsPilots.isEmpty()) return 0;
+    // Restituisce i punti totalizzati da un pilota specifico
+    public Integer getPointsOfSpecificPilot(int index) {
+        if (throwsPilots.isEmpty()) return 0;
         return throwsPilots.get(index).getTotPoints();
     }
 
-    public LocalTime getBestTimeOfSpecificPilot(int index)
-    {
-        if(throwsPilots.isEmpty()) return LocalTime.of(0,0,0,0);
+    // Restituisce il miglior tempo registrato da un pilota specifico
+    public LocalTime getBestTimeOfSpecificPilot(int index) {
+        if (throwsPilots.isEmpty()) return LocalTime.of(0, 0, 0, 0);
         return throwsPilots.get(index).getBestTime();
     }
 }

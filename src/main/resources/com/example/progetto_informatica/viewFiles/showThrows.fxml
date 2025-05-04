@@ -25,7 +25,7 @@
     <Label fx:id="pilotNameLabel" styleClass="pilot-name-title"/>
 
     <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS" fx:id="scrollPane">
-        <VBox spacing="15" styleClass="throws-list" fx:id="throwsContainer">
+        <VBox spacing="15" styleClass="throws-list" fx:id="throwsAnchor">
         </VBox>
     </ScrollPane>
 </VBox>
