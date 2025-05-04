@@ -19,6 +19,7 @@
     </stylesheets>
 
     <HBox spacing="10" styleClass="button-container">
+        <Button text="Effettua Lancio" styleClass="action-button" onAction="#handleExecuteThrow"/>
         <Button text="Indietro" styleClass="action-button" onAction="#handleBackToSavedPilotsView"/>
     </HBox>
 

@@ -7,13 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx/8.0.171"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.progetto_informatica.controller.TimerController"
+      fx:controller="com.example.progetto_informatica.controller.StopWatchController"
       spacing="30" alignment="CENTER" styleClass="main-container">
 
     <stylesheets>
-        <URL value="@../cssFiles/timer.css"/>
+        <URL value="@../cssFiles/StopWatchViewStyle.css"/>
     </stylesheets>
 
     <!-- Titolo -->
@@ -39,8 +40,8 @@
 
     <!-- Pulsanti START e STOP -->
     <HBox spacing="30" alignment="CENTER">
-        <Button fx:id="startButton" text="START" styleClass="start-button" />
-        <Button fx:id="stopButton" text="STOP" styleClass="stop-button" />
+        <Button fx:id="startButton" text="START" styleClass="start-button" onAction="#handleStart"/>
+        <Button fx:id="stopButton" text="STOP" styleClass="stop-button" onAction="#handleStop"/>
     </HBox>
 
 </VBox>

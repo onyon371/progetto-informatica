@@ -114,6 +114,7 @@ public class SavedPilotsController implements Initializable {
                 if (!championshipReference.getPilots().contains(pilot)) {
                     championshipReference.addPilot(pilot);
                     singleChampionshipMenùControllerReference.setParticipantsContainer();
+                    singleChampionshipMenùControllerReference.addRacesCard();
                 } else {
                     showError("Pilota già presente nel campionato!");
                 }

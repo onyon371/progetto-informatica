@@ -1,7 +1,8 @@
 package com.example.progetto_informatica.controller;
 
-import com.example.progetto_informatica.model.Pilot;
-import com.example.progetto_informatica.model.PilotPoint;
+import com.example.progetto_informatica.model.Main;
+import com.example.progetto_informatica.model.Race;
+import com.example.progetto_informatica.model.Throws;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,9 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-public class TimerViewController implements Initializable {
+public class StopWatchController implements Initializable {
 
     @FXML
     private Label minutesLabel, secondsLabel, millisecondsLabel; // Etichette per visualizzare il tempo (minuti, secondi, millisecondi)
@@ -23,10 +25,9 @@ public class TimerViewController implements Initializable {
     private AnimationTimer timer; // Timer che aggiorna il tempo ogni fotogramma
 
     private boolean running = false; // Flag per sapere se il timer è in esecuzione
-    private Pilot pilotReference; // Riferimento al pilota
-    private PilotPoint pilotPointReference; // Riferimento al punto del pilota (dove vengono salvati i punteggi)
 
-    private static final int MAX_TIME_SECONDS = 240; // Tempo massimo in secondi (4 minuti)
+    private Race raceReference;
+    private int pilotIndex;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,9 +35,9 @@ public class TimerViewController implements Initializable {
     }
 
     // Metodo per inizializzare i dati del pilota e del suo punto
-    public void initPilotData(Pilot pilot, PilotPoint pilotPoint) {
-        this.pilotReference = pilot;
-        this.pilotPointReference = pilotPoint;
+    public void init(Race raceReference, int pilotIndex) {
+        this.raceReference = raceReference;
+        this.pilotIndex = pilotIndex;
     }
 
     // Metodo per gestire l'inizio del timer
@@ -90,20 +91,7 @@ public class TimerViewController implements Initializable {
             totalSeconds += 1;
         }
 
-        // Calcola il punteggio
-        int score;
-        if (totalSeconds <= MAX_TIME_SECONDS) {
-            score = (int) totalSeconds; // 1 punto per ogni secondo se il tempo è entro il limite
-        } else {
-            int penalty = (int) (totalSeconds - MAX_TIME_SECONDS) * 2; // Penalità per ogni secondo oltre il limite
-            score = MAX_TIME_SECONDS - penalty; // Sottrai la penalità al punteggio massimo
-        }
-
-        // Se il punteggio è negativo, imposta il punteggio a 0
-        if (score < 0) score = 0;
-
-        // Aggiorna il punteggio del pilota
-        pilotPointReference.setPoints(score);
-        System.out.println("Punteggio aggiornato per " + pilotReference + ": " + score + " punti");
+        raceReference.getThrows().get(pilotIndex).addNewThrow(LocalTime.of(0,0,(int)totalSeconds,0));
+        Main.tryAndCloseSavedOtherView();
     }
 }

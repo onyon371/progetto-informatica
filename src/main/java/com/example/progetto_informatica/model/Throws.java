@@ -23,7 +23,7 @@ public class Throws implements Serializable {
     private final int overTimePenality = underTimePenality * 2;
 
     // Numero massimo di lanci consentiti
-    private static final int nThrows = 4;
+    public static final int nThrows = 4;
 
     // Numero di tempi da scartare (quelli peggiori)
     private final int nDiscardedTimes = 1;
@@ -32,6 +32,12 @@ public class Throws implements Serializable {
     public Throws() {
         times = new ArrayList<>();
         points = new ArrayList<>();
+    }
+
+    public ArrayList<Integer> getPoints()
+    {
+        calculatePoints();
+        return points;
     }
 
     // Calcola i punti di ciascun lancio in base alla distanza dal tempo ideale
@@ -113,7 +119,11 @@ public class Throws implements Serializable {
                 maxTime = t;
             }
         }
-
         return maxTime;
+    }
+
+    public ArrayList<LocalTime> getTimes()
+    {
+        return times;
     }
 }

@@ -91,7 +91,7 @@ public class SingleChampionshipMenùController implements Initializable {
     }
 
     // Metodo che aggiunge una card per ogni gara nel contenitore delle gare
-    private void addRacesCard() {
+    public void addRacesCard() {
         racesContainer.getChildren().clear(); // Pulisce le gare esistenti
 
         AtomicInteger counter = new AtomicInteger(0); // Variabile per numerare le gare

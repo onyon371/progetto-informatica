@@ -18,10 +18,9 @@ public class ShowThrowsController implements Initializable {
     @FXML
     private VBox throwsAnchor; // Contenitore principale per i lanci
 
-    private Pilot pilotReference; // Riferimento al pilota
     private Championship championshipReference; // Riferimento al campionato
     private Race raceReference; // Riferimento alla gara
-    private List<Throws> throwsList; // Lista dei lanci effettuati
+    private int pilotIndex;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -29,11 +28,10 @@ public class ShowThrowsController implements Initializable {
     }
 
     // Metodo per inizializzare i dati necessari: pilota, campionato, gara e lista dei lanci
-    public void initThrowsData(Pilot pilotReference, Championship championshipReference, Race raceReference, List<Throws> throwsList) {
-        this.pilotReference = pilotReference;
+    public void initThrowsData(Championship championshipReference, Race raceReference, int i) {
         this.championshipReference = championshipReference;
         this.raceReference = raceReference;
-        this.throwsList = throwsList;
+        this.pilotIndex = pilotIndex;
 
         // Chiamata per aggiungere le "cards" che mostrano i lanci
         addThrowsCards();
@@ -43,8 +41,9 @@ public class ShowThrowsController implements Initializable {
     private void addThrowsCards() {
         throwsAnchor.getChildren().clear(); // Pulisce i contenuti esistenti nel contenitore
 
-        // Ciclo per aggiungere le cards per i 4 lanci
-        for (int i = 0; i < 4; i++) {
+
+        // Ciclo per aggiungere le cards per i lanci
+        for (int i = 0; i < Throws.nThrows; i++) {
             // Crea un HBox per ogni card
             HBox card = new HBox(20);
             card.setPadding(new Insets(15)); // Distanza interna nella card
@@ -59,11 +58,12 @@ public class ShowThrowsController implements Initializable {
             Label pointsLabel;
 
             // Controlla se ci sono dati per il lancio corrente (se esiste un lancio nella lista)
-            if (i < throwsList.size()) {
-                Throws singleThrow = throwsList.get(i); // Ottieni il lancio specifico dalla lista
-                timeLabel = new Label("Tempo: "); // Mostra il tempo del lancio
-                pointsLabel = new Label("Punti: "); // Mostra i punti del lancio
-            } else {
+            try
+            {
+                timeLabel = new Label("Tempo: " + raceReference.getThrows().get(i).getTimes().get(i)); // Mostra il tempo del lancio
+                pointsLabel = new Label("Punti: " + raceReference.getThrows().get(i).getPoints().get(i)); // Mostra i punti del lancio
+            }catch (Exception e)
+            {
                 // Se non ci sono più lanci, mostra un valore di default ("-")
                 timeLabel = new Label("Tempo: -");
                 pointsLabel = new Label("Punti: -");
@@ -81,5 +81,11 @@ public class ShowThrowsController implements Initializable {
     private void handleBackToSavedPilotsView() {
         // Torna alla vista dei lanci precedenti
         Main.openSpecificRaceMenù(raceReference,championshipReference);
+    }
+
+    @FXML
+    private void handleExecuteThrow()
+    {
+        Main.openStopWatchView(raceReference, pilotIndex);
     }
 }

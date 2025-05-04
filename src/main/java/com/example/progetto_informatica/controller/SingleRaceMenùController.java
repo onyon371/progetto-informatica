@@ -104,7 +104,7 @@ public class SingleRaceMenùController implements Initializable {
         DropShadow shadow = new DropShadow(10, 5, 5, Color.DARKGRAY); // Effetto ombra per hover
         // Gestione degli eventi per il mouse
         card.setOnMouseClicked(e -> {
-            Main.openShowThrowsView(raceReference.getPilots().get(i), raceReference, championshipReference, raceReference.getThrows()); // Apre la vista per i lanci del pilota
+            Main.openShowThrowsView(i, raceReference, championshipReference); // Apre la vista per i lanci del pilota
         });
 
         // Effetto hover sulla card: cambia colore di sfondo e aggiungi ombra quando il mouse passa sopra
