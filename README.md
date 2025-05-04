@@ -47,7 +47,7 @@ Controller:
   - score = MAX_TIME_SECONDS - (secondsOverLimit × 2)
 
 - Il punteggio viene aggiornato nell'oggetto PilotPoint associato.
----
+
 Model:
 - 
 ### 2) Pilot.java
@@ -67,7 +67,7 @@ Model:
   - `getters` e `setters` per ogni campo
   - `equals()` per confronto logico tra piloti
   - `toString()` per una rappresentazione leggibile (es. "Mario Rossi")
----
+
 View:
 -
 ### 1) racesMenù.fxml
@@ -133,7 +133,7 @@ View:
   - Contenitore scrollabile dove vengono inseriti dinamicamente i componenti grafici che rappresentano i piloti.
   - Il contenitore:
     - `VBox fx:id="pilotsAnchor"` viene popolato a runtime tramite il controller.
----
+
 CSS:
 -
 ### 1)SingleRaceMenù.css
@@ -180,45 +180,3 @@ CSS:
   - Stile moderno con bordi e sfondo arrotondati.
   - Ombra leggera e colore neutro.
   - Cambia colore al focus per feedback visivo.
-
-
-### 2)racesMenùStyle.css
-
-**Descrizione:**
-- Il foglio di stile `racesMenùStyle.css` definisce l'aspetto grafico della schermata del menù gare.
-- Fornisce un design chiaro, ordinato e coerente con l'interfaccia generale dell’applicazione.
-
-**Funzionalità principali:**
-
-- **Struttura principale:**
-  - Contenitore principale con sfondo grigio chiaro.
-  - Padding uniforme su tutti i lati.
-  - Distanziamento verticale regolare tra le varie sezioni.
-
-- **Pulsanti:**
-  - Colore di sfondo blu con testo bianco.
-  - Bordi arrotondati per un aspetto moderno.
-  - Effetto hover che scurisce leggermente il colore.
-  - Cursore a forma di mano per indicare l’interattività.
-
-- **Sezioni:**
-  - Contenitori bianchi per le aree principali (partecipanti, classifica, gare).
-  - Angoli arrotondati e ombre leggere per profondità visiva.
-  - Titoli in grassetto, colore scuro e padding per evidenziarli.
-
-- **ScrollPane:**
-  - Aree scrollabili con sfondo trasparente.
-  - Nessun bordo visibile.
-  - Liste interne con spaziatura ordinata e padding adeguato.
-
-- **Elenchi e voci:**
-  - Font leggibile e colori neutri per tutte le liste (vincitori, gare).
-  - Dati come titolo, data, stato e vincitore ben distinti tramite tipografia e colore.
-
-- **Stato delle gare:**
-  - Badge di stato con colori distintivi:
-    - Completata: verde con testo bianco.
-    - In corso: verde con testo scuro.
-    - In programma: grigio scuro con testo bianco.
-  - Tutti i badge sono arrotondati, in grassetto e ben visibili all’interno delle card gara.
-
