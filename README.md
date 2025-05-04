@@ -980,4 +980,3 @@ CSS:
 
 - **.action-button:pressed**
   - `-fx-background-color: #357ABD`: Sfondo ancora più scuro alla pressione del pulsante.
-
