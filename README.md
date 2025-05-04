@@ -250,7 +250,7 @@ View:
 - **`stylesheets:`**
   - Collega il foglio di stile `championshipsMenùStyle.css` per la personalizzazione visiva dell'interfaccia.
 
-### 3)savedPilotsView.fxml
+### 4)savedPilotsView.fxml
 
 **Descrizione:**
 - Il file FXML descrive l'interfaccia utente per la schermata "Saved Pilots", che consente agli utenti di visualizzare un elenco di piloti salvati.
