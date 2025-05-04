@@ -23,8 +23,8 @@
    <children>
       <HBox prefHeight="46.0" prefWidth="515.0" spacing="10.0" alignment="CENTER">
          <children>
-
-            <TextField fx:id="searchField" />
+            <ImageView fx:id="searchIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <TextField fx:id="searchField" styleClass="search-field" promptText="Cerca pilota..."/>
          </children>
       </HBox>
       <ScrollPane fitToWidth="true" prefHeight="400.0">

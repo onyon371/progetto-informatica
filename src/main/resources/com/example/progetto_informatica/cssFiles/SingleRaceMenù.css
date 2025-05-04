@@ -115,3 +115,18 @@
 .separator {
     -fx-padding: 5 0;
 }
+/*Stile per il campo di ricerca (TextField)*/
+.search-field {
+    -fx-background-radius: 20; /* Bordo arrotondato dello sfondo */
+    -fx-border-radius: 20;     /* Bordo arrotondato del bordo */
+    -fx-padding: 8 12;         /* Spaziatura interna (verticale e orizzontale) */
+    -fx-font-size: 14px;       /* Dimensione del testo */
+    -fx-border-color: #ccc;    /* Colore del bordo grigio chiaro */
+    -fx-background-color: #ffffff; /* Sfondo bianco */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.5, 0.0, 1.0); /* Ombra leggera */
+}
+/*Effetto quando è selezionato*/
+.search-field:focused {
+    -fx-border-color: #40a8f5;  /* Colore azzurro del bordo al focus */
+    -fx-background-color: #eefaff; /* Sfondo azzurrino chiaro */
+}

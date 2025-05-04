@@ -10,11 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -27,7 +26,7 @@ public class SingleRaceMenùController implements Initializable {
     @FXML
     private VBox pilotsAnchor; // Contenitore per le card dei piloti
     @FXML
-    private ImageView imageView; // Immagine associata alla gara (non utilizzata nel codice fornito)
+    private ImageView searchIcon; // Immagine associata alla gara (non utilizzata nel codice fornito)
     @FXML
     private TextField searchField; // Campo di ricerca per cercare i piloti
 
@@ -37,6 +36,9 @@ public class SingleRaceMenùController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchField.setPromptText("Cerca pilota..."); // Imposta il testo di suggerimento per il campo di ricerca
+        // Carica l’immagine della lente
+        Image img = new Image(getClass().getResourceAsStream("/com/example/progetto_informatica/lente.png"));
+        searchIcon.setImage(img);
         // Listener per la ricerca: ogni volta che l'utente cambia il testo nella ricerca, viene eseguito il metodo renderPilotCards
         searchField.textProperty().addListener((obs, oldVal, newVal) -> {
             if (raceReference != null) {
