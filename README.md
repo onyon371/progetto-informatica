@@ -1,9 +1,9 @@
 Controller:
 -
-### 1) TimerViewController.java:
+### 1) StopWatchController.java:
 
 **Descrizione:**
-- Il TimerViewController gestisce la logica dell'interfaccia utente associata a un timer utilizzato per misurare e valutare le performance di un pilota all'interno di una gara o simulazione.
+- Il StopWatchController gestisce la logica dell'interfaccia utente associata a un timer utilizzato per misurare e valutare le performance di un pilota all'interno di una gara o simulazione.
 - Il timer mostra minuti, secondi e centesimi di secondo, consente l'avvio e l'arresto tramite pulsanti, e aggiorna automaticamente il punteggio del pilota in base al tempo registrato.
 
 **Funzionalità principali:**
@@ -48,7 +48,7 @@ Controller:
 
 - Il punteggio viene aggiornato nell'oggetto PilotPoint associato.
 
-### 2) SingleRaceMenùController.java
+### 2)SingleRaceMenùController.java
 
 **Descrizione:**
 - Il controller gestisce la schermata "SingleRaceMenù", che visualizza i piloti partecipanti a una gara specifica e offre funzionalità di ricerca e interazione.
