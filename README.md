@@ -48,9 +48,37 @@ Controller:
 
 - Il punteggio viene aggiornato nell'oggetto PilotPoint associato.
 
+### 2) SingleRaceMenùController.java
+
+**Descrizione:**
+- Il controller gestisce la schermata "SingleRaceMenù", che visualizza i piloti partecipanti a una gara specifica e offre funzionalità di ricerca e interazione.
+- Permette all'utente di vedere le card dei piloti con informazioni come posizione, statistiche e miglior tempo.
+- Gestisce la navigazione verso la schermata dei lanci di un pilota.
+
+**Funzionalità principali:**
+
+- **Inizializzazione dell'interfaccia:**
+  - Imposta il testo di suggerimento per il campo di ricerca.
+  - Carica l'icona della lente nel campo di ricerca.
+  - Aggiunge un listener al campo di ricerca, che aggiorna dinamicamente la visualizzazione delle card dei piloti al cambiamento del testo inserito.
+
+- **Gestione dei dati:**
+  - I riferimenti alla gara e al campionato vengono impostati tramite il metodo `initRaceReference()`.
+  - Quando viene avviato il controller, viene chiamato `renderPilotCards("")` per visualizzare tutte le card dei piloti.
+
+- **Rendering delle card dei piloti:**
+  - Il metodo `renderPilotCards(String filter)` filtra i piloti in base al testo di ricerca e aggiunge una card per ciascun pilota che soddisfa i criteri.
+  - Usa un `Set` per evitare la visualizzazione di duplicati nei nomi dei piloti.
+  - Ogni card viene creata con il metodo `createPilotCard(int i, int rank)`, che include informazioni come il nome del pilota, il numero di lanci effettuati, il miglior tempo e i punti totali.
+  - Le card sono dotate di effetti visivi (hover, ombra) per migliorare l'interazione utente.
+
+- **Navigazione:**
+  - Il metodo `handleBackToChampionshipMenù()` consente di tornare alla schermata del campionato principale, utilizzando il metodo `Main.openSingleChampionshipMenù()`.
+
+---
 Model:
 - 
-### 2) Pilot.java
+### 1) Pilot.java
 
 **Descrizione:**
 - La classe `Pilot` rappresenta un pilota all'interno del sistema.
@@ -67,7 +95,53 @@ Model:
   - `getters` e `setters` per ogni campo
   - `equals()` per confronto logico tra piloti
   - `toString()` per una rappresentazione leggibile (es. "Mario Rossi")
+### 2)Race.java
+   **Descrizione:**
+- La classe Race rappresenta una gara all'interno di un campionato.
+- Contiene informazioni sulla gara, come il nome, la data, lo stato della gara (aperta o chiusa), i piloti partecipanti e i lanci effettuati dai piloti.
+- Permette di gestire i punti dei piloti, visualizzare i migliori piloti in base ai punteggi e altre statistiche.
 
+**Funzionalità principali:**
+
+- **Attributi principali:**
+  - `name`: Il nome della gara.
+  - `date`: La data in cui si svolge la gara.
+  - `raceOpen`: Stato della gara (true se aperta, false se chiusa).
+  - `pilots`: Lista dei piloti che partecipano alla gara.
+  - `throwsPilots`: Lista degli oggetti Throws, che rappresentano i lanci effettuati dai piloti.
+
+- **Metodi principali:**
+  - **Costruttore (Race(String name, ArrayList<Pilot> pilots)):**
+    - Inizializza la gara con il nome, la lista dei piloti, e lo stato della gara come aperto.
+    - La data viene impostata alla data corrente.
+    - Ogni pilota riceve un oggetto Throws associato.
+
+  - **addPilot(Pilot p):**
+    - Aggiunge un pilota alla gara e crea un oggetto Throws per il pilota.
+
+  - **getPilotPointsList():**
+    - Restituisce una lista di oggetti PilotPoint, che rappresentano il punteggio di ogni pilota nella gara.
+
+  - **getBestPilotsAndPoints():**
+    - Restituisce una lista dei 3 migliori piloti della gara, ordinati per punteggio.
+    - Se ci sono 3 o meno piloti, restituisce tutti i piloti.
+
+  - **getMaxThrows():**
+    - Restituisce il numero massimo di lanci consentiti per la gara.
+
+  - **getThrowsCompletedOfSpecificPilot(int index):**
+    - Restituisce il numero di lanci completati da un pilota specifico, identificato dal suo indice nella lista dei piloti.
+
+  - **getMaxPoints():**
+    - Restituisce il punteggio massimo ottenibile da un pilota nella gara, basato sui lanci e sul punteggio per lancio.
+
+  - **getPointsOfSpecificPilot(int index):**
+    - Restituisce i punti totalizzati da un pilota specifico, identificato dal suo indice.
+
+  - **getBestTimeOfSpecificPilot(int index):**
+    - Restituisce il miglior tempo registrato da un pilota specifico. Se il pilota non ha effettuato lanci, restituisce `00:00:00`.
+
+---
 View:
 -
 ### 1) racesMenù.fxml
@@ -133,7 +207,7 @@ View:
   - Contenitore scrollabile dove vengono inseriti dinamicamente i componenti grafici che rappresentano i piloti.
   - Il contenitore:
     - `VBox fx:id="pilotsAnchor"` viene popolato a runtime tramite il controller.
-
+---
 CSS:
 -
 ### 1)SingleRaceMenù.css
@@ -180,3 +254,44 @@ CSS:
   - Stile moderno con bordi e sfondo arrotondati.
   - Ombra leggera e colore neutro.
   - Cambia colore al focus per feedback visivo.
+
+
+### 2)racesMenùStyle.css
+
+**Descrizione:**
+- Il foglio di stile `racesMenùStyle.css` definisce l'aspetto grafico della schermata del menù gare.
+- Fornisce un design chiaro, ordinato e coerente con l'interfaccia generale dell’applicazione.
+
+**Funzionalità principali:**
+
+- **Struttura principale:**
+  - Contenitore principale con sfondo grigio chiaro.
+  - Padding uniforme su tutti i lati.
+  - Distanziamento verticale regolare tra le varie sezioni.
+
+- **Pulsanti:**
+  - Colore di sfondo blu con testo bianco.
+  - Bordi arrotondati per un aspetto moderno.
+  - Effetto hover che scurisce leggermente il colore.
+  - Cursore a forma di mano per indicare l’interattività.
+
+- **Sezioni:**
+  - Contenitori bianchi per le aree principali (partecipanti, classifica, gare).
+  - Angoli arrotondati e ombre leggere per profondità visiva.
+  - Titoli in grassetto, colore scuro e padding per evidenziarli.
+
+- **ScrollPane:**
+  - Aree scrollabili con sfondo trasparente.
+  - Nessun bordo visibile.
+  - Liste interne con spaziatura ordinata e padding adeguato.
+
+- **Elenchi e voci:**
+  - Font leggibile e colori neutri per tutte le liste (vincitori, gare).
+  - Dati come titolo, data, stato e vincitore ben distinti tramite tipografia e colore.
+
+- **Stato delle gare:**
+  - Badge di stato con colori distintivi:
+    - Completata: verde con testo bianco.
+    - In corso: verde con testo scuro.
+    - In programma: grigio scuro con testo bianco.
+  - Tutti i badge sono arrotondati, in grassetto e ben visibili all’interno delle card gara.
