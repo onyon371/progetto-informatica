@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -12,15 +9,12 @@
         <URL value="@../cssFiles/savedPilots.css"/>
     </stylesheets>
 
-    <!-- Action Buttons -->
     <HBox spacing="10" styleClass="button-container">
         <Button text="Crea Nuovo Pilota" styleClass="action-button" onAction="#handleCreateNewPilot"/>
     </HBox>
 
-    <!-- Tournaments Container with ScrollPane -->
     <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS" fx:id="scrollPane">
         <VBox spacing="15" styleClass="pilots-list" fx:id="pilotsAnchor">
-            <!-- Tournaments will be added here dynamically -->
         </VBox>
     </ScrollPane>
 </VBox>

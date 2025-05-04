@@ -13,7 +13,6 @@
         <URL value="@../cssFiles/racesMenùStyle.css"/>
     </stylesheets>
 
-    <!-- Action Buttons -->
     <HBox spacing="10" styleClass="button-container">
         <Button text="Aggiungi Gara" styleClass="action-button" onAction="#handleAddNewRace"/>
         <Button text="Aggiungi Partecipante" styleClass="action-button" onAction="#handleAddNewPilot"/>
@@ -29,7 +28,6 @@
 
     <Separator styleClass="section-separator"/>
 
-    <!-- Recent Winners Section -->
     <VBox spacing="5" styleClass="section-container">
         <Label text="Classifica" styleClass="section-title"/>
         <VBox fx:id="pilotsRankingContainer" styleClass="winners-list"/>
@@ -41,7 +39,6 @@
         <Label text="Gare" styleClass="section-title"/>
     </VBox>
 
-    <!-- Races List with ScrollPane -->
     <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
         <VBox fx:id="racesContainer" styleClass="races-list"/>
     </ScrollPane>

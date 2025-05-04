@@ -26,7 +26,7 @@ public class Throws implements Serializable {
     public static final int nThrows = 4;
 
     // Numero di tempi da scartare (quelli peggiori)
-    private final int nDiscardedTimes = 1;
+    public static final int nDiscardedTimes = 1;
 
     // Costruttore: inizializza le liste
     public Throws() {
@@ -45,12 +45,12 @@ public class Throws implements Serializable {
         points.clear();
 
         for (int i = 0; i < times.size(); i++) {
-            if (times.get(i).compareTo(defaultTargetTime) == 0) {
+            if (times.get(i).equals(defaultTargetTime)) {
                 // Se il tempo è esattamente quello ideale, assegna il massimo punteggio
                 points.add(defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond());
             } else {
                 long deltaSeconds = times.get(i).until(defaultTargetTime, ChronoUnit.SECONDS);
-                if (deltaSeconds > 0) {
+                if (deltaSeconds < 0) {
                     // Tempo in ritardo → penalità maggiore
                     points.add((int) ((defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond()) - deltaSeconds * overTimePenality));
                 } else {
@@ -93,6 +93,7 @@ public class Throws implements Serializable {
             throw new RuntimeException("Throw limit reached");
         }
         times.add(time);
+        calculatePoints();
     }
 
     // Restituisce il punteggio massimo ottenibile per un singolo lancio
@@ -112,14 +113,17 @@ public class Throws implements Serializable {
 
     // Restituisce il miglior tempo tra quelli registrati
     public LocalTime getBestTime() {
-        LocalTime maxTime = LocalTime.of(0, 0, 0, 0);
+        if(times.isEmpty()) return LocalTime.of(0, 0, 0, 0);
 
-        for (LocalTime t : times) {
-            if (t.compareTo(maxTime) > 0) {
-                maxTime = t;
+        int best = 0;
+        int index = 0;
+        for (int i = 0; i < points.size(); i++) {
+            if (best < points.get(i)) {
+                best = points.get(i);
+                index = i;
             }
         }
-        return maxTime;
+        return times.get(index);
     }
 
     public ArrayList<LocalTime> getTimes()

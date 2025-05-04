@@ -4,6 +4,7 @@ import com.example.progetto_informatica.model.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -60,8 +61,8 @@ public class ShowThrowsController implements Initializable {
             // Controlla se ci sono dati per il lancio corrente (se esiste un lancio nella lista)
             try
             {
-                timeLabel = new Label("Tempo: " + raceReference.getThrows().get(i).getTimes().get(i)); // Mostra il tempo del lancio
-                pointsLabel = new Label("Punti: " + raceReference.getThrows().get(i).getPoints().get(i)); // Mostra i punti del lancio
+                timeLabel = new Label("Tempo: " + raceReference.getThrows().get(pilotIndex).getTimes().get(i)); // Mostra il tempo del lancio
+                pointsLabel = new Label("Punti: " + raceReference.getThrows().get(pilotIndex).getPoints().get(i)); // Mostra i punti del lancio
             }catch (Exception e)
             {
                 // Se non ci sono più lanci, mostra un valore di default ("-")
@@ -86,6 +87,17 @@ public class ShowThrowsController implements Initializable {
     @FXML
     private void handleExecuteThrow()
     {
-        Main.openStopWatchView(raceReference, pilotIndex);
+        if(raceReference.getThrows().get(pilotIndex).getThrowsDone() < Throws.getMaxThrows())
+        {
+        Main.openStopWatchView(raceReference, pilotIndex, championshipReference);
+        }else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore lancio");
+            alert.setHeaderText("Impossibile avviare il lancio");
+            alert.setContentText("Il pilota ha già effettuato il numero massimo di lanci!");
+            alert.showAndWait();
+        }
+
     }
 }

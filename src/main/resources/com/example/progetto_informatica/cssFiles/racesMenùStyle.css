@@ -1,16 +1,13 @@
-/* Main container styling */
 .main-container {
     -fx-padding: 20;
     -fx-background-color: #f5f5f5;
     -fx-spacing: 20;
 }
 
-/* Button container styling */
 .button-container {
     -fx-padding: 0 0 15 0;
 }
 
-/* Action buttons styling */
 .action-button {
     -fx-background-color: #4a90e2;
     -fx-text-fill: white;
@@ -24,7 +21,6 @@
     -fx-background-color: #3a7bc8;
 }
 
-/* Section styling */
 .section-container {
     -fx-padding: 10;
     -fx-background-color: white;
@@ -43,7 +39,6 @@
     -fx-padding: 5 0;
 }
 
-/* Winners list styling */
 .winners-list {
     -fx-spacing: 5;
 }
@@ -54,7 +49,6 @@
     -fx-padding: 3 10;
 }
 
-/* ScrollPane styling */
 .scroll-pane {
     -fx-background-color: transparent;
     -fx-padding: 0;
@@ -66,13 +60,11 @@
     -fx-background-color: transparent;
 }
 
-/* Races list styling */
 .races-list {
     -fx-spacing: 15;
     -fx-padding: 5;
 }
 
-/* Race container styling */
 .race-container {
     -fx-padding: 15;
     -fx-background-color: white;
@@ -131,7 +123,7 @@
 }
 
 .in-progress {
-    -fx-background-color: #FFC107;
+    -fx-background-color: #4CAF50;
     -fx-text-fill: #333;
 }
 

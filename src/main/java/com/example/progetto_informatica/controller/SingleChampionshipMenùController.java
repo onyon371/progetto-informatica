@@ -78,7 +78,7 @@ public class SingleChampionshipMenùController implements Initializable {
 
         // Per ogni pilota nella classifica, aggiungi il suo nome e punti
         bestPilots.forEach(pilot -> {
-            Label pilotLabel = new Label(counter.incrementAndGet() + " " + pilot.getP().toString() + " Punti: " + pilot.getPoints());
+            Label pilotLabel = new Label(counter.incrementAndGet() + ". " + pilot.getP().toString() + " Punti: " + pilot.getPoints());
             pilotLabel.getStyleClass().add("winner-name"); // Applica stile
             pilotsRankingContainer.getChildren().add(pilotLabel); // Aggiungi alla UI
         });
@@ -88,6 +88,7 @@ public class SingleChampionshipMenùController implements Initializable {
     private void removeRace(Race raceReference) {
         championshipReference.getRaces().remove(raceReference); // Rimuove la gara dalla lista
         addRacesCard(); // Ricarica le gare nella UI
+        setPilotsRankingContainer();
     }
 
     // Metodo che aggiunge una card per ogni gara nel contenitore delle gare

@@ -29,9 +29,17 @@ public class Race implements Serializable {
         this.raceOpen = true;
         this.date = LocalDate.now();
 
-        if(pilots.isEmpty()) this.pilots = new ArrayList<Pilot>();
-
         this.throwsPilots = new ArrayList<Throws>();
+        if(pilots.isEmpty())
+        {
+            this.pilots = new ArrayList<Pilot>();
+
+        }else {
+            for(int i = 0; i < pilots.size(); i++)
+            {
+                throwsPilots.add(new Throws());
+            }
+        }
     }
 
     // Aggiunge un pilota alla gara
@@ -133,7 +141,7 @@ public class Race implements Serializable {
 
     // Restituisce il punteggio massimo ottenibile
     public Integer getMaxPoints() {
-        return Throws.getMaxPoints();
+        return Throws.getMaxPoints() * (Throws.getMaxThrows()-Throws.nDiscardedTimes);
     }
 
     // Restituisce i punti totalizzati da un pilota specifico

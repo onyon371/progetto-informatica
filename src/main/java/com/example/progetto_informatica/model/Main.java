@@ -131,7 +131,7 @@ public class Main extends Application {
         }
     }
 
-    public static void openStopWatchView(Race raceReference, int pilotIndex)
+    public static void openStopWatchView(Race raceReference, int pilotIndex, Championship championshipReference)
     {
         if(stopWatchStage== null)stopWatchStage = new Stage();
         if(!stopWatchStage.isShowing())
@@ -144,7 +144,7 @@ public class Main extends Application {
                 Scene scene = new Scene(fxmlLoader.load(), 500, 500);
 
                 StopWatchController controller = fxmlLoader.getController();
-                controller.init(raceReference,pilotIndex);
+                controller.init(raceReference,pilotIndex, championshipReference);
                 stopWatchStage.setScene(scene);
                 stopWatchStage.show();
             } catch (IOException e) {

@@ -1,5 +1,6 @@
 package com.example.progetto_informatica.controller;
 
+import com.example.progetto_informatica.model.Championship;
 import com.example.progetto_informatica.model.Main;
 import com.example.progetto_informatica.model.Race;
 import com.example.progetto_informatica.model.Throws;
@@ -29,15 +30,18 @@ public class StopWatchController implements Initializable {
     private Race raceReference;
     private int pilotIndex;
 
+    private Championship championshipReference;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         stopButton.setDisable(true); // Disabilita il pulsante di stop all'inizio
     }
 
     // Metodo per inizializzare i dati del pilota e del suo punto
-    public void init(Race raceReference, int pilotIndex) {
+    public void init(Race raceReference, int pilotIndex, Championship championshipReference) {
         this.raceReference = raceReference;
         this.pilotIndex = pilotIndex;
+        this.championshipReference = championshipReference;
     }
 
     // Metodo per gestire l'inizio del timer
@@ -92,6 +96,7 @@ public class StopWatchController implements Initializable {
         }
 
         raceReference.getThrows().get(pilotIndex).addNewThrow(LocalTime.of(0,0,(int)totalSeconds,0));
+        Main.openShowThrowsView(pilotIndex, raceReference, championshipReference);
         Main.tryAndCloseSavedOtherView();
     }
 }

@@ -1,4 +1,3 @@
-/* Main Container Styling */
 .main-container {
     -fx-padding: 20;
     -fx-background-color: #f5f5f5;
@@ -6,14 +5,12 @@
     -fx-border-radius: 10px;
 }
 
-/* Button Container Styling */
 .button-container {
     -fx-alignment: center;
     -fx-spacing: 10;
     -fx-padding: 0 0 15 0;
 }
 
-/* Action buttons styling */
 .action-button {
     -fx-background-color: #4a90e2;
     -fx-text-fill: white;
@@ -31,7 +28,6 @@
     -fx-background-color: #357ABD;
 }
 
-/* ScrollPane Styling */
 .scroll-pane {
     -fx-background-color: transparent;
     -fx-padding: 0;
@@ -56,12 +52,10 @@
     -fx-background-radius: 5;
 }
 
-/* Pilots List Container */
 .pilots-list {
     -fx-padding: 5;
 }
 
-/* Pilot Container Styling */
 .pilot-container {
     -fx-padding: 15;
     -fx-background-color: white;
@@ -70,21 +64,18 @@
     -fx-spacing: 5;
 }
 
-/* Pilot Number Styling */
 .pilot-number {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
 }
 
-/* Pilot Data Styling */
 .pilot-data {
     -fx-font-size: 14px;
     -fx-text-fill: #666;
     -fx-padding: 0 10;
 }
 
-/* "Aggiungi" Button Styling */
 .pilot-container .action-button {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
@@ -101,12 +92,10 @@
     -fx-background-color: #388e3c;
 }
 
-/* Separator Styling */
 .separator {
     -fx-padding: 10 0;
 }
 
-/* Error Alert Styling */
 .alert-error {
     -fx-background-color: #f44336;
     -fx-text-fill: white;
@@ -114,18 +103,12 @@
     -fx-border-radius: 5px;
 }
 
-/* Menu a tre puntini */
 .three-dots {
     -fx-font-size: 14px;
     -fx-padding: 5;
     -fx-cursor: hand;
 }
 
-.three-dots:hover {
-    -fx-text-fill: #4a90e2; /* Colore blu per hover */
-}
-
-/* Menu a tre puntini opzioni */
 .menu-button {
     -fx-background-color: transparent;
     -fx-padding: 5 10;
@@ -134,12 +117,9 @@
     -fx-font-weight: normal;
 }
 
-/* Opzioni del menu a tre puntini */
 .menu-item {
     -fx-padding: 10;
     -fx-text-fill: #333;
 }
 
-.menu-item:hover {
-    -fx-background-color: #f0f0f0;
-}
+

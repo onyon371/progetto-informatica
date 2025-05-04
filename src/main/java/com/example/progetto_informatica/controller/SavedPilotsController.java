@@ -60,7 +60,11 @@ public class SavedPilotsController implements Initializable {
         Optional<String> pilotName = dialog.showAndWait();
 
         if (pilotName.isPresent() && !pilotName.get().isBlank()) {
+            dialog = new TextInputDialog();
+            dialog.setTitle("Aggiungi Pilota");
+            dialog.setHeaderText("Inserisci i dati del pilota che vuoi aggiungere!");
             dialog.setContentText("Cognome Pilota:");
+
             Optional<String> pilotSurname = dialog.showAndWait();
 
             if (pilotSurname.isPresent() && !pilotSurname.get().isBlank()) {
@@ -89,8 +93,10 @@ public class SavedPilotsController implements Initializable {
 
     // Stub per future funzioni di cancellazione piloti
     @FXML
-    void handleDeletePilots() {
-        // TODO: Implementare cancellazione piloti
+    void handleDeletePilots(Pilot p) {
+        savedPilots.remove(p);
+        savePilots();
+        addPilotsCard();
     }
 
     // Mostra nella GUI tutti i piloti salvati
@@ -131,7 +137,7 @@ public class SavedPilotsController implements Initializable {
 
             deleteItem.setOnAction(e->
             {
-                handleDeletePilots();
+                handleDeletePilots(pilot);
             });
 
             MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
