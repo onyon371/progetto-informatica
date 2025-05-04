@@ -815,3 +815,169 @@ CSS:
     - In corso: verde con testo scuro.
     - In programma: grigio scuro con testo bianco.
   - Tutti i badge sono arrotondati, in grassetto e ben visibili all’interno delle card gara.
+
+  
+### 3)savedPilots.css
+
+**Descrizione:**
+- Questo file CSS definisce lo stile della schermata "Saved Pilots", utilizzando classi JavaFX per migliorare l’aspetto grafico e l’esperienza utente.
+- Controlla layout, colori, padding, tipografia, interazioni (hover/pressed) e scrollbar.
+
+**Classi principali:**
+
+- **.main-container**
+  - `-fx-padding: 20`: Padding interno di 20 pixel.
+  - `-fx-background-color: #f5f5f5`: Sfondo grigio chiaro.
+  - `-fx-spacing: 15`: Spazio verticale tra i figli.
+  - `-fx-border-radius: 10px`: Bordi arrotondati.
+
+- **.button-container**
+  - `-fx-alignment: center`: Allineamento centrale dei contenuti.
+  - `-fx-spacing: 10`: Spaziatura orizzontale tra i figli.
+  - `-fx-padding: 0 0 15 0`: Padding inferiore di 15 pixel.
+
+- **.action-button**
+  - `-fx-background-color: #4a90e2`: Colore di sfondo blu.
+  - `-fx-text-fill: white`: Testo bianco.
+  - `-fx-font-weight: bold`: Testo in grassetto.
+  - `-fx-padding: 8 15`: Spaziatura interna.
+  - `-fx-background-radius: 5`: Bordi arrotondati.
+  - `-fx-cursor: hand`: Mostra una mano al passaggio del mouse.
+
+- **.action-button:hover**
+  - `-fx-background-color: #3a7bc8`: Sfondo più scuro al passaggio del mouse.
+
+- **.action-button:pressed**
+  - `-fx-background-color: #357ABD`: Sfondo ancora più scuro quando premuto.
+
+- **.scroll-pane**
+  - `-fx-background-color: transparent`: Sfondo trasparente.
+  - `-fx-padding: 0`: Nessun padding.
+  - `-fx-fit-to-width: true`: Adatta alla larghezza del contenitore.
+
+- **.scroll-pane .viewport**
+  - `-fx-background-color: transparent`: Viewport trasparente.
+
+- **.scroll-pane .scroll-bar:vertical**
+  - `-fx-background-color: transparent`: Barra verticale trasparente.
+
+- **.scroll-pane .scroll-bar:vertical .track**
+  - `-fx-background-color: transparent`: Traccia trasparente.
+  - `-fx-border-color: transparent`: Nessun bordo.
+
+- **.scroll-pane .scroll-bar:vertical .thumb**
+  - `-fx-background-color: #cccccc`: Colore grigio per il pollice della scrollbar.
+  - `-fx-background-radius: 5`: Arrotondamento del pollice.
+
+- **.pilots-list**
+  - `-fx-padding: 5`: Padding interno.
+
+- **.pilot-container**
+  - `-fx-padding: 15`: Spaziatura interna.
+  - `-fx-background-color: white`: Sfondo bianco.
+  - `-fx-background-radius: 8px`: Bordi arrotondati.
+  - `-fx-effect`: Ombra leggera per profondità.
+  - `-fx-spacing: 5`: Spaziatura verticale tra gli elementi interni.
+
+- **.pilot-number**
+  - `-fx-font-size: 16px`: Dimensione del font maggiore.
+  - `-fx-font-weight: bold`: Testo in grassetto.
+  - `-fx-text-fill: #333`: Testo grigio scuro.
+
+- **.pilot-data**
+  - `-fx-font-size: 14px`: Font standard.
+  - `-fx-text-fill: #666`: Testo grigio.
+  - `-fx-padding: 0 10`: Spaziatura orizzontale.
+
+- **.pilot-container .action-button**
+  - `-fx-background-color: #4CAF50`: Verde per azioni specifiche del pilota.
+  - `-fx-text-fill: white`: Testo bianco.
+  - `-fx-padding: 8 15`: Padding interno.
+  - `-fx-background-radius: 5`: Arrotondamento.
+  - `-fx-cursor: hand`: Cursore mano.
+
+- **.pilot-container .action-button:hover**
+  - `-fx-background-color: #45a049`: Verde più scuro al passaggio del mouse.
+
+- **.pilot-container .action-button:pressed**
+  - `-fx-background-color: #388e3c`: Verde più intenso alla pressione.
+
+- **.separator**
+  - `-fx-padding: 10 0`: Padding verticale.
+
+- **.alert-error**
+  - `-fx-background-color: #f44336`: Sfondo rosso per errori.
+  - `-fx-text-fill: white`: Testo bianco.
+  - `-fx-padding: 10px`: Padding interno.
+  - `-fx-border-radius: 5px`: Bordi arrotondati.
+
+- **.three-dots**
+  - `-fx-font-size: 14px`: Font standard.
+  - `-fx-padding: 5`: Padding interno.
+  - `-fx-cursor: hand`: Cursore a mano.
+
+- **.menu-button**
+  - `-fx-background-color: transparent`: Sfondo trasparente.
+  - `-fx-padding: 5 10`: Padding orizzontale.
+  - `-fx-border-radius: 5`: Bordi arrotondati.
+  - `-fx-font-size: 14px`: Dimensione del testo.
+  - `-fx-font-weight: normal`: Peso normale.
+
+- **.menu-item**
+  - `-fx-padding: 10`: Spaziatura interna.
+  - `-fx-text-fill: #333`: Testo grigio scuro.
+
+
+### 4)showThrowsStyle.css
+**Descrizione:**
+- Questo foglio di stile CSS personalizza la schermata dei dettagli di un pilota, includendo elementi come nome, modello, carte dei lanci, etichette e pulsanti d'azione.
+- Utilizza classi JavaFX per definire padding, colori, font e comportamenti interattivi (hover/pressed).
+
+**Classi principali:**
+
+- **.main-container**
+  - `-fx-padding: 20`: Padding interno uniforme di 20 pixel.
+  - `-fx-background-color: white`: Sfondo bianco per il contenitore principale.
+
+- **.pilot-name**
+  - `-fx-font-size: 30px`: Testo grande per il nome del pilota.
+  - `-fx-font-weight: bold`: Carattere in grassetto.
+
+- **.model-name**
+  - `-fx-font-size: 14px`: Dimensione minore per il nome del modello.
+  - `-fx-text-fill: gray`: Colore grigio.
+  - `-fx-translate-y: 10px`: Traslazione verticale per distanziarlo dal nome pilota.
+
+- **.throw-card**
+  - `-fx-background-color: #e2dede`: Sfondo grigio chiaro per ogni "carta lancio".
+  - `-fx-padding: 15`: Spaziatura interna.
+  - `-fx-border-radius: 10`: Bordi arrotondati.
+  - `-fx-background-radius: 10`: Arrotondamento anche dello sfondo.
+  - `-fx-border-color: black`: Bordo nero.
+  - `-fx-border-width: 1`: Spessore bordo di 1 pixel.
+
+- **.throw-card.error**
+  - `-fx-background-color: #f3b6b6`: Sfondo rosso chiaro per carte che indicano un errore.
+
+- **.throw-label**
+  - `-fx-font-weight: bold`: Testo in grassetto.
+  - `-fx-font-size: 16px`: Dimensione per etichette dei lanci.
+
+- **.throw-info**
+  - `-fx-font-size: 14px`: Dimensione del testo informativo.
+  - `-fx-text-fill: black`: Colore del testo nero.
+
+- **.action-button**
+  - `-fx-background-color: #4a90e2`: Sfondo blu principale.
+  - `-fx-text-fill: white`: Testo bianco.
+  - `-fx-font-weight: bold`: Testo in grassetto.
+  - `-fx-padding: 8 15`: Spaziatura interna.
+  - `-fx-background-radius: 5`: Arrotondamento dei bordi.
+  - `-fx-cursor: hand`: Cursore a mano al passaggio del mouse.
+
+- **.action-button:hover**
+  - `-fx-background-color: #3a7bc8`: Colore di sfondo più scuro al passaggio del mouse.
+
+- **.action-button:pressed**
+  - `-fx-background-color: #357ABD`: Sfondo ancora più scuro alla pressione del pulsante.
+
