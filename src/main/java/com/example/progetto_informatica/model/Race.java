@@ -29,13 +29,15 @@ public class Race implements Serializable {
         this.raceOpen = true;
         this.date = LocalDate.now();
 
-        this.pilots = new ArrayList<>();
-        this.throwsPilots = new ArrayList<>();
+        if(pilots.isEmpty()) this.pilots = new ArrayList<Pilot>();
+
+        this.throwsPilots = new ArrayList<Throws>();
     }
 
     // Aggiunge un pilota alla gara
     public void addPilot(Pilot p) {
         pilots.add(p);
+        throwsPilots.add(new Throws());
     }
 
     // Restituisce una lista di PilotPoint con i punti ottenuti da ciascun pilota

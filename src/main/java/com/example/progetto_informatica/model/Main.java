@@ -17,6 +17,9 @@ public class Main extends Application {
     // Finestra separata per la visualizzazione dei piloti salvati
     private static Stage pilotViewStage;
 
+    // Finestra separata per la visualizzazione dello StopWatch
+    private static Stage stopWatchStage;
+
     @Override
     public void start(Stage stage) throws IOException {
         // Metodo chiamato all'avvio dell'applicazione JavaFX
@@ -41,7 +44,7 @@ public class Main extends Application {
             mainStage.show();
 
             // Chiude la finestra dei piloti salvati se è aperta
-            tryAndCloseSavedPilotsView();
+            tryAndCloseSavedOtherView();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,7 +64,7 @@ public class Main extends Application {
             mainStage.show();
 
             // Chiude la finestra dei piloti salvati se è aperta
-            tryAndCloseSavedPilotsView();
+            tryAndCloseSavedOtherView();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +84,7 @@ public class Main extends Application {
             mainStage.show();
 
             // Chiude la finestra dei piloti salvati se è aperta
-            tryAndCloseSavedPilotsView();
+            tryAndCloseSavedOtherView();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,7 +111,7 @@ public class Main extends Application {
         }
     }
 
-    public static void openShowThrowsView(Pilot pilotReference, Race raceReference, Championship championshipReference, List<Throws> throwsList) {
+    public static void openShowThrowsView(int i, Race raceReference, Championship championshipReference) {
         // Apre la vista per mostrare i lanci di un pilota in una gara specifica
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/showThrows.fxml"));
@@ -116,21 +119,49 @@ public class Main extends Application {
 
             // Inizializza il controller con i dati dei lanci
             ShowThrowsController controller = fxmlLoader.getController();
-            controller.initThrowsData(pilotReference, championshipReference, raceReference, throwsList);
+            controller.initThrowsData(championshipReference, raceReference, i);
 
             mainStage.setScene(scene);
             mainStage.show();
+
+            tryAndCloseSavedOtherView();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void tryAndCloseSavedPilotsView() {
+    public static void openStopWatchView(Race raceReference, int pilotIndex)
+    {
+        if(stopWatchStage == null)
+        {
+            try
+            {
+                stopWatchStage = new Stage();
+                stopWatchStage.setTitle("Cronometro");
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/StopWatchView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+
+                StopWatchController controller = fxmlLoader.getController();
+                controller.init(raceReference,pilotIndex);
+                stopWatchStage.setScene(scene);
+                stopWatchStage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void tryAndCloseSavedOtherView() {
         // Chiude la finestra dei piloti salvati se è aperta
         if (pilotViewStage != null) {
             pilotViewStage.close();
             pilotViewStage = null;
+        }
+        if(stopWatchStage!=null)
+        {
+            stopWatchStage.close();
+            stopWatchStage = null;
         }
     }
 
