@@ -32,7 +32,7 @@ public class ShowThrowsController implements Initializable {
     public void initThrowsData(Championship championshipReference, Race raceReference, int i) {
         this.championshipReference = championshipReference;
         this.raceReference = raceReference;
-        this.pilotIndex = pilotIndex;
+        this.pilotIndex = i;
 
         // Chiamata per aggiungere le "cards" che mostrano i lanci
         addThrowsCards();
@@ -57,15 +57,13 @@ public class ShowThrowsController implements Initializable {
             // Variabili per tempo e punti
             Label timeLabel;
             Label pointsLabel;
-
             // Controlla se ci sono dati per il lancio corrente (se esiste un lancio nella lista)
-            try
+            if(i < raceReference.getThrows().get(pilotIndex).getThrowsDone())
             {
                 timeLabel = new Label("Tempo: " + raceReference.getThrows().get(pilotIndex).getTimes().get(i)); // Mostra il tempo del lancio
                 pointsLabel = new Label("Punti: " + raceReference.getThrows().get(pilotIndex).getPoints().get(i)); // Mostra i punti del lancio
-            }catch (Exception e)
+            }else
             {
-                // Se non ci sono più lanci, mostra un valore di default ("-")
                 timeLabel = new Label("Tempo: -");
                 pointsLabel = new Label("Punti: -");
             }
