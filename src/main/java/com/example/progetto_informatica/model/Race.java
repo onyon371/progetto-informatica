@@ -25,7 +25,7 @@ public class Race implements Serializable {
     // Costruttore: inizializza la gara con nome e lista di piloti
     public Race(String name, ArrayList<Pilot> pilots) {
         this.name = name;
-        this.pilots = pilots;
+        this.pilots = new ArrayList<Pilot>(pilots);
         this.raceOpen = true;
         this.date = LocalDate.now();
 
@@ -125,8 +125,10 @@ public class Race implements Serializable {
 
     // Restituisce il numero di lanci completati da un pilota specifico
     public Integer getThrowsCompletedOfSpecificPilot(int index) {
-        if (throwsPilots.isEmpty()) return 0;
-        return throwsPilots.get(index).getThrowsDone();
+        try
+        {
+            return throwsPilots.get(index).getThrowsDone();
+        }catch (Exception e) {return 0;}
     }
 
     // Restituisce il punteggio massimo ottenibile
@@ -136,13 +138,23 @@ public class Race implements Serializable {
 
     // Restituisce i punti totalizzati da un pilota specifico
     public Integer getPointsOfSpecificPilot(int index) {
-        if (throwsPilots.isEmpty()) return 0;
-        return throwsPilots.get(index).getTotPoints();
+        try
+        {
+            return throwsPilots.get(index).getTotPoints();
+        }catch (Exception e)
+        {
+            return 0;
+        }
     }
 
     // Restituisce il miglior tempo registrato da un pilota specifico
     public LocalTime getBestTimeOfSpecificPilot(int index) {
-        if (throwsPilots.isEmpty()) return LocalTime.of(0, 0, 0, 0);
-        return throwsPilots.get(index).getBestTime();
+        try
+        {
+            return throwsPilots.get(index).getBestTime();
+        }catch (Exception e)
+        {
+            return LocalTime.of(0, 0, 0, 0);
+        }
     }
 }

@@ -92,9 +92,9 @@ public class Main extends Application {
 
     public static void openSavedPilotsView(Championship championshipReference, SingleChampionshipMenùController singleChampionshipMenùControllerReference) {
         // Apre una finestra secondaria per gestire i piloti salvati
-        if (pilotViewStage == null) {
+        if(pilotViewStage==null) pilotViewStage = new Stage();
+        if (!pilotViewStage.isShowing()) {
             try {
-                pilotViewStage = new Stage();
                 pilotViewStage.setTitle("Gestione Piloti");
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/savedPilotsView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 500, 500);
@@ -133,11 +133,12 @@ public class Main extends Application {
 
     public static void openStopWatchView(Race raceReference, int pilotIndex)
     {
-        if(stopWatchStage == null)
+        if(stopWatchStage== null)stopWatchStage = new Stage();
+        if(!stopWatchStage.isShowing())
         {
             try
             {
-                stopWatchStage = new Stage();
+
                 stopWatchStage.setTitle("Cronometro");
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/StopWatchView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 500, 500);
@@ -156,12 +157,10 @@ public class Main extends Application {
         // Chiude la finestra dei piloti salvati se è aperta
         if (pilotViewStage != null) {
             pilotViewStage.close();
-            pilotViewStage = null;
         }
         if(stopWatchStage!=null)
         {
             stopWatchStage.close();
-            stopWatchStage = null;
         }
     }
 
