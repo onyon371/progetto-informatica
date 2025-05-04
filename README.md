@@ -14,9 +14,9 @@ Controller:
   - Centesimi di secondo
 
 **Calcolo e assegnazione del punteggio basato sul tempo impiegato:**
-  - Tempo massimo consentito: 240 secondi (4 minuti)
-  - Penalità: -2 punti per ogni secondo oltre il limite
-  - Punteggio minimo: 0 punti
+- Tempo massimo consentito: 240 secondi (4 minuti)
+- Penalità: -2 punti per ogni secondo oltre il limite
+- Punteggio minimo: 0 punti
 
 - Gestione dei pulsanti Start e Stop
 - Integrazione con i modelli Pilot e PilotPoint
@@ -150,33 +150,33 @@ CSS:
   - Spaziatura ordinata tra gli elementi.
 
 **Pulsanti:**
-  - Sfondo blu con testo bianco.
-  - Bordi arrotondati.
-  - Effetto hover che modifica leggermente il colore.
-  - Cursore a forma di mano per evidenziare la cliccabilità.
+- Sfondo blu con testo bianco.
+- Bordi arrotondati.
+- Effetto hover che modifica leggermente il colore.
+- Cursore a forma di mano per evidenziare la cliccabilità.
 
 **ScrollPane:**
-  - Sfondo trasparente.
-  - Scrollbar minimali:
-    - Solo il pollice visibile.
-    - Colore neutro e angoli arrotondati.
+- Sfondo trasparente.
+- Scrollbar minimali:
+  - Solo il pollice visibile.
+  - Colore neutro e angoli arrotondati.
 
 **Sezioni per tornei (Card)**
-  - Sfondo bianco.
-  - Bordi arrotondati.
-  - Ombra leggera per profondità visiva.
-  - Spaziatura interna coerente.
+- Sfondo bianco.
+- Bordi arrotondati.
+- Ombra leggera per profondità visiva.
+- Spaziatura interna coerente.
 
 **Etichette e titoli**
-  - Colore grigio scuro per etichette secondarie.
-  - Titoli più grandi e in grassetto.
+- Colore grigio scuro per etichette secondarie.
+- Titoli più grandi e in grassetto.
 
 **Etichette di stato**
-  - Giallo per “in corso”.
-  - Verde per “completato”.
-  - Etichette con bordi arrotondati, padding interno e testo evidenziato.
+- Giallo per “in corso”.
+- Verde per “completato”.
+- Etichette con bordi arrotondati, padding interno e testo evidenziato.
 
 **Campo di ricerca**
-  - Stile moderno con bordi e sfondo arrotondati.
-  - Ombra leggera e colore neutro.
-  - Cambia colore al focus per feedback visivo.
+- Stile moderno con bordi e sfondo arrotondati.
+- Ombra leggera e colore neutro.
+- Cambia colore al focus per feedback visivo.
