@@ -75,6 +75,207 @@ Controller:
 - **Navigazione:**
   - Il metodo `handleBackToChampionshipMenù()` consente di tornare alla schermata del campionato principale, utilizzando il metodo `Main.openSingleChampionshipMenù()`.
 
+### 3) SingleChampionshipMenùController.java
+
+**Descrizione:**
+- Il `SingleChampionshipMenùController` gestisce la schermata dedicata a un singolo campionato.
+- Permette di visualizzare informazioni generali sul campionato, inclusi:
+  - La lista dei partecipanti
+  - La classifica aggiornata dei piloti
+  - Le gare create e i relativi dettagli
+- Offre inoltre funzionalità per aggiungere gare e piloti, o gestire le gare esistenti.
+
+**Funzionalità principali:**
+
+- **Visualizzazione partecipanti:**
+  - Mostra in ordine numerato i piloti iscritti al campionato.
+
+- **Visualizzazione classifica:**
+  - Mostra i piloti ordinati per punteggio, con posizione e punti totali.
+
+- **Visualizzazione gare:**
+  - Ogni gara viene rappresentata come una card con nome, data, partecipanti, stato e vincitore (se disponibile).
+
+- **Gestione gare:**
+  - Possibilità di aggiungere nuove gare o eliminarle.
+
+- **Navigazione:**
+  - Ritorno al menù generale dei campionati e apertura di viste specifiche per gare o piloti.
+
+**Metodi principali:**
+
+- `void initialize(URL location, ResourceBundle resources)`
+  - Inizializza il controller impostando a `null` il riferimento al campionato.
+
+- `void initChampionhip(Championship championshipReference)`
+  - Inizializza il controller con il campionato selezionato, caricando:
+    - Partecipanti (`setParticipantsContainer`)
+    - Classifica (`setPilotsRankingContainer`)
+    - Gare (`addRacesCard`)
+
+- `void setParticipantsContainer()`
+  - Mostra i partecipanti del campionato:
+    - Se la lista è vuota, visualizza "Nessun Partecipante!"
+    - Altrimenti elenca tutti i piloti con numerazione.
+
+- `void setPilotsRankingContainer()`
+  - Mostra la classifica piloti:
+    - Se vuota, visualizza "Classifica Vuota!"
+    - Altrimenti mostra ogni pilota con posizione e punteggio.
+
+- `void addRacesCard()`
+  - Crea dinamicamente le card per ciascuna gara:
+    - Mostra nome, data, numero partecipanti, stato (In corso / Terminata), vincitore (se presente)
+    - Ogni card può essere cliccata per aprire la vista
+
+### 4)ShowThrowsController.java
+
+**Descrizione:**
+- Il `ShowThrowsController` gestisce la schermata in cui vengono visualizzati i lanci effettuati da un pilota all'interno di una gara specifica.
+- Consente la consultazione dei tempi e dei punteggi relativi a ciascun lancio ed eventualmente l’esecuzione di un nuovo lancio, se non è stato ancora raggiunto il numero massimo consentito.
+
+**Funzionalità principali:**
+
+- **Visualizzazione dei lanci effettuati:**
+  - Ogni lancio è rappresentato da una card che mostra:
+    - Numero del lancio
+    - Tempo registrato
+    - Punti ottenuti
+
+- **Gestione lancio:**
+  - Permette l’avvio di un nuovo lancio tramite cronometro, se non è stato ancora raggiunto il limite massimo.
+
+- **Navigazione:**
+  - Gestione del ritorno alla schermata precedente relativa alla gara.
+
+**Metodi principali:**
+
+- `void initialize(URL location, ResourceBundle resources)`
+  - Metodo standard di inizializzazione del controller (attualmente non utilizzato direttamente).
+
+- `void initThrowsData(Championship championshipReference, Race raceReference, int i)`
+  - Inizializza il controller con:
+    - Riferimento al campionato
+    - Riferimento alla gara
+    - Indice del pilota selezionato
+  - Chiama `addThrowsCards()` per aggiornare la visualizzazione.
+
+- `private void addThrowsCards()`
+  - Costruisce dinamicamente la visualizzazione delle card dei lanci:
+    - Per ogni lancio (fino a `Throws.nThrows`):
+      - Se il lancio è stato effettuato, mostra tempo e punti
+      - Altrimenti, mostra “Tempo: -” e “Punti: -”
+    - Le card sono aggiunte al contenitore `throwsAnchor` e stilizzate per chiarezza visiva.
+
+- `@FXML void handleExecuteThrow()`
+  - Controlla se il pilota ha ancora lanci disponibili:
+    - Se sì, apre la vista `StopWatchView` per misurare un nuovo lancio
+    - Se no, mostra un messaggio d’errore
+
+- `@FXML void handleBackToSavedPilotsView()`
+  - Torna alla schermata precedente, ossia quella della gara (`SpecificRaceMenù`).
+
+**Logica del dominio:**
+
+- **Numero massimo di lanci:** controllato tramite `Throws.getMaxThrows()`
+- **Condizione per nuovo lancio:** confronta il numero di lanci effettuati (`getThrowsDone()`) con il massimo
+
+### 5)SavedPilotsController.java
+
+**Descrizione:**
+- Il `SavedPilotsController` gestisce la visualizzazione, creazione e rimozione dei piloti salvati, che possono essere successivamente aggiunti a un campionato.
+- Si interfaccia con il `SingleChampionshipMenùController` per aggiornare la lista dei partecipanti al campionato selezionato.
+- I dati dei piloti vengono salvati e caricati da un file binario (`pilots.bin`).
+
+**Funzionalità principali:**
+
+- **Visualizzazione piloti salvati:**
+  - Ogni pilota è mostrato tramite una card contenente:
+    - Numero progressivo
+    - Nome e cognome
+    - Pulsante per aggiungerlo al campionato attivo
+    - Menu opzioni per la rimozione del pilota
+
+- **Aggiunta pilota:**
+  - Permette all’utente di inserire nome e cognome tramite due finestre di dialogo successive.
+  - Se il pilota non è già presente, viene salvato su file e visualizzato.
+
+- **Eliminazione pilota:**
+  - Rimuove un pilota dalla lista dei salvati, aggiorna l’interfaccia e salva i dati aggiornati.
+
+- **Aggiunta al campionato:**
+  - Ogni pilota può essere aggiunto al campionato in corso (se non già presente).
+  - Se l’aggiunta ha successo, vengono aggiornati i partecipanti e le relative gare nel controller del campionato.
+
+- **Persistenza dati:**
+  - I piloti vengono caricati e salvati da/in un file binario chiamato `pilots.bin`.
+
+**Metodi principali:**
+
+- `void initialize(URL location, ResourceBundle resources)`
+  - Metodo chiamato automaticamente alla creazione del controller.
+  - Imposta il riferimento al campionato a `null`.
+
+- `void initChampionship(Championship championshipReference, SingleChampionshipMenùController singleChampionshipMenùControllerReference)`
+  - Inizializza i riferimenti al campionato attivo e al relativo controller.
+  - Carica i piloti salvati e aggiorna
+
+### 6)AllChampionshipsMenùController.java
+
+**Descrizione:**
+- Il controller `AllChampionshipsMenùController` gestisce la schermata principale dell'applicazione dove vengono mostrati tutti i campionati disponibili.
+- Permette la visualizzazione, creazione ed eliminazione dei campionati.
+- I campionati sono rappresentati da schede interattive (cards), e i dati vengono caricati e salvati da/verso un file binario (`save.bin`).
+
+**Funzionalità principali:**
+
+- **Visualizzazione interfaccia campionati:**
+  - Ogni campionato è visualizzato tramite una card che mostra:
+    - Nome del campionato
+    - Anno (assegnato automaticamente all’anno corrente alla creazione)
+    - Numero di partecipanti
+    - Stato del campionato (Aperto / Terminato)
+  - Ogni card contiene anche un menu con opzione per eliminare il campionato.
+
+- **Creazione campionato:**
+  - L’utente può creare un nuovo campionato inserendo un nome tramite una finestra di dialogo.
+  - Il nuovo campionato viene aggiunto alla lista e viene creata dinamicamente la relativa card.
+
+- **Eliminazione campionato:**
+  - Ogni card include un’opzione per rimuovere il campionato selezionato, con aggiornamento automatico dell’interfaccia.
+
+- **Persistenza dati:**
+  - I campionati vengono salvati e caricati da un file binario chiamato `save.bin` mediante serializzazione.
+
+**Metodi principali:**
+
+- `void initialize(URL location, ResourceBundle resources)`
+  - Metodo di inizializzazione automatico.
+  - Carica i campionati da file (se non già presenti) e crea le rispettive schede grafiche.
+
+- `void handleAddTournament()`
+  - Mostra un `TextInputDialog` per inserire il nome di un nuovo campionato.
+  - Crea un nuovo oggetto `Championship`, lo aggiunge alla lista e ne genera la card visiva.
+  - Mostra un errore se il nome inserito è vuoto.
+
+- `void deleteTournament(Championship championshipReference)`
+  - Rimuove un campionato dalla lista e ricarica dinamicamente l’interfaccia.
+
+- `void addAllChampionshipsCards()`
+  - Cancella tutte le schede visive correnti e le ricrea sulla base della lista aggiornata.
+
+- `void addTournamentCard(String year, String title, String participants, boolean status, Championship championshipReference)`
+  - Crea graficamente una card per un singolo campionato.
+  - Imposta:
+    - Testo descrittivo (nome, anno, partecipanti, stato)
+    - Azione di apertura al click
+    - Menu per eliminazione del campionato
+
+- `void getChampionships()`
+  - Carica da file `save.bin` la lista dei campionati salvati.
+
+- `static void saveChampionships()`
+  - Salva la lista attuale di campionati in `save.bin` tramite serializzazione.
 ---
 Model:
 - 
@@ -141,10 +342,130 @@ Model:
   - **getBestTimeOfSpecificPilot(int index):**
     - Restituisce il miglior tempo registrato da un pilota specifico. Se il pilota non ha effettuato lanci, restituisce `00:00:00`.
 
+### 3) PilotPoint.java
+
+**Descrizione:**
+  - La classe `PilotPoint` rappresenta l'associazione tra un pilota e il punteggio da lui totalizzato in una gara.
+  - Viene utilizzata per gestire classifiche, statistiche e visualizzare i risultati dei piloti.
+
+**Funzionalità principali:**
+
+- Rappresentazione del punteggio associato a un pilota con:
+  - Oggetto `Pilot` (`p`)
+  - Intero `points`, che rappresenta il punteggio totalizzato
+
+- Implementazione dei metodi:
+  - `getP()`: restituisce il pilota associato
+  - `setP(Pilot p)`: imposta il pilota associato
+  - `getPoints()`: restituisce il punteggio del pilota
+  - `setPoints(Integer points)`: imposta il punteggio del pilota
+
+### 4) Throws.java
+
+**Descrizione:**
+  - La classe `Throws` rappresenta l’insieme dei lanci effettuati da un pilota durante una gara.
+  - Contiene i tempi registrati per ogni lancio, calcola i punteggi associati e gestisce il totale dei punti considerando solo i migliori lanci.
+  - Permette di simulare l’effetto di un tempo ideale con penalità diverse in base alla distanza da tale tempo.
+
+**Funzionalità principali:**
+
+- **Attributi principali:**
+  - `times`: Lista di oggetti `LocalTime` che rappresentano i tempi registrati per ogni lancio.
+  - `points`: Lista di interi, ciascuno rappresentante il punteggio calcolato per un lancio.
+  - `defaultTargetTime`: Tempo ideale da raggiungere (4 minuti esatti).
+  - `underTimePenality`: Penalità per ogni secondo sotto il tempo ideale (1 punto per secondo).
+  - `overTimePenality`: Penalità per ogni secondo oltre il tempo ideale (2 punti per secondo).
+  - `nThrows`: Numero massimo di lanci consentiti (4).
+  - `nDiscardedTimes`: Numero di lanci da scartare (quelli peggiori, 1 di default).
+
+- **Metodi principali:**
+  - **Costruttore (`Throws()`):**
+    - Inizializza le liste dei tempi e dei punteggi.
+
+  - **`addNewThrow(LocalTime time)`:**
+    - Aggiunge un nuovo lancio con il tempo specificato.
+    - Se viene superato il numero massimo di lanci, genera un'eccezione.
+
+  - **`getPoints()`:**
+    - Calcola e restituisce i punteggi di tutti i lanci effettuati.
+
+  - **`getTotPoints()`:**
+    - Calcola e restituisce la somma dei migliori punteggi, escludendo i peggiori.
+
+  - **`getMaxPoints()`:**
+    - Restituisce il punteggio massimo ottenibile per un singolo lancio.
+
+  - **`getMaxThrows()`:**
+    - Restituisce il numero massimo di lanci consentiti.
+
+  - **`getThrowsDone()`:**
+    - Restituisce il numero di lanci effettuati.
+
+  - **`getBestTime()`:**
+    - Restituisce il miglior tempo tra quelli registrati (in base al punteggio).
+    - Se non ci sono lanci, restituisce `00:00:00`.
+
+  - **`getTimes()`:**
+    - Restituisce la lista di tutti i tempi registrati.
+### 5) Championship.java
+
+**Descrizione:**
+  - La classe `Championship` rappresenta un campionato, contenente più gare (`Race`) e piloti (`Pilot`).
+  - Gestisce lo stato del campionato, i partecipanti e permette di aggiungere nuove gare o piloti.
+  - Fornisce funzionalità per calcolare i migliori piloti in base alla somma dei punteggi ottenuti nelle gare.
+
+**Funzionalità principali:**
+
+- **Attributi principali:**
+  - `races`: Lista delle gare appartenenti al campionato.
+  - `championshipName`: Nome del campionato.
+  - `championshipYear`: Anno in cui si svolge il campionato.
+  - `championshipOpen`: Booleano che indica se il campionato è ancora aperto.
+  - `pilots`: Lista dei piloti iscritti al campionato.
+
+- **Metodi principali:**
+  - **Costruttore (`Championship(String championshipName, int championshipYear)`):**
+    - Inizializza il nome, anno, stato (aperto), la lista dei piloti e delle gare.
+
+  - **`addPilot(Pilot p)`:**
+    - Aggiunge un nuovo pilota al campionato.
+    - Il pilota viene automaticamente aggiunto anche a tutte le gare esistenti.
+    - Lancia un’eccezione se il pilota è già presente.
+
+  - **`addRace(String raceName)`:**
+    - Crea una nuova gara con il nome specificato e vi assegna tutti i piloti attuali.
+
+  - **`getBestPilotsAndPoints()`:**
+    - Calcola e restituisce una lista con i 3 piloti migliori in base alla somma dei punti ottenuti in tutte le gare.
+    - Se ci sono meno di 3 piloti, restituisce comunque quelli presenti.
+
+  - **`getChampionshipName()`:**
+    - Restituisce il nome del campionato.
+
+  - **`getChampionshipYear()`:**
+    - Restituisce l'anno del campionato.
+
+  - **`getChampionshipParticipantsNumber()`:**
+    - Restituisce il numero di piloti iscritti al campionato.
+
+  - **`isChampionshipOpen()`:**
+    - Ritorna `true` se il campionato è ancora aperto.
+
+  - **`getRaces()`:**
+    - Restituisce la lista delle gare del campionato.
+
+  - **`getPilots()`:**
+    - Restituisce la lista dei piloti iscritti.
+
+  - **`setPilots(ArrayList<Pilot> pilots)`:**
+    - Imposta una nuova lista di piloti (es. caricati da file).
+
+  - **`toString()`**
+    - Ritorna una stringa rappresentativa del campionato con il suo nome.
+
 ---
 View:
--
-### 1) racesMenù.fxml
+### 1)racesMenù.fxml
 
 **Descrizione:**
 - Il file `racesMenù.fxml` definisce l'interfaccia grafica per il menù delle gare di un singolo campionato.
@@ -156,30 +477,33 @@ View:
 
 - L’interfaccia è strutturata verticalmente tramite un contenitore `VBox`, suddivisa in cinque sezioni principali:
 
-  **1. Barra Azioni (HBox)**
+  **Barra Azioni (HBox)**
   - Contiene tre pulsanti per le azioni principali:
     - Aggiungi Gara → `handleAddNewRace`
     - Aggiungi Partecipante → `handleAddNewPilot`
     - Indietro → `handleBackToChampionshipMenù`
 
-  **2. Sezione Partecipanti**
+  **Sezione Partecipanti**
   - Visualizza la lista dei partecipanti al campionato.
   - È presente un contenitore scrollabile (`ScrollPane`) con:
     - `VBox fx:id="pilotsParticipantsContainer"` popolato dinamicamente con i partecipanti.
 
-  **3. Classifica**
+  **Classifica**
   - Mostra la classifica attuale del campionato.
   - È presente un:
     - `VBox fx:id="pilotsRankingContainer"` popolato dinamicamente con i punteggi dei piloti.
 
-  **4. Titolo Gare**
+  **Titolo Gare**
   - Visualizza semplicemente l’etichetta “Gare” al centro dell’interfaccia.
 
-  **5. Lista Gare**
+  **Lista Gare**
   - Contiene l’elenco delle gare create.
   - È presente un contenitore scrollabile (`ScrollPane`) con:
     - `VBox fx:id="racesContainer"` popolato dinamicamente con i dati di ogni gara.
-### 2) SingleRaceMenù.fxml
+
+---
+
+### 2)SingleRaceMenù.fxml
 
 **Descrizione:**
 - Il file `SingleRaceMenù.fxml` definisce l'interfaccia grafica per la gestione di una singola gara.
@@ -194,19 +518,20 @@ View:
 
 - L'interfaccia è organizzata verticalmente tramite un contenitore principale `VBox` e presenta tre sezioni principali:
 
-  **1. Barra dei Pulsanti**
+  **Barra dei Pulsanti**
   - Contiene un solo pulsante:
     - "Indietro", che richiama il metodo `handleBackToChampionshipMenù()` nel controller.
 
-  **2. Barra di Ricerca Pilota**
+  **Barra di Ricerca Pilota**
   - Icona di ricerca (`ImageView`) decorativa.
   - Campo di testo:
     - `TextField fx:id="searchField"` con `promptText` per l’inserimento del nome o cognome del pilota da cercare.
 
-  **3. Elenco dei Piloti (ScrollPane)**
+  **Elenco dei Piloti (ScrollPane)**
   - Contenitore scrollabile dove vengono inseriti dinamicamente i componenti grafici che rappresentano i piloti.
   - Il contenitore:
     - `VBox fx:id="pilotsAnchor"` viene popolato a runtime tramite il controller.
+
     
 ### 3)championshipsMenù.fxml
 
@@ -293,6 +618,114 @@ View:
     - `spacing="15"`: Distanza verticale tra gli elementi della lista dei piloti.
     - `styleClass="pilots-list"`: Classe CSS per stilizzare l'elenco dei piloti.
     - `fx:id="pilotsAnchor"`: Identificatore per accedere alla lista dei piloti dal controller.
+
+### 5) ShowThrows.fxml
+
+**Descrizione:**
+- Il file `ShowThrows.fxml` definisce l'interfaccia grafica per la schermata dedicata alla gestione e visualizzazione dei lanci effettuati da un pilota.
+- L’interfaccia consente di eseguire nuovi lanci, tornare alla schermata precedente e visualizzare in modo ordinato l’elenco dei lanci già effettuati.
+- È collegata al controller `ShowThrowsController`.
+  - Il layout grafico è personalizzato tramite il foglio di stile `showThrowsStyle.css`.
+
+**Struttura principale:**
+
+- **VBox (root element):**
+  - `spacing="20"`
+  - `styleClass="main-container"`
+  - `fx:controller="com.example.progetto_informatica.controller.ShowThrowsController"`
+
+- **Foglio di stile:**
+  - `stylesheets:` `showThrowsStyle.css`
+
+**Componenti principali:**
+
+- **HBox (barra dei pulsanti):**
+  - `spacing="10"`
+  - `styleClass="button-container"`
+
+  - **Button "Effettua Lancio":**
+    - `onAction="#handleExecuteThrow"`
+    - `styleClass="action-button"`
+
+  - **Button "Indietro":**
+    - `onAction="#handleBackToSavedPilotsView"`
+    - `styleClass="action-button"`
+
+- **Label (nome pilota):**
+  - `fx:id="pilotNameLabel"`
+  - `styleClass="pilot-name-title"`
+
+- **ScrollPane (contenitore lanci):**
+  - `fitToWidth="true"`
+  - `styleClass="scroll-pane"`
+  - Contiene:
+    - **VBox fx:id="throwsAnchor"**
+      - `spacing="15"`
+
+### 6) StopWatchView.fxml
+
+**Descrizione:**
+- Il file `StopWatchView.fxml` definisce l'interfaccia grafica per la schermata dedicata al cronometro, utilizzato per la misurazione del tempo in contesti come gare o simulazioni.
+- L’interfaccia consente di avviare e arrestare il conteggio del tempo, visualizzando minuti, secondi e centesimi di secondo in tempo reale.
+- È collegata al controller `StopWatchController`.
+- Il layout grafico è personalizzato tramite il foglio di stile `StopWatchViewStyle.css`.
+
+**Struttura della GUI:**
+
+- L’interfaccia è organizzata verticalmente tramite un contenitore principale `VBox`, suddiviso in tre sezioni principali:
+
+  **1. Titolo della Schermata (Label)**
+  - Etichetta con testo “CRONOMETRO”.
+  - Stile:
+    - Testo centrato.
+    - Grassetto.
+    - Dimensione ampia: `-fx-font-size: 36px`.
+  - Funzione descrittiva per indicare la schermata all’utente.
+
+  **2. Visualizzazione Tempo (HBox)**
+  - Contenitore orizzontale per la visualizzazione del tempo.
+  - Include tre `VBox`, una per ciascuna unità di misura:
+
+    - **Minuti:**
+      - Label statica: “minuti”.
+      - Label dinamica: `fx:id="minutesLabel"` inizializzata a “00”.
+
+    - **Secondi:**
+      - Label statica: “secondi”.
+      - Label dinamica: `fx:id="secondsLabel"` inizializzata a “00”.
+
+    - **Centesimi:**
+      - Label statica: “centesimi”.
+      - Label dinamica: `fx:id="millisecondsLabel"` inizializzata a “00”.
+
+  - Ogni `VBox` è:
+    - Allineata al centro.
+    - Stilizzata con bordi, padding e spaziatura omogenei per leggibilità.
+    - Distribuita equamente all'interno dell'`HBox`.
+
+  **3. Pulsanti di Controllo (HBox)**
+  - Contenitore orizzontale per i pulsanti operativi:
+
+    - **Pulsante "START":**
+      - `fx:id="startButton"`
+      - `onAction="#handleStart"`
+      - Stile: classe CSS `start-button`.
+
+    - **Pulsante "STOP":**
+      - `fx:id="stopButton"`
+      - `onAction="#handleStop"`
+      - Stile: classe CSS `stop-button`.
+
+  - L’`HBox` ha:
+    - `spacing="30"` per separazione visiva chiara.
+    - Allineamento centrato per un layout bilanciato.
+
+**Stili CSS collegati:**
+- Foglio di stile: `StopWatchViewStyle.css`
+- Definisce:
+  - Stile del contenitore principale: `main-container`.
+  - Colori, bordi e padding delle sezioni dei tempi.
+  - Stili dei pulsanti (`start-button`, `stop-button`), inclusi effetti hover, transizioni ed eventuali ombre.
 
 ---
 CSS:
