@@ -80,6 +80,6 @@ public class ShowThrowsController implements Initializable {
     @FXML
     private void handleBackToSavedPilotsView() {
         // Torna alla vista dei lanci precedenti
-        Main.openShowThrowsView(pilotReference, raceReference, championshipReference, throwsList);
+        Main.openSpecificRaceMenù(raceReference,championshipReference);
     }
 }

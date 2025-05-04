@@ -36,3 +36,21 @@
     -fx-font-size: 14px;
     -fx-text-fill: black;
 }
+
+/* Action buttons styling */
+.action-button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #3a7bc8;
+}
+
+.action-button:pressed {
+    -fx-background-color: #357ABD;
+}

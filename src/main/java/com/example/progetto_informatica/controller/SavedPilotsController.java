@@ -5,6 +5,7 @@ import com.example.progetto_informatica.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
@@ -99,7 +100,6 @@ public class SavedPilotsController implements Initializable {
 
         savedPilots.forEach(pilot -> {
             HBox pilotBox = new HBox();
-            pilotBox.getStyleClass().add("pilot-container");
 
             Label pilotNumber = new Label(Integer.toString(counter.incrementAndGet()));
             pilotNumber.getStyleClass().add("pilot-number");
@@ -119,8 +119,37 @@ public class SavedPilotsController implements Initializable {
                 }
             });
 
+            // Crea il menu con le opzioni "Modifica" e "Elimina"
+            MenuItem editItem = new MenuItem("Modifica");
+            MenuItem deleteItem = new MenuItem("Elimina");
+
+            editItem.setOnAction(e -> {
+                System.out.println("Modifica ");
+                handleEditPilots();
+            });
+
+            deleteItem.setOnAction(e->
+            {
+                handleDeletePilots();
+            });
+
+            MenuButton optionsButton = new MenuButton("⋮", null, editItem, deleteItem);
+            optionsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: black;");
+            optionsButton.getStyleClass().add("three-dots");
+
+
             pilotBox.getChildren().addAll(pilotNumber, pilotData, addPilotToChampionship);
-            pilotsAnchor.getChildren().add(pilotBox);
+
+
+            BorderPane savedPilotsPane = new BorderPane();
+            savedPilotsPane.setCenter(pilotBox);
+            savedPilotsPane.setRight(optionsButton);
+            savedPilotsPane.setStyle("-fx-padding: 10;");
+            savedPilotsPane.getStyleClass().add("pilot-container");
+
+            optionsButton.setOnMouseClicked(e -> e.consume());
+
+            pilotsAnchor.getChildren().add(savedPilotsPane);
         });
     }
 

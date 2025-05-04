@@ -51,7 +51,7 @@ public class Main extends Application {
         // Apre il menù di un singolo campionato selezionato
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/racesMenù.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1000, 650);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
 
             // Inizializza il controller con il riferimento al campionato
             SingleChampionshipMenùController controller = fxmlLoader.getController();
@@ -94,7 +94,7 @@ public class Main extends Application {
                 pilotViewStage = new Stage();
                 pilotViewStage.setTitle("Gestione Piloti");
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/progetto_informatica/viewFiles/savedPilotsView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+                Scene scene = new Scene(fxmlLoader.load(), 500, 500);
 
                 // Inizializza il controller con il campionato e controller di riferimento
                 SavedPilotsController controller = fxmlLoader.getController();
