@@ -20,7 +20,7 @@ public class Throws implements Serializable {
     private final int underTimePenality = 1;
 
     // Penalità per lanci sopra il tempo ideale (2 punti per ogni secondo in più)
-    private final int overTimePenality = underTimePenality * 2;
+    private final int overTimePenality = 2;
 
     // Numero massimo di lanci consentiti
     public static final int nThrows = 4;
@@ -50,13 +50,14 @@ public class Throws implements Serializable {
                 points.add(defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond());
             } else {
                 long deltaSeconds = times.get(i).until(defaultTargetTime, ChronoUnit.SECONDS);
+                long deltaPositivo = Math.abs(deltaSeconds);
+
                 if (deltaSeconds < 0) {
-                    // Tempo in ritardo → penalità maggiore
-                    points.add((int) ((defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond()) - deltaSeconds * overTimePenality));
+                    points.add((int)((defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond()) - deltaPositivo * overTimePenality));
                 } else {
-                    // Tempo in anticipo → penalità minore
-                    points.add((int) ((defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond()) - deltaSeconds * underTimePenality));
+                    points.add((int)((defaultTargetTime.getMinute() * 60 + defaultTargetTime.getSecond()) - deltaPositivo * underTimePenality));
                 }
+
             }
         }
     }

@@ -66,6 +66,8 @@ public class SingleChampionshipMenùController implements Initializable {
     private void setPilotsRankingContainer() {
         pilotsRankingContainer.getChildren().clear(); // Pulisce la classifica esistente
         ArrayList<PilotPoint> bestPilots = championshipReference.getBestPilotsAndPoints(); // Ottiene i piloti e i punti
+        bestPilots.sort((p1, p2) -> Integer.compare(p2.getPoints(), p1.getPoints()));
+
 
         AtomicInteger counter = new AtomicInteger(0); // Variabile per numerare i piloti nella classifica
 

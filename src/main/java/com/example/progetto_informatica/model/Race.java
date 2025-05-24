@@ -85,6 +85,7 @@ public class Race implements Serializable {
                 pilotPointsList.remove(index);
             }
         }
+        pilotPointsList.sort((p1, p2) -> Integer.compare(p2.getPoints(), p1.getPoints()));
         return pilotPointsList;
     }
 
